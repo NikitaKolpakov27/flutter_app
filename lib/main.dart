@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'new_character.dart';
+import 'new_location.dart';
+import 'new_story.dart';
+import 'login.dart';
 
 void main() => runApp(MaterialApp(
-  home: MyApp(),
+  home: Registration(),
 ));
 
-class MyApp extends StatelessWidget {
+class Registration extends StatelessWidget {
   late String _name;
   late String _password;
+  late String _email;
   final _sizeTextBlack = const TextStyle(fontSize: 20.0, color: Colors.black);
   final _sizeTextWhite = const TextStyle(fontSize: 20.0, color: Colors.white);
   final formKey = GlobalKey<FormState>();
@@ -30,10 +35,25 @@ class MyApp extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    Container(
+                    SizedBox(
                       width: 400.0,
                       child: TextFormField(
-                        decoration: InputDecoration(labelText: "Login"),
+                        decoration: const InputDecoration(labelText: "E-mail"),
+                        keyboardType: TextInputType.emailAddress,
+                        style: _sizeTextBlack,
+                        onSaved: (val) => _email = val!,
+                        validator: (val) {
+                          if (!(val!.contains('@')) & !(val.contains('.'))) {
+                            return 'Invalid E-mail format';
+                          }
+                          return null;
+                        },
+                      ),
+                    ),
+                    SizedBox(
+                      width: 400.0,
+                      child: TextFormField(
+                        decoration: const InputDecoration(labelText: "Login"),
                         keyboardType: TextInputType.name,
                         style: _sizeTextBlack,
                         onSaved: (val) => _name = val!,
@@ -71,6 +91,31 @@ class MyApp extends StatelessWidget {
                         ),
                       ),
                     ),
+                    const Divider(),
+                    InkWell(
+                      child: RichText(
+                        text: TextSpan(
+                          text: "Already have an account? ",
+                          style: _sizeTextBlack,
+                          children: const <TextSpan>[
+                            TextSpan(
+                              text: "Sign in",
+                              style: TextStyle(
+                                color: Colors.indigoAccent
+                              )
+                            )
+                          ]
+                        ),
+                      ),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => LoginProcess(),
+                          ),
+                        );
+                      },
+                    )
                   ],
                 ),
               ),
@@ -92,7 +137,7 @@ class MyApp extends StatelessWidget {
     Navigator.push(
         _context,
         MaterialPageRoute(
-            builder: (context) => SecondScreen(_name, _password)));
+            builder: (context) => AddMenu(_name, _password)));
   }
 
   void hideKeyboard() {
@@ -101,12 +146,13 @@ class MyApp extends StatelessWidget {
 
 }
 
-class SecondScreen extends StatelessWidget {
+class AddMenu extends StatelessWidget {
   String _name = '';
   String _password = '';
   final _sizeTextBlack = const TextStyle(fontSize: 20.0, color: Colors.black);
+  final _sizeTitleDrawer = const TextStyle(fontSize: 30.0, fontStyle: FontStyle.italic, color: Colors.lightBlue);
 
-  SecondScreen(String name, String password) {
+  AddMenu(String name, String password) {
     _name = name;
     _password = password;
   }
@@ -115,13 +161,258 @@ class SecondScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text("Second Screen"),
-        ),
-        body: Center(
-          child: Text(
-            "Login: $_name, password: $_password",
-            style: _sizeTextBlack,
+          title: const Text(
+            "Приложение для писателей",
+            style: TextStyle(
+              fontSize: 22.0,
+              fontStyle: FontStyle.italic,
+              color: Colors.white
+            ),
+
           ),
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+          items: const [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.add),
+              label: "Создание"
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.account_tree),
+              label: "Генерация"
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.star),
+              label: "Избранное"
+            )
+          ],
+        ),
+
+
+        drawer: Drawer(
+          child: Column(
+                children: [
+                  Container(
+                    height: 150,
+                    width: 300,
+                    color: Colors.blueAccent,
+                    child: SizedBox(
+                      width: 300,
+                      height: 150,
+                      child: Row(
+                        children: [
+                          const Icon(
+                            Icons.account_circle_sharp,
+                            color: Colors.greenAccent,
+                            size: 75,
+                          ),
+                          Text(
+                            "Здравствуйте, $_name",
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontStyle: FontStyle.italic,
+                              fontSize: 20.0,
+                            ),
+                          ),
+                        ],
+                      )
+                    ),
+                  ),
+              const Divider(),
+
+              SizedBox(
+                height: 500,
+                width: 250,
+                child: ListView(
+                  scrollDirection: Axis.vertical,
+                  children: [
+                    InkWell(
+                      onTap: () {
+                      },
+                      child: SizedBox(
+                        height: 150,
+                        width: 150,
+                            child: Container(
+                              height: 150,
+                              width: 150,
+                              color: Colors.indigo,
+                              child: const Center(child: Text(
+                                  'Персонажи',
+                                   style: TextStyle(
+                                    fontSize: 25.0
+                                   ),
+                              ),),
+                            ),
+                      ),
+                    ),
+                    const Divider(),
+
+                    InkWell(
+                      onTap: () {
+                      },
+                      child: SizedBox(
+                        height: 150,
+                        width: 150,
+                          child: Container(
+                              height: 150,
+                              width: 150,
+                              color: Colors.indigo,
+                              child: const Center(child: Text(
+                                  'Истории',
+                                   style: TextStyle(
+                                    fontSize: 25.0
+                                  ),
+                              ),),
+                            ),
+                      ),
+                    ),
+                    const Divider(),
+
+                    InkWell(
+                      onTap: () {
+                      },
+                      child: SizedBox(
+                        height: 150,
+                        width: 150,
+                        child: Container(
+                              height: 150,
+                              width: 150,
+                              color: Colors.indigo,
+                              child: const Center(child: Text(
+                                  'Локации',
+                                  style: TextStyle(
+                                    fontSize: 25.0
+                                  ),
+                              ),),
+                            ),
+                      ),
+                    ),
+                  ],
+                ),
+              )
+            ],
+          ),
+        ),
+
+
+        body: SizedBox(
+          height: 500,
+          child: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Column(
+              children: [
+                const SizedBox(height: 20,),
+                InkWell(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => CreateNewCharacter(_name),
+                        ),
+                    );
+                  },
+                  child: SizedBox(
+                    height: 150,
+                    child: Column(
+                      children: <Widget>[
+                        Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20.0),
+                            color: Colors.blue,
+                          ),
+                          height: 100,
+                          width: 300,
+                          margin: const EdgeInsets.all(20),
+                          child: const Center(child: Text('Создать нового персонажа'),),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+
+
+                InkWell(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => CreateNewLocation(),
+                      ),
+                    );
+                  },
+                  child: SizedBox(
+                    height: 150,
+                    child: Column(
+                      children: <Widget>[
+                        Container(
+                          height: 100,
+                          width: 300,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20.0),
+                            color: Colors.blue,
+                          ),
+                          margin: const EdgeInsets.all(20),
+                          child: const Center(child: Text('Создать новую локацию'),),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+
+
+                InkWell(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => CreateNewStory(),
+                      ),
+                    );
+                  },
+                  child: SizedBox(
+                    height: 150,
+                    child: Column(
+                      children: <Widget>[
+                        Container(
+                          height: 100,
+                          width: 300,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20.0),
+                            color: Colors.blue,
+                          ),
+                          margin: const EdgeInsets.all(20),
+                          child: const Center(child: Text('Создать новую историю'),),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          )
         ));
   }
+
+  /*Widget _bottomTab() {
+    return BottomNavigationBar(
+        currentIndex: _index,
+        onTap: (int index) => _index = index,
+        items: const [
+            BottomNavigationBarItem(
+                icon: Icon(Icons.add),
+                label: "Создание"
+            ),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.account_tree),
+                label: "Генерация"
+            ),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.star),
+                label: "Избранное"
+            )
+          ],
+    );
+  }*/
+
 }
+
