@@ -6,6 +6,8 @@ import 'main.dart';
 class LoginProcess extends StatelessWidget {
   late String _name;
   late String _password;
+  late String _email;
+
   final _sizeTextBlack = const TextStyle(fontSize: 20.0, color: Colors.black);
   final _sizeTextWhite = const TextStyle(fontSize: 20.0, color: Colors.white);
   final formKey = GlobalKey<FormState>();
@@ -89,7 +91,6 @@ class LoginProcess extends StatelessWidget {
                               )
                           )
                         ],
-
                       ),
                     ),
                 ],
@@ -102,6 +103,10 @@ class LoginProcess extends StatelessWidget {
 
   void submit() {
     final form = formKey.currentState;
+
+    // Инициализировать email по логину из БД (достать email из джсон файла)
+    _email = 'default@mail.ru';
+
     if (form!.validate()) {
       form.save();
       performLogin();
@@ -113,7 +118,7 @@ class LoginProcess extends StatelessWidget {
     Navigator.push(
         _context,
         MaterialPageRoute(
-            builder: (context) => AddMenu(_name, _password)));
+            builder: (context) => AddMenu(_name, _email, _password)));
   }
 
   void hideKeyboard() {

@@ -1,0 +1,28 @@
+{
+  "users": [
+    {
+      "id": 12,
+      "email": "nik.kolpakov@inbox.ru",
+      "login": "Nikita1",
+      "password": "kolpak23"
+    },
+    {
+      "id": 123,
+      "email": "allsop@yandex.ru",
+      "login": "Per45",
+      "password": "p0pdsa"
+    },
+    {
+      "id": 989,
+      "email": "lopahyus@mail.ru",
+      "login": "KekBoxer",
+      "password": "nikita12"
+    },
+    {
+      "id": 989,
+      "email": "popalopa@gmail.com",
+      "login": "KekBoxer",
+      "password": "nikita12"
+    }
+  ]
+}

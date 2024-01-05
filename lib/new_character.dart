@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:test_flutter/pers.dart';
 
 class CreateNewCharacter extends StatelessWidget {
   final formKeyPers = GlobalKey<FormState>();
@@ -7,6 +10,7 @@ class CreateNewCharacter extends StatelessWidget {
   late String _name = '';
 
   // Character's properties
+  late int _persID = 0;
   late String _persName = '';
   late String _persLastName = '';
   late String _persPatronymic = '';
@@ -217,7 +221,6 @@ class CreateNewCharacter extends StatelessWidget {
                 child: TextFormField(
                   decoration: const InputDecoration(labelText: "Age"),
                   keyboardType: TextInputType.number,
-                  obscureText: true,
                   onSaved: (val) => _persAge = int.parse(val!),
                   validator: (val) =>
                   int.parse(val!) <= 0
@@ -257,6 +260,9 @@ class CreateNewCharacter extends StatelessWidget {
 
   void performLogin() {
     hideKeyboard();
+    // var chars = getAllChars();
+    // _persID = chars.length;
+    // createNewChar(_persID, _persName, _persLastName, _persPatronymic, _persSex, _persAge);
     Navigator.push(
         _context,
         MaterialPageRoute(

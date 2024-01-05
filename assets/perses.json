@@ -1,0 +1,32 @@
+{
+  "perses": [
+    {
+      "id": 0,
+      "name": "Nikita",
+      "lastname": "Kolpakov",
+      "patronymic": "Sergeevich",
+      "sex": true,
+      "age": 22,
+      "personality": [
+        {
+          "mbti": "ISTP",
+          "temper": "CHOLERIC"
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "name": "hgfhfg",
+      "lastname": "sda",
+      "patronymic": "Serdsageevich",
+      "sex": true,
+      "age": 34,
+      "personality": [
+        {
+          "mbti": "ENFP",
+          "temper": "MELANCHOLIC"
+        }
+      ]
+    }
+  ]
+}

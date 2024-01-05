@@ -1,5 +1,8 @@
+import 'dart:io';
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:test_flutter/pers.dart';
 import 'new_character.dart';
 import 'new_location.dart';
 import 'new_story.dart';
@@ -8,6 +11,14 @@ import 'login.dart';
 void main() => runApp(MaterialApp(
   home: Registration(),
 ));
+
+// void main() async {
+//   WidgetsFlutterBinding.ensureInitialized();
+//
+//   final String data = await rootBundle.loadString('assets/perses.json');
+//   var decoded = json.decode(data);
+//   print(decoded);
+// }
 
 class Registration extends StatelessWidget {
   late String _name;
@@ -132,12 +143,15 @@ class Registration extends StatelessWidget {
     }
   }
 
-  void performLogin() {
+  void performLogin() async {
     hideKeyboard();
+
+    // ДОБАВИТЬ ЗАПИСЬ В БД !!!
+
     Navigator.push(
         _context,
         MaterialPageRoute(
-            builder: (context) => AddMenu(_name, _password)));
+            builder: (context) => AddMenu(_name, _email, _password)));
   }
 
   void hideKeyboard() {
@@ -149,12 +163,20 @@ class Registration extends StatelessWidget {
 class AddMenu extends StatelessWidget {
   String _name = '';
   String _password = '';
+  String _email = '';
+
   final _sizeTextBlack = const TextStyle(fontSize: 20.0, color: Colors.black);
   final _sizeTitleDrawer = const TextStyle(fontSize: 30.0, fontStyle: FontStyle.italic, color: Colors.lightBlue);
 
-  AddMenu(String name, String password) {
+  AddMenu(String name, String email, String password) {
     _name = name;
     _password = password;
+    _email = email;
+  }
+
+  AddMenu.copy(AddMenu addMenu, {super.key}) {
+    _name = addMenu._name;
+    _password = addMenu._password;
   }
 
   @override
