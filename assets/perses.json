@@ -16,15 +16,15 @@
     },
     {
       "id": 1,
-      "name": "hgfhfg",
-      "lastname": "sda",
-      "patronymic": "Serdsageevich",
-      "sex": true,
-      "age": 34,
+      "name": "Alisa",
+      "lastname": "Dvachevskaya",
+      "patronymic": "Filippovna",
+      "sex": false,
+      "age": 21,
       "personality": [
         {
-          "mbti": "ENFP",
-          "temper": "MELANCHOLIC"
+          "mbti": "INFP",
+          "temper": "FLEGMATIC"
         }
       ]
     }

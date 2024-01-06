@@ -1,16 +1,28 @@
 import 'dart:convert';
 import 'dart:io';
 
-void main() {
-  // createNewUser(989, "KekBoxer", "nikita12");
-  // print(await getUsersData("login"));
-  print(getAllUsers());
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/services.dart';
+
+void main() async {
+  createNewUser(989, "KekBoxer", "nikita12");
+  print(await getUsersData("login"));
 }
 
-getAllUsers() {
-  File file = File("./lib/db/users.json");
+// getAllUsers() {
+//   File file = File("./lib/db/users.json");
+//
+//   final data = file.readAsStringSync();
+//   var decoded = json.decode(data);
+//   var users = decoded["users"] as List;
+//
+//   return users;
+// }
 
-  final data = file.readAsStringSync();
+getAllUsers() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  final String data = await rootBundle.loadString('assets/users.json');
   var decoded = json.decode(data);
   var users = decoded["users"] as List;
 

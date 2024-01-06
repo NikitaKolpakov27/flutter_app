@@ -2,7 +2,9 @@ import 'dart:io';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:test_flutter/file_utils/file_utils.dart';
 import 'package:test_flutter/pers.dart';
+import 'package:test_flutter/user.dart';
 import 'new_character.dart';
 import 'new_location.dart';
 import 'new_story.dart';
@@ -147,6 +149,8 @@ class Registration extends StatelessWidget {
     hideKeyboard();
 
     // ДОБАВИТЬ ЗАПИСЬ В БД !!!
+    var us_id = await getAllUsers();
+    writeUser(us_id.length, _name, _password);
 
     Navigator.push(
         _context,

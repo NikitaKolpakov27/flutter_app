@@ -1,12 +1,11 @@
 import 'dart:convert';
 import 'dart:io';
-
 import 'character/personality.dart';
 
 void main() {
   // var res = getAllChars();
   // print(res);
-  var res = getInfoByID(0);
+  var res = getInfoByID(1);
   print(res);
 }
 
@@ -141,7 +140,7 @@ class Character {
   @override
   String toString() {
     var sexStr = _sex == true ? "Male" : "Female";
-    return "Character: $_name $_lastname $_patronymic. $sexStr, $_age years old. Personality = ${_personality.getMbti()}, ${_personality.getTemper()}";
+    return "Character: $_name $_lastname $_patronymic. $sexStr, $_age years old. Personality = ${_personality.mbti}, ${_personality.temper}";
   }
 
 }
