@@ -3,14 +3,14 @@
     {
       "id": 12,
       "email": "nik.kolpakov@inbox.ru",
-      "login": "Nikita1",
+      "login": "Nikita101",
       "password": "kolpak23"
     },
     {
       "id": 123,
       "email": "allsop@yandex.ru",
       "login": "Per45",
-      "password": "p0pdsa"
+      "password": "p0pdsaaa"
     },
     {
       "id": 989,
@@ -21,7 +21,7 @@
     {
       "id": 989,
       "email": "popalopa@gmail.com",
-      "login": "KekBoxer",
+      "login": "Kek",
       "password": "nikita12"
     }
   ]

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:test_flutter/file_utils/file_utils.dart';
 import 'package:test_flutter/pers.dart';
-import 'package:test_flutter/pers/all_perses.dart';
+import 'package:test_flutter/character/perses_json.dart';
 import 'package:test_flutter/user.dart';
 import 'package:test_flutter/users_json.dart';
 import 'new_character.dart';
@@ -28,6 +28,7 @@ class Registration extends StatelessWidget {
   late String _name;
   late String _password;
   late String _email;
+  late String _confirmPassword;
   final _sizeTextBlack = const TextStyle(fontSize: 20.0, color: Colors.black);
   final _sizeTextWhite = const TextStyle(fontSize: 20.0, color: Colors.white);
   final formKey = GlobalKey<FormState>();
@@ -35,146 +36,154 @@ class Registration extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    _context = context;
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Users Json',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        useMaterial3: true,
-      ),
-      home: const JsonUser(),
+        theme: ThemeData(primaryColor: Colors.indigoAccent),
+        home: Scaffold(
+          appBar: AppBar(
+            title: const Text("Приложение для писателей"),
+            centerTitle: true,
+          ),
+          body: Center(
+              child: Form(
+                key: formKey,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    SizedBox(
+                      width: 400.0,
+                      child: TextFormField(
+                        decoration: const InputDecoration(labelText: "E-mail"),
+                        keyboardType: TextInputType.emailAddress,
+                        style: _sizeTextBlack,
+                        onSaved: (val) => _email = val!,
+                        onChanged: (val) => _email = val,
+                        validator: (val) {
+                          if (!(val!.contains('@')) & !(val.contains('.'))) {
+                            return 'Invalid E-mail format';
+                          }
+                          return null;
+                        },
+                      ),
+                    ),
+                    SizedBox(
+                      width: 400.0,
+                      child: TextFormField(
+                        decoration: const InputDecoration(labelText: "Login"),
+                        keyboardType: TextInputType.name,
+                        style: _sizeTextBlack,
+                        onSaved: (val) => _name = val!,
+                        onChanged: (val) => _name = val,
+                        validator: (val) =>
+                        val!.length < 8
+                            ? 'Too short name'
+                            : null,
+                      ),
+                    ),
+                    Container(
+                      width: 400.0,
+                      padding: const EdgeInsets.only(top: 10.0),
+                      child: TextFormField(
+                        decoration: const InputDecoration(labelText: "Password"),
+                        keyboardType: TextInputType.visiblePassword,
+                        obscureText: true,
+                        style: _sizeTextBlack,
+                        onSaved: (val) => _password = val!,
+                        onChanged: (val) => _password = val,
+                        validator: (val) =>
+                        val!.length < 8
+                            ? 'Too short password'
+                            : null,
+                      ),
+                    ),
+                    Container(
+                      width: 400.0,
+                      padding: const EdgeInsets.only(top: 10.0),
+                      child: TextFormField(
+                        decoration: const InputDecoration(labelText: "Confirm Password"),
+                        keyboardType: TextInputType.visiblePassword,
+                        obscureText: true,
+                        style: _sizeTextBlack,
+                        onSaved: (val) => _confirmPassword = val!,
+                        validator: (val) {
+                          if (val! != _password) {
+                            return 'Passwords are not the same!';
+                          } else {
+                            return null;
+                          }
+                        }
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10.0),
+                      child: MaterialButton(
+                        color: Colors.indigoAccent,
+                        height: 50.0,
+                        minWidth: 150.0,
+                        onPressed: submit,
+                        child: Text(
+                          "REGISTER",
+                          style: _sizeTextWhite,
+                        ),
+                      ),
+                    ),
+                    const Divider(),
+                    InkWell(
+                      child: RichText(
+                        text: TextSpan(
+                          text: "Already have an account? ",
+                          style: _sizeTextBlack,
+                          children: const <TextSpan>[
+                            TextSpan(
+                              text: "Sign in",
+                              style: TextStyle(
+                                color: Colors.indigoAccent
+                              )
+                            )
+                          ]
+                        ),
+                      ),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => LoginProcess(),
+                          ),
+                        );
+                      },
+                    )
+                  ],
+                ),
+              ),
+          ),
+        )
     );
   }
 
-  // @override
-  // Widget build(BuildContext context) {
-  //   _context = context;
-  //   return MaterialApp(
-  //       theme: ThemeData(primaryColor: Colors.indigoAccent),
-  //       home: Scaffold(
-  //         appBar: AppBar(
-  //           title: const Text("Приложение для писателей"),
-  //           centerTitle: true,
-  //         ),
-  //         body: Center(
-  //             child: Form(
-  //               key: formKey,
-  //               child: Column(
-  //                 mainAxisAlignment: MainAxisAlignment.center,
-  //                 children: <Widget>[
-  //                   SizedBox(
-  //                     width: 400.0,
-  //                     child: TextFormField(
-  //                       decoration: const InputDecoration(labelText: "E-mail"),
-  //                       keyboardType: TextInputType.emailAddress,
-  //                       style: _sizeTextBlack,
-  //                       onSaved: (val) => _email = val!,
-  //                       validator: (val) {
-  //                         if (!(val!.contains('@')) & !(val.contains('.'))) {
-  //                           return 'Invalid E-mail format';
-  //                         }
-  //                         return null;
-  //                       },
-  //                     ),
-  //                   ),
-  //                   SizedBox(
-  //                     width: 400.0,
-  //                     child: TextFormField(
-  //                       decoration: const InputDecoration(labelText: "Login"),
-  //                       keyboardType: TextInputType.name,
-  //                       style: _sizeTextBlack,
-  //                       onSaved: (val) => _name = val!,
-  //                       validator: (val) =>
-  //                       val!.length < 8
-  //                           ? 'Too short name'
-  //                           : null,
-  //                     ),
-  //                   ),
-  //                   Container(
-  //                     width: 400.0,
-  //                     padding: const EdgeInsets.only(top: 10.0),
-  //                     child: TextFormField(
-  //                       decoration: const InputDecoration(labelText: "Password"),
-  //                       keyboardType: TextInputType.visiblePassword,
-  //                       obscureText: true,
-  //                       style: _sizeTextBlack,
-  //                       onSaved: (val) => _password = val!,
-  //                       validator: (val) =>
-  //                       val!.length < 8
-  //                           ? 'Too short password'
-  //                           : null,
-  //                     ),
-  //                   ),
-  //                   Padding(
-  //                     padding: const EdgeInsets.only(top: 25.0),
-  //                     child: MaterialButton(
-  //                       color: Colors.indigoAccent,
-  //                       height: 50.0,
-  //                       minWidth: 150.0,
-  //                       onPressed: submit,
-  //                       child: Text(
-  //                         "REGISTER",
-  //                         style: _sizeTextWhite,
-  //                       ),
-  //                     ),
-  //                   ),
-  //                   const Divider(),
-  //                   InkWell(
-  //                     child: RichText(
-  //                       text: TextSpan(
-  //                         text: "Already have an account? ",
-  //                         style: _sizeTextBlack,
-  //                         children: const <TextSpan>[
-  //                           TextSpan(
-  //                             text: "Sign in",
-  //                             style: TextStyle(
-  //                               color: Colors.indigoAccent
-  //                             )
-  //                           )
-  //                         ]
-  //                       ),
-  //                     ),
-  //                     onTap: () {
-  //                       Navigator.push(
-  //                         context,
-  //                         MaterialPageRoute(
-  //                           builder: (context) => LoginProcess(),
-  //                         ),
-  //                       );
-  //                     },
-  //                   )
-  //                 ],
-  //               ),
-  //             ),
-  //         ),
-  //       )
-  //   );
-  // }
-  //
-  // void submit() {
-  //   final form = formKey.currentState;
-  //   if (form!.validate()) {
-  //     form.save();
-  //     performLogin();
-  //   }
-  // }
-  //
-  // void performLogin() async {
-  //   hideKeyboard();
-  //
-  //   // ДОБАВИТЬ ЗАПИСЬ В БД !!!
-  //   var us_id = await getAllUsers();
-  //   writeUser(us_id.length, _name, _password);
-  //
-  //   Navigator.push(
-  //       _context,
-  //       MaterialPageRoute(
-  //           builder: (context) => AddMenu(_name, _email, _password)));
-  // }
-  //
-  // void hideKeyboard() {
-  //   SystemChannels.textInput.invokeMethod('TextInput.hide');
-  // }
+  void submit() {
+    final form = formKey.currentState;
+    if (form!.validate()) {
+      form.save();
+      performLogin();
+    }
+  }
+
+  void performLogin() async {
+    hideKeyboard();
+
+    // ДОБАВИТЬ ЗАПИСЬ В БД !!!
+    var us_id = await getAllUsers(); // Это работает
+    writeUser(us_id.length, _name, _password);
+
+    Navigator.push(
+        _context,
+        MaterialPageRoute(
+            builder: (context) => AddMenu(_name, _email, _password)));
+  }
+
+  void hideKeyboard() {
+    SystemChannels.textInput.invokeMethod('TextInput.hide');
+  }
 
 }
 
@@ -271,7 +280,7 @@ class AddMenu extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => AllPerses(),
+                            builder: (context) => const JsonChar(),
                           ),
                         );
                       },

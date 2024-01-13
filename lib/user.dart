@@ -5,19 +5,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 
 void main() async {
-  createNewUser(989, "KekBoxer", "nikita12");
-  print(await getUsersData("login"));
+  print(await getUsersDataByLogin('password', 'Nikita101'));
 }
-
-// getAllUsers() {
-//   File file = File("./lib/db/users.json");
-//
-//   final data = file.readAsStringSync();
-//   var decoded = json.decode(data);
-//   var users = decoded["users"] as List;
-//
-//   return users;
-// }
 
 getAllUsers() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -30,10 +19,10 @@ getAllUsers() async {
 }
 
 // Функция, возвращающая данные пользователя (ID, логин, пароль)
-getUsersData(type_data) {
-  File file = File("./lib/db/users.json");
+getUsersData(type_data) async {
+  WidgetsFlutterBinding.ensureInitialized();
 
-  final data = file.readAsStringSync();
+  final String data = await rootBundle.loadString('assets/users.json');
   var decoded = json.decode(data);
   var users = decoded["users"] as List;
 
@@ -41,6 +30,26 @@ getUsersData(type_data) {
 
   for (var user in users) {
     userData.insert(userData.length, user[type_data]);
+  }
+
+  return userData;
+}
+
+// Функция, возвращающая данные пользователя по логину (ID, emial, пароль)
+getUsersDataByLogin(type_data, login) async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  final String data = await rootBundle.loadString('assets/users.json');
+  var decoded = json.decode(data);
+  var users = decoded["users"] as List;
+
+  dynamic userData;
+
+  for (var user in users) {
+
+    if (user['login'] == login) {
+      userData = user[type_data];
+    }
   }
 
   return userData;

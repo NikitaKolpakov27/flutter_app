@@ -1,5 +1,7 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:test_flutter/user.dart';
 import 'main.dart';
 
 
@@ -33,30 +35,26 @@ class LoginProcess extends StatelessWidget {
                 children: <Widget>[
                   SizedBox(
                     width: 400.0,
-                    child: TextFormField(
+                      child: TextFormField(
                       decoration: const InputDecoration(labelText: "Login"),
                       keyboardType: TextInputType.name,
                       style: _sizeTextBlack,
                       onSaved: (val) => _name = val!,
-                      validator: (val) =>
-                      val!.length < 8
-                          ? 'Too short name'
-                          : null,
+                      onChanged: (val) => _name = val,
+                      validator: (val) => usernameValidator(_name)
                     ),
                   ),
                   Container(
                     width: 400.0,
                     padding: const EdgeInsets.only(top: 10.0),
                     child: TextFormField(
-                      decoration: const InputDecoration(labelText: "Password"),
-                      keyboardType: TextInputType.visiblePassword,
-                      obscureText: true,
-                      style: _sizeTextBlack,
-                      onSaved: (val) => _password = val!,
-                      validator: (val) =>
-                      val!.length < 8
-                          ? 'Too short password'
-                          : null,
+                        decoration: const InputDecoration(labelText: "Password"),
+                        keyboardType: TextInputType.visiblePassword,
+                        obscureText: true,
+                        style: _sizeTextBlack,
+                        onSaved: (val) => _password = val!,
+                        onChanged: (val) => _password = val,
+                        validator: (val) => passwordValidator(_password, _name)
                     ),
                   ),
                   Padding(
@@ -101,15 +99,69 @@ class LoginProcess extends StatelessWidget {
     );
   }
 
-  void submit() {
+  String? usernameValidator(username) {
+    dynamic msg;
+
+    getUsersData('login').then((val) {
+      if (val.contains(username)) {
+        print("Да, он в теме!");
+      } else {
+        print("Нет, его нету в базе");
+        msg = 'Имени $username нет в базе!';
+      }
+    });
+
+    if (username.length < 5) {
+      msg = 'Имя слишком короткое!';
+    }
+
+    return msg;
+  }
+
+  String? passwordValidator(password, login) {
+    dynamic msg;
+
+    getUsersDataByLogin('password', login).then((val) {
+      if (val == password) {
+        print("Да, он в теме!");
+      } else {
+        print("ПАРОЛЬ. Нет, его нету в базе");
+        msg = 'Такого пароля нет в базе!';
+      }
+    });
+
+    if (password.length < 8) {
+      msg = 'Пароль слишком короткий!';
+    }
+
+    return msg;
+  }
+
+  void submit() async {
     final form = formKey.currentState;
 
     // Инициализировать email по логину из БД (достать email из джсон файла)
     _email = 'default@mail.ru';
 
     if (form!.validate()) {
-      form.save();
-      performLogin();
+
+      try {
+        var right_email = await getUsersDataByLogin('email', _name);
+        var right_password = await getUsersDataByLogin('password', _name);
+
+        _email = right_email;
+
+        if (right_password != _password) {
+          throw Exception('Неверный пароль!');
+        }
+
+        print('Успешный вход! E-mail: $_email');
+        form.save();
+        performLogin();
+      } catch (e) {
+        print('Нет пользователя с таким логином');
+      }
+
     }
   }
 

@@ -26,7 +26,8 @@ Future<File> get _usersFile async {
 }
 
 Future<File> writeUser(id, login, password) async {
-  final file = await _usersFile;
+  // final file = await _usersFile;
+  final file = File('assets/users.json');
 
   // Создание нового пользователя и подготовка его к записи в БД
   User new_user = User(id, login, password);
