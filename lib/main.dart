@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:test_flutter/file_utils/file_utils.dart';
 import 'package:test_flutter/pers.dart';
+import 'package:test_flutter/pers/all_perses.dart';
 import 'package:test_flutter/user.dart';
+import 'package:test_flutter/users_json.dart';
 import 'new_character.dart';
 import 'new_location.dart';
 import 'new_story.dart';
@@ -31,136 +33,148 @@ class Registration extends StatelessWidget {
   final formKey = GlobalKey<FormState>();
   late BuildContext _context;
 
-
   @override
   Widget build(BuildContext context) {
-    _context = context;
     return MaterialApp(
-        theme: ThemeData(primaryColor: Colors.indigoAccent),
-        home: Scaffold(
-          appBar: AppBar(
-            title: const Text("Приложение для писателей"),
-            centerTitle: true,
-          ),
-          body: Center(
-              child: Form(
-                key: formKey,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    SizedBox(
-                      width: 400.0,
-                      child: TextFormField(
-                        decoration: const InputDecoration(labelText: "E-mail"),
-                        keyboardType: TextInputType.emailAddress,
-                        style: _sizeTextBlack,
-                        onSaved: (val) => _email = val!,
-                        validator: (val) {
-                          if (!(val!.contains('@')) & !(val.contains('.'))) {
-                            return 'Invalid E-mail format';
-                          }
-                          return null;
-                        },
-                      ),
-                    ),
-                    SizedBox(
-                      width: 400.0,
-                      child: TextFormField(
-                        decoration: const InputDecoration(labelText: "Login"),
-                        keyboardType: TextInputType.name,
-                        style: _sizeTextBlack,
-                        onSaved: (val) => _name = val!,
-                        validator: (val) =>
-                        val!.length < 8
-                            ? 'Too short name'
-                            : null,
-                      ),
-                    ),
-                    Container(
-                      width: 400.0,
-                      padding: const EdgeInsets.only(top: 10.0),
-                      child: TextFormField(
-                        decoration: const InputDecoration(labelText: "Password"),
-                        keyboardType: TextInputType.visiblePassword,
-                        obscureText: true,
-                        style: _sizeTextBlack,
-                        onSaved: (val) => _password = val!,
-                        validator: (val) =>
-                        val!.length < 8
-                            ? 'Too short password'
-                            : null,
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 25.0),
-                      child: MaterialButton(
-                        color: Colors.indigoAccent,
-                        height: 50.0,
-                        minWidth: 150.0,
-                        onPressed: submit,
-                        child: Text(
-                          "REGISTER",
-                          style: _sizeTextWhite,
-                        ),
-                      ),
-                    ),
-                    const Divider(),
-                    InkWell(
-                      child: RichText(
-                        text: TextSpan(
-                          text: "Already have an account? ",
-                          style: _sizeTextBlack,
-                          children: const <TextSpan>[
-                            TextSpan(
-                              text: "Sign in",
-                              style: TextStyle(
-                                color: Colors.indigoAccent
-                              )
-                            )
-                          ]
-                        ),
-                      ),
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => LoginProcess(),
-                          ),
-                        );
-                      },
-                    )
-                  ],
-                ),
-              ),
-          ),
-        )
+      debugShowCheckedModeBanner: false,
+      title: 'Users Json',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+        useMaterial3: true,
+      ),
+      home: const JsonUser(),
     );
   }
 
-  void submit() {
-    final form = formKey.currentState;
-    if (form!.validate()) {
-      form.save();
-      performLogin();
-    }
-  }
-
-  void performLogin() async {
-    hideKeyboard();
-
-    // ДОБАВИТЬ ЗАПИСЬ В БД !!!
-    var us_id = await getAllUsers();
-    writeUser(us_id.length, _name, _password);
-
-    Navigator.push(
-        _context,
-        MaterialPageRoute(
-            builder: (context) => AddMenu(_name, _email, _password)));
-  }
-
-  void hideKeyboard() {
-    SystemChannels.textInput.invokeMethod('TextInput.hide');
-  }
+  // @override
+  // Widget build(BuildContext context) {
+  //   _context = context;
+  //   return MaterialApp(
+  //       theme: ThemeData(primaryColor: Colors.indigoAccent),
+  //       home: Scaffold(
+  //         appBar: AppBar(
+  //           title: const Text("Приложение для писателей"),
+  //           centerTitle: true,
+  //         ),
+  //         body: Center(
+  //             child: Form(
+  //               key: formKey,
+  //               child: Column(
+  //                 mainAxisAlignment: MainAxisAlignment.center,
+  //                 children: <Widget>[
+  //                   SizedBox(
+  //                     width: 400.0,
+  //                     child: TextFormField(
+  //                       decoration: const InputDecoration(labelText: "E-mail"),
+  //                       keyboardType: TextInputType.emailAddress,
+  //                       style: _sizeTextBlack,
+  //                       onSaved: (val) => _email = val!,
+  //                       validator: (val) {
+  //                         if (!(val!.contains('@')) & !(val.contains('.'))) {
+  //                           return 'Invalid E-mail format';
+  //                         }
+  //                         return null;
+  //                       },
+  //                     ),
+  //                   ),
+  //                   SizedBox(
+  //                     width: 400.0,
+  //                     child: TextFormField(
+  //                       decoration: const InputDecoration(labelText: "Login"),
+  //                       keyboardType: TextInputType.name,
+  //                       style: _sizeTextBlack,
+  //                       onSaved: (val) => _name = val!,
+  //                       validator: (val) =>
+  //                       val!.length < 8
+  //                           ? 'Too short name'
+  //                           : null,
+  //                     ),
+  //                   ),
+  //                   Container(
+  //                     width: 400.0,
+  //                     padding: const EdgeInsets.only(top: 10.0),
+  //                     child: TextFormField(
+  //                       decoration: const InputDecoration(labelText: "Password"),
+  //                       keyboardType: TextInputType.visiblePassword,
+  //                       obscureText: true,
+  //                       style: _sizeTextBlack,
+  //                       onSaved: (val) => _password = val!,
+  //                       validator: (val) =>
+  //                       val!.length < 8
+  //                           ? 'Too short password'
+  //                           : null,
+  //                     ),
+  //                   ),
+  //                   Padding(
+  //                     padding: const EdgeInsets.only(top: 25.0),
+  //                     child: MaterialButton(
+  //                       color: Colors.indigoAccent,
+  //                       height: 50.0,
+  //                       minWidth: 150.0,
+  //                       onPressed: submit,
+  //                       child: Text(
+  //                         "REGISTER",
+  //                         style: _sizeTextWhite,
+  //                       ),
+  //                     ),
+  //                   ),
+  //                   const Divider(),
+  //                   InkWell(
+  //                     child: RichText(
+  //                       text: TextSpan(
+  //                         text: "Already have an account? ",
+  //                         style: _sizeTextBlack,
+  //                         children: const <TextSpan>[
+  //                           TextSpan(
+  //                             text: "Sign in",
+  //                             style: TextStyle(
+  //                               color: Colors.indigoAccent
+  //                             )
+  //                           )
+  //                         ]
+  //                       ),
+  //                     ),
+  //                     onTap: () {
+  //                       Navigator.push(
+  //                         context,
+  //                         MaterialPageRoute(
+  //                           builder: (context) => LoginProcess(),
+  //                         ),
+  //                       );
+  //                     },
+  //                   )
+  //                 ],
+  //               ),
+  //             ),
+  //         ),
+  //       )
+  //   );
+  // }
+  //
+  // void submit() {
+  //   final form = formKey.currentState;
+  //   if (form!.validate()) {
+  //     form.save();
+  //     performLogin();
+  //   }
+  // }
+  //
+  // void performLogin() async {
+  //   hideKeyboard();
+  //
+  //   // ДОБАВИТЬ ЗАПИСЬ В БД !!!
+  //   var us_id = await getAllUsers();
+  //   writeUser(us_id.length, _name, _password);
+  //
+  //   Navigator.push(
+  //       _context,
+  //       MaterialPageRoute(
+  //           builder: (context) => AddMenu(_name, _email, _password)));
+  // }
+  //
+  // void hideKeyboard() {
+  //   SystemChannels.textInput.invokeMethod('TextInput.hide');
+  // }
 
 }
 
@@ -254,6 +268,12 @@ class AddMenu extends StatelessWidget {
                   children: [
                     InkWell(
                       onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => AllPerses(),
+                          ),
+                        );
                       },
                       child: SizedBox(
                         height: 150,
@@ -418,27 +438,5 @@ class AddMenu extends StatelessWidget {
           )
         ));
   }
-
-  /*Widget _bottomTab() {
-    return BottomNavigationBar(
-        currentIndex: _index,
-        onTap: (int index) => _index = index,
-        items: const [
-            BottomNavigationBarItem(
-                icon: Icon(Icons.add),
-                label: "Создание"
-            ),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.account_tree),
-                label: "Генерация"
-            ),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.star),
-                label: "Избранное"
-            )
-          ],
-    );
-  }*/
-
 }
 
