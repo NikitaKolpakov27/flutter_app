@@ -5,7 +5,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 
 void main() async {
-  print(await getUsersDataByLogin('password', 'Nikita101'));
+  // print(await getUsersDataByLogin('password', 'Nikita101'));
+  var email = 'nik.kolpakov@inbox.ru';
+  RegExp exp = RegExp(r'[a-zA-Z0-9_.]+@[A-Za-z]+\.[a-z]{2,4}');
+  bool cond = exp.hasMatch(email);
+  print(cond);
 }
 
 getAllUsers() async {

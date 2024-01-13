@@ -58,12 +58,7 @@ class Registration extends StatelessWidget {
                         style: _sizeTextBlack,
                         onSaved: (val) => _email = val!,
                         onChanged: (val) => _email = val,
-                        validator: (val) {
-                          if (!(val!.contains('@')) & !(val.contains('.'))) {
-                            return 'Invalid E-mail format';
-                          }
-                          return null;
-                        },
+                        validator: (val) => emailValidator(_email)
                       ),
                     ),
                     SizedBox(
@@ -158,6 +153,19 @@ class Registration extends StatelessWidget {
           ),
         )
     );
+  }
+
+  String? emailValidator(email) {
+    dynamic msg;
+
+    RegExp exp = RegExp(r'[a-zA-Z0-9_.]+@[A-Za-z]+\.[a-z]{2,4}');
+    if (exp.hasMatch(email)) {
+      msg = null;
+    } else {
+      msg = 'Неправильный E-mail формат!';
+    }
+
+    return msg;
   }
 
   void submit() {
