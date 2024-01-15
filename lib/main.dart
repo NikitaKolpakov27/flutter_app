@@ -3,13 +3,15 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:test_flutter/file_utils/file_utils.dart';
-import 'package:test_flutter/pers.dart';
+import 'package:test_flutter/character/pers.dart';
 import 'package:test_flutter/character/perses_json.dart';
-import 'package:test_flutter/user.dart';
-import 'package:test_flutter/users_json.dart';
-import 'new_character.dart';
-import 'new_location.dart';
-import 'new_story.dart';
+import 'package:test_flutter/locations/locations_json.dart';
+import 'package:test_flutter/story/stories_json.dart';
+import 'package:test_flutter/user/user.dart';
+import 'package:test_flutter/user/users_json.dart';
+import 'character/new_character.dart';
+import 'locations/new_location.dart';
+import 'story/new_story.dart';
 import 'login.dart';
 
 void main() => runApp(MaterialApp(
@@ -312,6 +314,12 @@ class AddMenu extends StatelessWidget {
 
                     InkWell(
                       onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const JsonStory(),
+                          ),
+                        );
                       },
                       child: SizedBox(
                         height: 150,
@@ -333,6 +341,12 @@ class AddMenu extends StatelessWidget {
 
                     InkWell(
                       onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const JsonLocation(),
+                          ),
+                        );
                       },
                       child: SizedBox(
                         height: 150,
@@ -399,7 +413,7 @@ class AddMenu extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => CreateNewLocation(),
+                        builder: (context) => CreateNewLocation(_name),
                       ),
                     );
                   },
@@ -428,7 +442,7 @@ class AddMenu extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => CreateNewStory(),
+                        builder: (context) => CreateNewStory(_name),
                       ),
                     );
                   },

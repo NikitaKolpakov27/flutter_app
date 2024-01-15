@@ -1,22 +1,17 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:test_flutter/pers.dart';
 
-class CreateNewCharacter extends StatelessWidget {
-  final formKeyPers = GlobalKey<FormState>();
+class CreateNewLocation extends StatelessWidget {
+  final formKeyLocation = GlobalKey<FormState>();
   late BuildContext _context;
   late String _name = '';
 
-  // Character's properties
-  late int _persID = 0;
-  late String _persName = '';
-  late String _persLastName = '';
-  late String _persPatronymic = '';
-  late bool _persSex = false;
-  late int _persAge = 0;
+  // Location's properties
+  late int _locationID = 0;
+  late String _locationName = '';
+  late String _description = '';
 
-  CreateNewCharacter(String name) {
+  CreateNewLocation(String name) {
     _name = name;
   }
 
@@ -24,10 +19,9 @@ class CreateNewCharacter extends StatelessWidget {
   Widget build(BuildContext context) {
     _context = context;
     return Scaffold(
-
       appBar: AppBar(
         title: const Text(
-          "Создание персонажа",
+          "Создание локации",
           style: TextStyle(
               fontSize: 20.0,
               fontStyle: FontStyle.italic,
@@ -160,19 +154,19 @@ class CreateNewCharacter extends StatelessWidget {
 
       body: Center(
         child: Form(
-          key: formKeyPers,
+          key: formKeyLocation,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               SizedBox(
                 width: 400.0,
                 child: TextFormField(
-                  decoration: const InputDecoration(labelText: "Name"),
+                  decoration: const InputDecoration(labelText: "Название локации"),
                   keyboardType: TextInputType.name,
-                  onSaved: (val) => _persName = val!,
+                  onSaved: (val) => _locationName = val!,
                   validator: (val) {
                     if (val!.isEmpty) {
-                      return "Too short character's name";
+                      return "Слишком короткое название локации";
                     }
                     return null;
                   },
@@ -181,50 +175,15 @@ class CreateNewCharacter extends StatelessWidget {
               SizedBox(
                 width: 400.0,
                 child: TextFormField(
-                  decoration: const InputDecoration(labelText: "Last Name"),
+                  decoration: const InputDecoration(labelText: "Описание"),
                   keyboardType: TextInputType.name,
-                  onSaved: (val) => _persLastName = val!,
-                  validator: (val) =>
-                  val!.length < 8
-                      ? 'Too short last name'
-                      : null,
-                ),
-              ),
-              Container(
-                width: 400.0,
-                padding: const EdgeInsets.only(top: 10.0),
-                child: TextFormField(
-                  decoration: const InputDecoration(labelText: "Patronymic"),
-                  keyboardType: TextInputType.name,
-                  onSaved: (val) => _persPatronymic = val!,
-                  validator: (val) =>
-                  val!.length < 6
-                      ? 'Too short patronymic'
-                      : null,
-                ),
-              ),
-              Container(
-                width: 400.0,
-                padding: const EdgeInsets.only(top: 10.0),
-                child: CheckboxListTile(
-                  title: const Text("Sex"),
-                  value: _persSex,
-                  onChanged: (bool? value) {
-                    _persSex = value!;
+                  onSaved: (val) => _description = val!,
+                  validator: (val) {
+                    if (val!.isEmpty) {
+                      return "Слишком короткое описание";
+                    }
+                    return null;
                   },
-                )
-              ),
-              Container(
-                width: 400.0,
-                padding: const EdgeInsets.only(top: 10.0),
-                child: TextFormField(
-                  decoration: const InputDecoration(labelText: "Age"),
-                  keyboardType: TextInputType.number,
-                  onSaved: (val) => _persAge = int.parse(val!),
-                  validator: (val) =>
-                  int.parse(val!) <= 0
-                      ? 'Too small age'
-                      : null,
                 ),
               ),
               Padding(
@@ -233,11 +192,11 @@ class CreateNewCharacter extends StatelessWidget {
                   color: Colors.indigoAccent,
                   height: 50.0,
                   minWidth: 150.0,
-                  onPressed: submitPers,
+                  onPressed: submitLocation,
                   child: const Text(
-                    "Создать персонажа",
+                    "Создать локацию",
                     style: TextStyle(
-                      color: Colors.white
+                        color: Colors.white
                     ),
                   ),
                 ),
@@ -246,73 +205,59 @@ class CreateNewCharacter extends StatelessWidget {
           ),
         ),
       ),
+
+
     );
   }
 
-  void submitPers() {
-    final form = formKeyPers.currentState;
+  void submitLocation() {
+    final form = formKeyLocation.currentState;
     if (form!.validate()) {
       form.save();
-      performLogin();
+      performLocation();
     }
   }
 
-  void performLogin() {
+  void performLocation() {
     hideKeyboard();
-    // var chars = getAllChars();
-    // _persID = chars.length;
-    // createNewChar(_persID, _persName, _persLastName, _persPatronymic, _persSex, _persAge);
     Navigator.push(
         _context,
         MaterialPageRoute(
-            builder: (context) => SecondScreen(_persName, _persLastName, _persPatronymic, _persSex, _persAge)));
+            builder: (context) => SecondScreen(_locationName, _description)));
   }
 
   void hideKeyboard() {
     SystemChannels.textInput.invokeMethod('TextInput.hide');
   }
-
 }
 
 class SecondScreen extends StatelessWidget {
 
-  // Character's properties
-  late String _persName = '';
-  late String _persLastName = '';
-  late String _persPatronymic = '';
-  late String _persSex = '';
-  late int _persAge = 0;
+  // Story's properties
+  late String _locationName = '';
+  late String _description = '';
 
-  SecondScreen(String persName, String persLastName, String persPatronymic, bool persSex, int persAge) {
-    _persName = persName;
-    _persLastName = persLastName;
-    _persPatronymic = persPatronymic;
-    _persSex = (persSex == true ? 'Female' : 'Male');
-    _persAge = persAge;
+  SecondScreen(String locationName, String description) {
+    _locationName = locationName;
+    _description = description;
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Результаты"),
-      ),
+        appBar: AppBar(
+          title: Text("Результаты"),
+        ),
 
-      body: Column(
-        children: [
-          Text('Имя персонажа: $_persName'),
-          Divider(),
-          Text('Фамилия персонажа: $_persLastName'),
-          Divider(),
-          Text('Отчество персонажа: $_persPatronymic'),
-          Divider(),
-          Text('Пол персонажа: $_persSex'),
-          Divider(),
-          Text('Возраст персонажа: $_persAge'),
-        ],
-      )
-
+        body: Column(
+          children: [
+            Text('Название локации: $_locationName'),
+            Divider(),
+            Text('Описание локации: $_description'),
+            Divider(),
+          ],
+        )
     );
   }
-
 }
+

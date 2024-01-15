@@ -1,0 +1,27 @@
+{
+  "stories": [
+    {
+      "id": 0,
+      "title": "How I spent the summer",
+      "genre": "Narrative",
+      "characters": [
+        {
+          "charID": 0
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "title": "Stranger things",
+      "genre": "Horror",
+      "characters": [
+        {
+          "charID": 0
+        },
+        {
+          "charID": 1
+        }
+      ]
+    }
+  ]
+}

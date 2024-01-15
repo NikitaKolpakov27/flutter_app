@@ -1,0 +1,14 @@
+{
+  "locations": [
+    {
+      "id": 0,
+      "location_name": "The Grand Canyon",
+      "description": "Massive open natural landscape"
+    },
+    {
+      "id": 1,
+      "location_name": "Baikal Lake",
+      "description": "Huge and purest lake in the World"
+    }
+  ]
+}

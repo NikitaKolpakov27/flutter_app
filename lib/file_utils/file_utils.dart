@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:path_provider/path_provider.dart';
-import '../user.dart';
+import '../user/user.dart';
 
 Future<String> get _usersPath async {
   final directory = await getTemporaryDirectory();

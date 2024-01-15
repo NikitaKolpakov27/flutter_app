@@ -1,6 +1,9 @@
 import 'dart:convert';
 import 'dart:io';
-import 'character/personality.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/services.dart';
+
+import 'personality.dart';
 
 void main() {
   // var res = getAllChars();
@@ -46,10 +49,10 @@ getInfoByID(id) {
   return charData;
 }
 
-getAllChars() {
-  File file = File("./assets/perses.json");
+getAllChars() async {
+  WidgetsFlutterBinding.ensureInitialized();
 
-  final data = file.readAsStringSync();
+  final String data = await rootBundle.loadString('assets/perses.json');
   var decoded = json.decode(data);
   var chars = decoded["perses"] as List;
 

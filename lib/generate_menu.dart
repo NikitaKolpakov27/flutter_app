@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'new_character.dart';
-import 'new_location.dart';
-import 'new_story.dart';
+import 'character/new_character.dart';
+import 'locations/new_location.dart';
+import 'story/new_story.dart';
 
 class GenerateMenu extends StatelessWidget {
   String _name = '';
@@ -117,7 +117,7 @@ class GenerateMenu extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => CreateNewLocation(),
+                          builder: (context) => CreateNewLocation(_name),
                         ),
                       );
                     },
@@ -143,7 +143,7 @@ class GenerateMenu extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => CreateNewStory(),
+                          builder: (context) => CreateNewStory(_name),
                         ),
                       );
                     },
