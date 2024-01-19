@@ -47,111 +47,6 @@ class CreateNewLocation extends StatelessWidget {
         ],
       ),
 
-      drawer: Drawer(
-        child: Column(
-          children: [
-            Container(
-              height: 150,
-              width: 300,
-              color: Colors.blueAccent,
-              child: SizedBox(
-                  width: 300,
-                  height: 150,
-                  child: Row(
-                    children: [
-                      const Icon(
-                        Icons.account_circle_sharp,
-                        color: Colors.greenAccent,
-                        size: 75,
-                      ),
-                      Text(
-                        "Здравствуйте, $_name",
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontStyle: FontStyle.italic,
-                          fontSize: 20.0,
-                        ),
-                      ),
-                    ],
-                  )
-              ),
-            ),
-            const Divider(),
-
-            SizedBox(
-              height: 500,
-              width: 250,
-              child: ListView(
-                scrollDirection: Axis.vertical,
-                children: [
-                  InkWell(
-                    onTap: () {
-                    },
-                    child: SizedBox(
-                      height: 150,
-                      width: 150,
-                      child: Container(
-                        height: 150,
-                        width: 150,
-                        color: Colors.indigo,
-                        child: const Center(child: Text(
-                          'Персонажи',
-                          style: TextStyle(
-                              fontSize: 25.0
-                          ),
-                        ),),
-                      ),
-                    ),
-                  ),
-                  const Divider(),
-
-                  InkWell(
-                    onTap: () {
-                    },
-                    child: SizedBox(
-                      height: 150,
-                      width: 150,
-                      child: Container(
-                        height: 150,
-                        width: 150,
-                        color: Colors.indigo,
-                        child: const Center(child: Text(
-                          'Истории',
-                          style: TextStyle(
-                              fontSize: 25.0
-                          ),
-                        ),),
-                      ),
-                    ),
-                  ),
-                  const Divider(),
-
-                  InkWell(
-                    onTap: () {
-                    },
-                    child: SizedBox(
-                      height: 150,
-                      width: 150,
-                      child: Container(
-                        height: 150,
-                        width: 150,
-                        color: Colors.indigo,
-                        child: const Center(child: Text(
-                          'Локации',
-                          style: TextStyle(
-                              fontSize: 25.0
-                          ),
-                        ),),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            )
-          ],
-        ),
-      ),
-
       body: Center(
         child: Form(
           key: formKeyLocation,
@@ -223,7 +118,7 @@ class CreateNewLocation extends StatelessWidget {
     Navigator.push(
         _context,
         MaterialPageRoute(
-            builder: (context) => SecondScreen(_locationName, _description)));
+            builder: (context) => LocationView(_locationID, _locationName, _description)));
   }
 
   void hideKeyboard() {
@@ -231,13 +126,15 @@ class CreateNewLocation extends StatelessWidget {
   }
 }
 
-class SecondScreen extends StatelessWidget {
+class LocationView extends StatelessWidget {
 
   // Story's properties
+  late int _locationID = 0;
   late String _locationName = '';
   late String _description = '';
 
-  SecondScreen(String locationName, String description) {
+  LocationView(int locationID, String locationName, String description) {
+    _locationID = locationID;
     _locationName = locationName;
     _description = description;
   }

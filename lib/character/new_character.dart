@@ -5,14 +5,6 @@ import 'package:test_flutter/character/pers.dart';
 import 'package:test_flutter/character/personality.dart';
 
 class CreateNewCharacter extends StatelessWidget {
-  // CreateNewCharacter({super.key});
-
-  late String _name = '';
-  // String get name => _name;
-
-  CreateNewCharacter(String name) {
-    _name = name;
-  }
 
   // This widget is the root of your application.
   @override
@@ -47,6 +39,8 @@ class _CreateNewCharacter extends State<NewCharacter> {
   late String selectedMBTI = 'ISTJ';
   late String selectedTemper = 'CHOLERIC';
   late Personality _personality;
+
+  bool isFavorite = false;
 
   // _CreateNewCharacter(String name) {
   //   _name = name;
@@ -83,111 +77,6 @@ class _CreateNewCharacter extends State<NewCharacter> {
               label: "Избранное"
           )
         ],
-      ),
-
-      drawer: Drawer(
-        child: Column(
-          children: [
-            Container(
-              height: 150,
-              width: 300,
-              color: Colors.blueAccent,
-              child: SizedBox(
-                  width: 300,
-                  height: 150,
-                  child: Row(
-                    children: [
-                      const Icon(
-                        Icons.account_circle_sharp,
-                        color: Colors.greenAccent,
-                        size: 75,
-                      ),
-                      Text(
-                        "Здравствуйте, $_name",
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontStyle: FontStyle.italic,
-                          fontSize: 20.0,
-                        ),
-                      ),
-                    ],
-                  )
-              ),
-            ),
-            const Divider(),
-
-            SizedBox(
-              height: 500,
-              width: 250,
-              child: ListView(
-                scrollDirection: Axis.vertical,
-                children: [
-                  InkWell(
-                    onTap: () {
-                    },
-                    child: SizedBox(
-                      height: 150,
-                      width: 150,
-                      child: Container(
-                        height: 150,
-                        width: 150,
-                        color: Colors.indigo,
-                        child: const Center(child: Text(
-                          'Персонажи',
-                          style: TextStyle(
-                              fontSize: 25.0
-                          ),
-                        ),),
-                      ),
-                    ),
-                  ),
-                  const Divider(),
-
-                  InkWell(
-                    onTap: () {
-                    },
-                    child: SizedBox(
-                      height: 150,
-                      width: 150,
-                      child: Container(
-                        height: 150,
-                        width: 150,
-                        color: Colors.indigo,
-                        child: const Center(child: Text(
-                          'Истории',
-                          style: TextStyle(
-                              fontSize: 25.0
-                          ),
-                        ),),
-                      ),
-                    ),
-                  ),
-                  const Divider(),
-
-                  InkWell(
-                    onTap: () {
-                    },
-                    child: SizedBox(
-                      height: 150,
-                      width: 150,
-                      child: Container(
-                        height: 150,
-                        width: 150,
-                        color: Colors.indigo,
-                        child: const Center(child: Text(
-                          'Локации',
-                          style: TextStyle(
-                              fontSize: 25.0
-                          ),
-                        ),),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            )
-          ],
-        ),
       ),
 
       body: Center(

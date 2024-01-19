@@ -1,7 +1,10 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:test_flutter/character/personality.dart';
 import 'dart:convert';
+
+import 'new_character.dart';
 
 class JsonChar extends StatefulWidget {
   const JsonChar({Key? key}) : super(key: key);
@@ -45,12 +48,32 @@ class _JsonHomeState extends State<JsonChar> {
               child: ListView.builder(
                   itemCount: _chars.length,
                   itemBuilder: (context, index) {
-                    return Card(
-                      margin: const EdgeInsets.all(10),
-                      child: ListTile(
-                        leading: Text(_chars[index]["id"].toString()),
-                        title: Text(_chars[index]["name"] + " " + _chars[index]["lastname"] + " " + _chars[index]["patronymic"]),
-                        subtitle: Text("Age: ${_chars[index]["age"]}"),
+                    return InkWell(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => CharacterView(
+                                _chars[index]["id"],
+                                _chars[index]["name"],
+                                _chars[index]["lastname"],
+                                _chars[index]["patronymic"],
+                                _chars[index]["sex"],
+                                _chars[index]["age"],
+                                Personality(_chars[index]["id"],
+                                    _chars[index]["personality"][0]["mbti"],
+                                    _chars[index]["personality"][0]["temper"])
+                            ),
+                          ),
+                        );
+                      },
+                      child: Card(
+                        margin: const EdgeInsets.all(10),
+                        child: ListTile(
+                          leading: Text(_chars[index]["id"].toString()),
+                          title: Text(_chars[index]["name"] + " " + _chars[index]["lastname"] + " " + _chars[index]["patronymic"]),
+                          subtitle: Text("Age: ${_chars[index]["age"]}"),
+                        ),
                       ),
                     );
                   }),

@@ -424,7 +424,7 @@ class _AddMenu extends State<AddMenu> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => CreateNewCharacter(_name),
+                            builder: (context) => NewCharacter(),
                         ),
                     );
                   },

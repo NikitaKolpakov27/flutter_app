@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'dart:convert';
 
+import 'package:test_flutter/locations/new_location.dart';
+
 class JsonLocation extends StatefulWidget {
   const JsonLocation({Key? key}) : super(key: key);
 
@@ -45,12 +47,26 @@ class _JsonHomeState extends State<JsonLocation> {
               child: ListView.builder(
                   itemCount: _locations.length,
                   itemBuilder: (context, index) {
-                    return Card(
-                      margin: const EdgeInsets.all(10),
-                      child: ListTile(
-                        leading: Text(_locations[index]["id"].toString()),
-                        title: Text(_locations[index]["location_name"]),
-                        subtitle: Text(_locations[index]["description"]),
+                    return InkWell(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => LocationView(
+                                _locations[index]["id"],
+                                _locations[index]["location_name"],
+                                _locations[index]["description"]
+                            ),
+                          ),
+                        );
+                      },
+                      child: Card(
+                        margin: const EdgeInsets.all(10),
+                        child: ListTile(
+                          leading: Text(_locations[index]["id"].toString()),
+                          title: Text(_locations[index]["location_name"]),
+                          subtitle: Text(_locations[index]["description"]),
+                        ),
                       ),
                     );
                   }),
