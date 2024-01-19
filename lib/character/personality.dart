@@ -1,10 +1,17 @@
 class Personality {
-  final int _charID;
-  final String mbti;
-  final String temper;
+  int _charID;
+  String mbti;
+  String temper;
 
   Personality(this._charID, this.mbti, this.temper);
 
+  set setMBTI(String val) => mbti = val;
+  set setTemper(String val) => temper = val;
+  set setID(int val) => _charID = val;
+
+  String get getMBTI => mbti;
+  String get getTemper => temper;
+  int get getID => _charID;
 
   factory Personality.fromJson(Map<String, Object?> jsonMap) {
     return Personality(

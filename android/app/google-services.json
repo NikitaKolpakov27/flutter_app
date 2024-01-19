@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "420289599985",
+    "project_id": "writersflutter",
+    "storage_bucket": "writersflutter.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:420289599985:android:fd9221f21110463ca70c50",
+        "android_client_info": {
+          "package_name": "com.example.test_flutter"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC7H3JUJGOuFO8G8tzzo1g528UCG48J4-w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

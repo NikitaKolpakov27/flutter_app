@@ -83,7 +83,7 @@ createNewChar(id, name, lastname, patronymic, sex, age, personality) {
   final new_entry = jsonDecode(encoded); // Новый персонаж без кавычек
 
   // Запись в БД
-  File file = File("./lib/assets/perses.json");
+  File file = File("./assets/perses.json");
   final data = file.readAsStringSync();
 
   var decoded = json.decode(data);

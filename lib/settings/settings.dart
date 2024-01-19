@@ -1,5 +1,4 @@
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
 
 
@@ -203,7 +202,6 @@ class _SettingsState extends State<Settings> {
                   },
                 ),
               ),
-
               ElevatedButton(
                 style: ElevatedButton.styleFrom(textStyle: current_style),
                 onPressed: () {

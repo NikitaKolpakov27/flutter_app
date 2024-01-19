@@ -2,8 +2,36 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:test_flutter/character/pers.dart';
+import 'package:test_flutter/character/personality.dart';
 
 class CreateNewCharacter extends StatelessWidget {
+  // CreateNewCharacter({super.key});
+
+  late String _name = '';
+  // String get name => _name;
+
+  CreateNewCharacter(String name) {
+    _name = name;
+  }
+
+  // This widget is the root of your application.
+  @override
+  Widget build(BuildContext context) {
+    return const MaterialApp(
+      home: NewCharacter(),
+      debugShowCheckedModeBanner: false,
+    );
+  }
+}
+
+class NewCharacter extends StatefulWidget {
+  const NewCharacter({super.key});
+
+  @override
+  State<NewCharacter> createState() => _CreateNewCharacter();
+}
+
+class _CreateNewCharacter extends State<NewCharacter> {
   final formKeyPers = GlobalKey<FormState>();
   late BuildContext _context;
   late String _name = '';
@@ -16,9 +44,13 @@ class CreateNewCharacter extends StatelessWidget {
   late bool _persSex = false;
   late int _persAge = 0;
 
-  CreateNewCharacter(String name) {
-    _name = name;
-  }
+  late String selectedMBTI = 'ISTJ';
+  late String selectedTemper = 'CHOLERIC';
+  late Personality _personality;
+
+  // _CreateNewCharacter(String name) {
+  //   _name = name;
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -203,17 +235,51 @@ class CreateNewCharacter extends StatelessWidget {
                       : null,
                 ),
               ),
-              Container(
-                width: 400.0,
-                padding: const EdgeInsets.only(top: 10.0),
-                child: CheckboxListTile(
-                  title: const Text("Sex"),
-                  value: _persSex,
-                  onChanged: (bool? value) {
-                    _persSex = value!;
-                  },
-                )
+
+              Row(
+                children: [
+                  const Flexible(
+                    child: Text(
+                      'Пол:',
+                      style: TextStyle(fontSize: 20.0, color: Colors.black),
+                    ),
+                  ),
+                  // const Divider(),
+                  Flexible(
+                    child: ListTile(
+                      title: const Text(
+                        'Мужчина', style: TextStyle(fontSize: 15.0),
+                      ),
+                      leading: Radio<bool>(
+                        value: true,
+                        groupValue: _persSex,
+                        onChanged: (bool? value) {
+                          setState(() {
+                            _persSex = value!;
+                          });
+                        },
+                      ),
+                    ),
+                  ),
+                  Flexible(
+                    child: ListTile(
+                      title: const Text(
+                        'Женщина', style: TextStyle(fontSize: 15.0),
+                      ),
+                      leading: Radio<bool>(
+                        value: false,
+                        groupValue: _persSex,
+                        onChanged: (bool? value) {
+                          setState(() {
+                            _persSex = value!;
+                          });
+                        },
+                      ),
+                    ),
+                  ),
+                ],
               ),
+
               Container(
                 width: 400.0,
                 padding: const EdgeInsets.only(top: 10.0),
@@ -221,12 +287,62 @@ class CreateNewCharacter extends StatelessWidget {
                   decoration: const InputDecoration(labelText: "Age"),
                   keyboardType: TextInputType.number,
                   onSaved: (val) => _persAge = int.parse(val!),
-                  validator: (val) =>
-                  int.parse(val!) <= 0
-                      ? 'Too small age'
-                      : null,
+                  validator: (val) {
+                    try {
+                      var age = int.parse(val!);
+
+                      if (age <= 0) {
+                        return 'Too small age';
+                      }
+                    } catch (e) {
+                      return 'It\'s not a number!';
+                    }
+
+                    return null;
+                  }
                 ),
               ),
+
+              const Flexible(
+                  child: Text(
+                    'Личность:',
+                    style: TextStyle(fontSize: 15.0),
+                  )
+              ),
+
+              Flexible(
+                child: Container(
+                  width: 400.0,
+                  padding: const EdgeInsets.only(top: 10.0),
+                  child: DropdownButton(
+                      value: selectedMBTI,
+                      items: dropdownMBTI,
+                      onChanged: (String? val){
+                        setState(() {
+                          selectedMBTI = val!;
+                        });
+                      },
+                  ),
+                ),
+              ),
+
+              Flexible(
+                child: Container(
+                  width: 400.0,
+                  padding: const EdgeInsets.only(top: 10.0),
+                  child: DropdownButton(
+                    value: selectedTemper,
+                    items: dropdownTempers,
+                    onChanged: (String? val){
+                      setState(() {
+                        selectedTemper = val!;
+                      });
+                    },
+                  ),
+                ),
+              ),
+
+
               Padding(
                 padding: const EdgeInsets.only(top: 25.0),
                 child: MaterialButton(
@@ -249,6 +365,41 @@ class CreateNewCharacter extends StatelessWidget {
     );
   }
 
+  List<DropdownMenuItem<String>> get dropdownMBTI{
+    List<DropdownMenuItem<String>> menuItems = [
+      const DropdownMenuItem(value: "ISTJ", child: Text("ISTJ")),
+      const DropdownMenuItem(value: "ISFJ", child: Text("ISFJ")),
+      const DropdownMenuItem(value: "INFJ", child: Text("INFJ")),
+      const DropdownMenuItem(value: "INTJ", child: Text("INTJ")),
+
+      const DropdownMenuItem(value: "ISTP", child: Text("ISTP")),
+      const DropdownMenuItem(value: "ISFP", child: Text("ISFP")),
+      const DropdownMenuItem(value: "INFP", child: Text("INFP")),
+      const DropdownMenuItem(value: "INTP", child: Text("INTP")),
+
+      const DropdownMenuItem(value: "ESTP", child: Text("ESTP")),
+      const DropdownMenuItem(value: "ESFP", child: Text("ESFP")),
+      const DropdownMenuItem(value: "ENFP", child: Text("ENFP")),
+      const DropdownMenuItem(value: "ENTP", child: Text("ENTP")),
+
+      const DropdownMenuItem(value: "ESTJ", child: Text("ESTJ")),
+      const DropdownMenuItem(value: "ESFJ", child: Text("ESFJ")),
+      const DropdownMenuItem(value: "ENFJ", child: Text("ENFJ")),
+      const DropdownMenuItem(value: "ENTJ", child: Text("ENTJ")),
+    ];
+    return menuItems;
+  }
+
+  List<DropdownMenuItem<String>> get dropdownTempers{
+    List<DropdownMenuItem<String>> menuItems = [
+      const DropdownMenuItem(value: "CHOLERIC", child: Text("CHOLERIC")),
+      const DropdownMenuItem(value: "MELANCHOLIC", child: Text("MELANCHOLIC")),
+      const DropdownMenuItem(value: "PHLEGMATIC", child: Text("PHLEGMATIC")),
+      const DropdownMenuItem(value: "SANGUINE", child: Text("SANGUINE")),
+    ];
+    return menuItems;
+  }
+
   void submitPers() {
     final form = formKeyPers.currentState;
     if (form!.validate()) {
@@ -257,58 +408,190 @@ class CreateNewCharacter extends StatelessWidget {
     }
   }
 
-  void performLogin() {
+  void performLogin() async {
     hideKeyboard();
-    // var chars = getAllChars();
-    // _persID = chars.length;
-    // createNewChar(_persID, _persName, _persLastName, _persPatronymic, _persSex, _persAge);
+
+    _personality = Personality(_persID, selectedMBTI, selectedTemper);
+
+    // var chars = await getAllChars();
+    _persID = 12;
+    createNewChar(_persID, _persName, _persLastName, _persPatronymic, _persSex, _persAge, _personality);
+
     Navigator.push(
         _context,
         MaterialPageRoute(
-            builder: (context) => SecondScreen(_persName, _persLastName, _persPatronymic, _persSex, _persAge)));
+            builder: (context) => CharacterView(_persID, _persName, _persLastName, _persPatronymic, _persSex, _persAge, _personality)));
   }
 
   void hideKeyboard() {
     SystemChannels.textInput.invokeMethod('TextInput.hide');
   }
-
 }
 
-class SecondScreen extends StatelessWidget {
+class CharacterView extends StatelessWidget {
 
   // Character's properties
+  late int _persID;
   late String _persName = '';
   late String _persLastName = '';
   late String _persPatronymic = '';
   late String _persSex = '';
   late int _persAge = 0;
+  late Personality _personality;
 
-  SecondScreen(String persName, String persLastName, String persPatronymic, bool persSex, int persAge) {
+  CharacterView(int persID, String persName, String persLastName, String persPatronymic, bool persSex, int persAge, Personality personality) {
+    _persID = persID;
     _persName = persName;
     _persLastName = persLastName;
     _persPatronymic = persPatronymic;
-    _persSex = (persSex == true ? 'Female' : 'Male');
+    _persSex = (persSex == true ? 'Male' : 'Female');
     _persAge = persAge;
+    _personality = personality;
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Результаты"),
+        title: const Text(
+            'Созданный персонаж',
+            style: TextStyle(fontSize: 25.0),
+          ),
       ),
 
       body: Column(
         children: [
-          Text('Имя персонажа: $_persName'),
+
+          Text(
+            'Персонаж №$_persID',
+            style: const TextStyle(fontSize: 25.0, fontWeight: FontWeight.bold),
+          ),
+          const Divider(),
+
+          Row(
+            children: [
+                const Flexible(
+                    child: Text(
+                      'Имя персонажа:',
+                      style: TextStyle(fontSize: 17.0, color: Colors.indigo),
+                    ),
+                ),
+                Flexible(
+                    child: Text(
+                      ' $_persName',
+                      style: TextStyle(fontSize: 17.0),
+                    ),
+                  ),
+            ],
+          ),
           Divider(),
-          Text('Фамилия персонажа: $_persLastName'),
+
+          Row(
+            children: [
+              const Flexible(
+                  child: Text(
+                    'Фамилия персонажа:',
+                    style: TextStyle(fontSize: 17.0, color: Colors.indigo),
+                  ),
+                ),
+              Flexible(
+                child: Text(
+                  ' $_persLastName',
+                  style: TextStyle(fontSize: 17.0),
+                ),
+              ),
+            ],
+          ),
           Divider(),
-          Text('Отчество персонажа: $_persPatronymic'),
+
+          Row(
+            children: [
+              const Flexible(
+                child: Text(
+                  'Отчество персонажа:',
+                  style: TextStyle(fontSize: 17.0, color: Colors.indigo),
+                ),
+              ),
+              Flexible(
+                child: Text(
+                  ' $_persPatronymic',
+                  style: TextStyle(fontSize: 17.0),
+                ),
+              ),
+            ],
+          ),
           Divider(),
-          Text('Пол персонажа: $_persSex'),
+
+          Row(
+            children: [
+              const Flexible(
+                child: Text(
+                  'Пол персонажа:',
+                  style: TextStyle(fontSize: 17.0, color: Colors.indigo),
+                ),
+              ),
+              Flexible(
+                child: Text(
+                  ' $_persSex',
+                  style: TextStyle(fontSize: 17.0),
+                ),
+              ),
+            ],
+          ),
           Divider(),
-          Text('Возраст персонажа: $_persAge'),
+
+          Row(
+            children: [
+              const Flexible(
+                child: Text(
+                  'Возраст персонажа:',
+                  style: TextStyle(fontSize: 17.0, color: Colors.indigo),
+                ),
+              ),
+              Flexible(
+                child: Text(
+                  ' $_persAge',
+                  style: TextStyle(fontSize: 17.0),
+                ),
+              ),
+            ],
+          ),
+          Divider(),
+
+          Row(
+            children: [
+              const Flexible(
+                child: Text(
+                  'Тип личности по MBTI:',
+                  style: TextStyle(fontSize: 17.0, color: Colors.indigo),
+                ),
+              ),
+              Flexible(
+                child: Text(
+                  ' ${_personality.getMBTI}',
+                  style: TextStyle(fontSize: 17.0),
+                ),
+              ),
+            ],
+          ),
+          Divider(),
+
+          Row(
+            children: [
+              const Flexible(
+                child: Text(
+                  'Характер персонажа:',
+                  style: TextStyle(fontSize: 17.0, color: Colors.indigo),
+                ),
+              ),
+              Flexible(
+                child: Text(
+                  ' ${_personality.getTemper}',
+                  style: TextStyle(fontSize: 17.0),
+                ),
+              ),
+            ],
+          ),
         ],
       )
 
