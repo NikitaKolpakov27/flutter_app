@@ -6,6 +6,7 @@ import 'package:test_flutter/file_utils/file_utils.dart';
 import 'package:test_flutter/character/pers.dart';
 import 'package:test_flutter/character/perses_json.dart';
 import 'package:test_flutter/locations/locations_json.dart';
+import 'package:test_flutter/settings/settings.dart';
 import 'package:test_flutter/story/stories_json.dart';
 import 'package:test_flutter/user/user.dart';
 import 'package:test_flutter/user/users_json.dart';
@@ -31,8 +32,8 @@ class Registration extends StatelessWidget {
   late String _password;
   late String _email;
   late String _confirmPassword;
-  final _sizeTextBlack = const TextStyle(fontSize: 20.0, color: Colors.black);
-  final _sizeTextWhite = const TextStyle(fontSize: 20.0, color: Colors.white);
+  TextStyle sizeTextBlack = const TextStyle(fontSize: 20.0, color: Colors.black);
+  TextStyle _sizeTextWhite = const TextStyle(fontSize: 20.0, color: Colors.white);
   final formKey = GlobalKey<FormState>();
   late BuildContext _context;
 
@@ -57,7 +58,7 @@ class Registration extends StatelessWidget {
                       child: TextFormField(
                         decoration: const InputDecoration(labelText: "E-mail"),
                         keyboardType: TextInputType.emailAddress,
-                        style: _sizeTextBlack,
+                        style: sizeTextBlack,
                         onSaved: (val) => _email = val!,
                         onChanged: (val) => _email = val,
                         validator: (val) => emailValidator(_email)
@@ -68,7 +69,7 @@ class Registration extends StatelessWidget {
                       child: TextFormField(
                         decoration: const InputDecoration(labelText: "Login"),
                         keyboardType: TextInputType.name,
-                        style: _sizeTextBlack,
+                        style: sizeTextBlack,
                         onSaved: (val) => _name = val!,
                         onChanged: (val) => _name = val,
                         validator: (val) =>
@@ -84,7 +85,7 @@ class Registration extends StatelessWidget {
                         decoration: const InputDecoration(labelText: "Password"),
                         keyboardType: TextInputType.visiblePassword,
                         obscureText: true,
-                        style: _sizeTextBlack,
+                        style: sizeTextBlack,
                         onSaved: (val) => _password = val!,
                         onChanged: (val) => _password = val,
                         validator: (val) =>
@@ -100,7 +101,7 @@ class Registration extends StatelessWidget {
                         decoration: const InputDecoration(labelText: "Confirm Password"),
                         keyboardType: TextInputType.visiblePassword,
                         obscureText: true,
-                        style: _sizeTextBlack,
+                        style: sizeTextBlack,
                         onSaved: (val) => _confirmPassword = val!,
                         validator: (val) {
                           if (val! != _password) {
@@ -129,7 +130,7 @@ class Registration extends StatelessWidget {
                       child: RichText(
                         text: TextSpan(
                           text: "Already have an account? ",
-                          style: _sizeTextBlack,
+                          style: sizeTextBlack,
                           children: const <TextSpan>[
                             TextSpan(
                               text: "Sign in",
@@ -188,7 +189,8 @@ class Registration extends StatelessWidget {
     Navigator.push(
         _context,
         MaterialPageRoute(
-            builder: (context) => AddMenu(_name, _email, _password)));
+            // builder: (context) => AddMenu(_name, _email, _password)));
+              builder: (context) => AddMenu()));
   }
 
   void hideKeyboard() {
@@ -197,24 +199,31 @@ class Registration extends StatelessWidget {
 
 }
 
-class AddMenu extends StatelessWidget {
+class AddMenu extends StatefulWidget {
+  @override
+  _AddMenu createState() {
+    return _AddMenu();
+  }
+}
+
+class _AddMenu extends State<AddMenu> {
   String _name = '';
   String _password = '';
   String _email = '';
 
-  final _sizeTextBlack = const TextStyle(fontSize: 20.0, color: Colors.black);
+  TextStyle _sizeTextBlack = const TextStyle(fontSize: 20.0, color: Colors.black);
   final _sizeTitleDrawer = const TextStyle(fontSize: 30.0, fontStyle: FontStyle.italic, color: Colors.lightBlue);
 
-  AddMenu(String name, String email, String password) {
-    _name = name;
-    _password = password;
-    _email = email;
-  }
-
-  AddMenu.copy(AddMenu addMenu, {super.key}) {
-    _name = addMenu._name;
-    _password = addMenu._password;
-  }
+  // AddMenu(String name, String email, String password) {
+  //   _name = name;
+  //   _password = password;
+  //   _email = email;
+  // }
+  //
+  // AddMenu.copy(AddMenu addMenu, {super.key}) {
+  //   _name = addMenu._name;
+  //   _password = addMenu._password;
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -280,7 +289,7 @@ class AddMenu extends StatelessWidget {
               const Divider(),
 
               SizedBox(
-                height: 500,
+                height: 550,
                 width: 250,
                 child: ListView(
                   scrollDirection: Axis.vertical,
@@ -364,6 +373,37 @@ class AddMenu extends StatelessWidget {
                             ),
                       ),
                     ),
+
+                    const Divider(),
+
+                    InkWell(
+                      onTap: () async {
+                        var custom_style = await Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const Settings(),
+                          ),
+                        );
+                        setState(() {
+                          _sizeTextBlack = custom_style;
+                        });
+                      },
+                      child: SizedBox(
+                        height: 50,
+                        width: 50,
+                        child: Container(
+                          height: 50,
+                          width: 50,
+                          color: Colors.indigo,
+                          child: const Center(child: Text(
+                            'Настройки',
+                            style: TextStyle(
+                                fontSize: 10.0
+                            ),
+                          ),),
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               )
@@ -400,7 +440,7 @@ class AddMenu extends StatelessWidget {
                           height: 100,
                           width: 300,
                           margin: const EdgeInsets.all(20),
-                          child: const Center(child: Text('Создать нового персонажа'),),
+                          child: Center(child: Text('Создать нового персонажа', style: _sizeTextBlack,),),
                         ),
                       ],
                     ),

@@ -1,24 +1,21 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:test_flutter/main.dart';
 
 
 void main() {
-  runApp(MyApp());
+  runApp(Setting());
 }
 
 
-class MyApp extends StatelessWidget {
-  MyApp({super.key});
+class Setting extends StatelessWidget {
+  Setting({super.key});
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.pink,
-      ),
-      home: const Settings(),
+    return const MaterialApp(
+      home: Settings(),
       debugShowCheckedModeBanner: false,
     );
   }
@@ -51,6 +48,17 @@ class _SettingsState extends State<Settings> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
+      appBar: AppBar(
+        title: const Text(
+          "Настройки приложения",
+          style: TextStyle(
+              fontSize: 20.0,
+              color: Colors.white
+          ),
+        ),
+      ),
+
       body: Center(
 
         child: Column(
@@ -214,10 +222,11 @@ class _SettingsState extends State<Settings> {
                         fontWeight: selectedFontWeight
                     );
                     isPressed = !isPressed;
+                    Navigator.pop(context, current_style);
                   });
                 },
                 child: Text(
-                  'Press Here',
+                  'Применить',
                   style: current_style,
                 ),
               ),

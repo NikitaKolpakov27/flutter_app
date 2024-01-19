@@ -170,7 +170,8 @@ class LoginProcess extends StatelessWidget {
     Navigator.push(
         _context,
         MaterialPageRoute(
-            builder: (context) => AddMenu(_name, _email, _password)));
+            // builder: (context) => AddMenu(_name, _email, _password)));
+              builder: (context) => AddMenu()));
   }
 
   void hideKeyboard() {
