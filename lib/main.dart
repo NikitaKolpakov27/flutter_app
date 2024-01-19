@@ -211,7 +211,7 @@ class _AddMenu extends State<AddMenu> {
   String _password = '';
   String _email = '';
 
-  TextStyle _sizeTextBlack = const TextStyle(fontSize: 20.0, color: Colors.black);
+  TextStyle _current_style = const TextStyle(fontSize: 20.0, color: Colors.black);
   final _sizeTitleDrawer = const TextStyle(fontSize: 30.0, fontStyle: FontStyle.italic, color: Colors.lightBlue);
 
   // AddMenu(String name, String email, String password) {
@@ -385,7 +385,7 @@ class _AddMenu extends State<AddMenu> {
                           ),
                         );
                         setState(() {
-                          _sizeTextBlack = custom_style;
+                          _current_style = custom_style;
                         });
                       },
                       child: SizedBox(
@@ -440,7 +440,7 @@ class _AddMenu extends State<AddMenu> {
                           height: 100,
                           width: 300,
                           margin: const EdgeInsets.all(20),
-                          child: Center(child: Text('Создать нового персонажа', style: _sizeTextBlack,),),
+                          child: Center(child: Text('Создать нового персонажа', style: _current_style,),),
                         ),
                       ],
                     ),
@@ -469,7 +469,7 @@ class _AddMenu extends State<AddMenu> {
                             color: Colors.blue,
                           ),
                           margin: const EdgeInsets.all(20),
-                          child: const Center(child: Text('Создать новую локацию'),),
+                          child: Center(child: Text('Создать новую локацию', style: _current_style,),),
                         ),
                       ],
                     ),
@@ -498,7 +498,7 @@ class _AddMenu extends State<AddMenu> {
                             color: Colors.blue,
                           ),
                           margin: const EdgeInsets.all(20),
-                          child: const Center(child: Text('Создать новую историю'),),
+                          child: Center(child: Text('Создать новую историю', style: _current_style,),),
                         ),
                       ],
                     ),
