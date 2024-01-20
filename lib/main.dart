@@ -6,12 +6,14 @@ import 'package:test_flutter/file_utils/file_utils.dart';
 import 'package:test_flutter/character/pers.dart';
 import 'package:test_flutter/character/perses_json.dart';
 import 'package:test_flutter/locations/locations_json.dart';
+import 'package:test_flutter/notes/new_note.dart';
 import 'package:test_flutter/settings/settings.dart';
 import 'package:test_flutter/story/stories_json.dart';
 import 'package:test_flutter/user/user.dart';
 import 'package:test_flutter/user/users_json.dart';
 import 'character/new_character.dart';
 import 'locations/new_location.dart';
+import 'notes/notes_json.dart';
 import 'story/new_story.dart';
 import 'login.dart';
 
@@ -294,8 +296,12 @@ class _AddMenu extends State<AddMenu> {
                 child: ListView(
                   scrollDirection: Axis.vertical,
                   children: [
-                    InkWell(
-                      onTap: () {
+                    FilledButton(
+                      style: ButtonStyle(
+                        overlayColor: MaterialStateProperty.all(Colors.indigo),
+                        padding: MaterialStateProperty.all(const EdgeInsets.all(30)),
+                      ),
+                      onPressed: () {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -303,26 +309,16 @@ class _AddMenu extends State<AddMenu> {
                           ),
                         );
                       },
-                      child: SizedBox(
-                        height: 150,
-                        width: 150,
-                            child: Container(
-                              height: 150,
-                              width: 150,
-                              color: Colors.indigo,
-                              child: const Center(child: Text(
-                                  'Персонажи',
-                                   style: TextStyle(
-                                    fontSize: 25.0
-                                   ),
-                              ),),
-                            ),
-                      ),
+                      child: Center(child: Text('Персонажи', style: _current_style,),),
                     ),
                     const Divider(),
 
-                    InkWell(
-                      onTap: () {
+                    FilledButton(
+                      style: ButtonStyle(
+                        overlayColor: MaterialStateProperty.all(Colors.indigo),
+                        padding: MaterialStateProperty.all(const EdgeInsets.all(30)),
+                      ),
+                      onPressed: () {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -330,26 +326,17 @@ class _AddMenu extends State<AddMenu> {
                           ),
                         );
                       },
-                      child: SizedBox(
-                        height: 150,
-                        width: 150,
-                          child: Container(
-                              height: 150,
-                              width: 150,
-                              color: Colors.indigo,
-                              child: const Center(child: Text(
-                                  'Истории',
-                                   style: TextStyle(
-                                    fontSize: 25.0
-                                  ),
-                              ),),
-                            ),
-                      ),
+                      child: Center(child: Text('Истории', style: _current_style,),),
                     ),
                     const Divider(),
 
-                    InkWell(
-                      onTap: () {
+
+                    FilledButton(
+                      style: ButtonStyle(
+                        overlayColor: MaterialStateProperty.all(Colors.indigo),
+                        padding: MaterialStateProperty.all(const EdgeInsets.all(30)),
+                      ),
+                      onPressed: () {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -357,27 +344,37 @@ class _AddMenu extends State<AddMenu> {
                           ),
                         );
                       },
-                      child: SizedBox(
-                        height: 150,
-                        width: 150,
-                        child: Container(
-                              height: 150,
-                              width: 150,
-                              color: Colors.indigo,
-                              child: const Center(child: Text(
-                                  'Локации',
-                                  style: TextStyle(
-                                    fontSize: 25.0
-                                  ),
-                              ),),
-                            ),
-                      ),
+                      child: Center(child: Text('Локации', style: _current_style,),),
                     ),
-
+                    const Divider(),
                     const Divider(),
 
-                    InkWell(
-                      onTap: () async {
+                    FilledButton(
+                      style: ButtonStyle(
+                        overlayColor: MaterialStateProperty.all(Colors.indigo),
+                        padding: MaterialStateProperty.all(const EdgeInsets.all(30)),
+                      ),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const JsonNote(),
+                          ),
+                        );
+                      },
+                      child: Center(child: Text('Заметки', style: _current_style,),),
+                    ),
+                    const Divider(),
+                    const Divider(),
+                    const Divider(),
+                    const Divider(),
+
+                    FilledButton(
+                      style: ButtonStyle(
+                        overlayColor: MaterialStateProperty.all(Colors.indigo),
+                        padding: MaterialStateProperty.all(const EdgeInsets.all(30)),
+                      ),
+                      onPressed: () async {
                         var custom_style = await Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -388,22 +385,9 @@ class _AddMenu extends State<AddMenu> {
                           _current_style = custom_style;
                         });
                       },
-                      child: SizedBox(
-                        height: 50,
-                        width: 50,
-                        child: Container(
-                          height: 50,
-                          width: 50,
-                          color: Colors.indigo,
-                          child: const Center(child: Text(
-                            'Настройки',
-                            style: TextStyle(
-                                fontSize: 10.0
-                            ),
-                          ),),
-                        ),
-                      ),
+                      child: Center(child: Text('Настройки', style: _current_style,),),
                     ),
+                    const Divider(),
                   ],
                 ),
               )
@@ -418,6 +402,13 @@ class _AddMenu extends State<AddMenu> {
           child: Column(
             children: [
               const Divider(),
+
+              Text(
+                'Главное меню',
+                style: TextStyle(fontSize: 35.0, color: Colors.deepPurple.shade500, fontFamily: 'Arial'),
+              ),
+              const Divider(),
+
               FilledButton(
                 style: ButtonStyle(
                   padding: MaterialStateProperty.all(const EdgeInsets.all(30)),
@@ -464,6 +455,22 @@ class _AddMenu extends State<AddMenu> {
                     );
                   },
                   child: Center(child: Text('Создать новую историю', style: _current_style,),),
+              ),
+              const Divider(),
+
+              FilledButton(
+                style: ButtonStyle(
+                  padding: MaterialStateProperty.all(const EdgeInsets.all(30)),
+                ),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => CreateNewNote(_name),
+                    ),
+                  );
+                },
+                child: Center(child: Text('Новая заметка', style: _current_style,),),
               ),
             ],
           )
