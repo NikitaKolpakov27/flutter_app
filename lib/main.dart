@@ -211,7 +211,7 @@ class _AddMenu extends State<AddMenu> {
   String _password = '';
   String _email = '';
 
-  TextStyle _current_style = const TextStyle(fontSize: 20.0, color: Colors.black);
+  TextStyle _current_style = const TextStyle(fontSize: 15.0, color: Colors.white);
   final _sizeTitleDrawer = const TextStyle(fontSize: 30.0, fontStyle: FontStyle.italic, color: Colors.lightBlue);
 
   // AddMenu(String name, String email, String password) {
@@ -413,103 +413,59 @@ class _AddMenu extends State<AddMenu> {
 
 
         body: SizedBox(
-          height: 500,
+          height: double.infinity,
           width: double.infinity,
-          child: SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Column(
-              children: [
-                const SizedBox(height: 20,),
-                InkWell(
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => NewCharacter(),
-                        ),
-                    );
-                  },
-                  child: SizedBox(
-                    height: 150,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20.0),
-                        color: Colors.blue,
-                      ),
-                      margin: const EdgeInsets.all(20),
-                      child: Center(child: Text('Создать нового персонажа', style: _current_style,),),
-                    ),
-                  ),
+          child: Column(
+            children: [
+              const Divider(),
+              FilledButton(
+                style: ButtonStyle(
+                  padding: MaterialStateProperty.all(const EdgeInsets.all(30)),
                 ),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => NewCharacter(),
+                    ),
+                  );
+                },
+                child: Center(child: Text('Создать нового персонажа', style: _current_style,),),
+              ),
+              const Divider(),
 
 
-                InkWell(
-                  onTap: () {
+              FilledButton(
+                style: ButtonStyle(
+                  padding: MaterialStateProperty.all(const EdgeInsets.all(30)),
+                ),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => CreateNewLocation(_name),
+                    ),
+                  );
+                },
+                child: Center(child: Text('Создать новую локацию', style: _current_style,),),
+              ),
+              const Divider(),
+
+              FilledButton(
+                  style: ButtonStyle(
+                    padding: MaterialStateProperty.all(const EdgeInsets.all(30)),
+                  ),
+                  onPressed: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => CreateNewLocation(_name),
+                        builder: (context) => CreateNewStory(_name),
                       ),
                     );
                   },
-                  child: SizedBox(
-                    height: 150,
-                    child: Column(
-                      children: <Widget>[
-                        Container(
-                          height: 100,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20.0),
-                            color: Colors.blue,
-                          ),
-                          margin: const EdgeInsets.all(20),
-                          child: Center(child: Text('Создать новую локацию', style: _current_style,),),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-
-                FilledButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => CreateNewStory(_name),
-                        ),
-                      );
-                    },
-                    child: Center(child: Text('Создать новую историю', style: _current_style,),),
-                ),
-                // InkWell(
-                //   onTap: () {
-                //     Navigator.push(
-                //       context,
-                //       MaterialPageRoute(
-                //         builder: (context) => CreateNewStory(_name),
-                //       ),
-                //     );
-                //   },
-                //   child: SizedBox(
-                //     height: 150,
-                //     child: Column(
-                //       children: <Widget>[
-                //         Container(
-                //           height: 100,
-                //           width: 300,
-                //           decoration: BoxDecoration(
-                //             borderRadius: BorderRadius.circular(20.0),
-                //             color: Colors.blue,
-                //           ),
-                //           margin: const EdgeInsets.all(20),
-                //           child: Center(child: Text('Создать новую историю', style: _current_style,),),
-                //         ),
-                //       ],
-                //     ),
-                //   ),
-                // ),
-              ],
-            ),
+                  child: Center(child: Text('Создать новую историю', style: _current_style,),),
+              ),
+            ],
           )
         ));
   }

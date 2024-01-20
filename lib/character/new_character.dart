@@ -85,6 +85,7 @@ class _CreateNewCharacter extends State<NewCharacter> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
+              const Text('Новый персонаж', style: TextStyle(fontSize: 25.0),),
               SizedBox(
                 width: 400.0,
                 child: TextFormField(
