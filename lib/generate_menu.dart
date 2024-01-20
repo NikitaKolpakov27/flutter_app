@@ -91,7 +91,7 @@ class GenerateMenu extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => CreateNewCharacter(_name),
+                          builder: (context) => CreateNewCharacter(),
                         ),
                       );
                     },

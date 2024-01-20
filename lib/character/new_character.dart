@@ -304,7 +304,7 @@ class _CreateNewCharacter extends State<NewCharacter> {
 
     // var chars = await getAllChars();
     _persID = 12;
-    createNewChar(_persID, _persName, _persLastName, _persPatronymic, _persSex, _persAge, _personality);
+    // createNewChar(_persID, _persName, _persLastName, _persPatronymic, _persSex, _persAge, _personality);
 
     Navigator.push(
         _context,

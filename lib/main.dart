@@ -414,6 +414,7 @@ class _AddMenu extends State<AddMenu> {
 
         body: SizedBox(
           height: 500,
+          width: double.infinity,
           child: SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: Column(
@@ -430,19 +431,13 @@ class _AddMenu extends State<AddMenu> {
                   },
                   child: SizedBox(
                     height: 150,
-                    child: Column(
-                      children: <Widget>[
-                        Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20.0),
-                            color: Colors.blue,
-                          ),
-                          height: 100,
-                          width: 300,
-                          margin: const EdgeInsets.all(20),
-                          child: Center(child: Text('Создать нового персонажа', style: _current_style,),),
-                        ),
-                      ],
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20.0),
+                        color: Colors.blue,
+                      ),
+                      margin: const EdgeInsets.all(20),
+                      child: Center(child: Text('Создать нового персонажа', style: _current_style,),),
                     ),
                   ),
                 ),
@@ -463,7 +458,6 @@ class _AddMenu extends State<AddMenu> {
                       children: <Widget>[
                         Container(
                           height: 100,
-                          width: 300,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(20.0),
                             color: Colors.blue,
@@ -476,34 +470,44 @@ class _AddMenu extends State<AddMenu> {
                   ),
                 ),
 
-
-                InkWell(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => CreateNewStory(_name),
-                      ),
-                    );
-                  },
-                  child: SizedBox(
-                    height: 150,
-                    child: Column(
-                      children: <Widget>[
-                        Container(
-                          height: 100,
-                          width: 300,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20.0),
-                            color: Colors.blue,
-                          ),
-                          margin: const EdgeInsets.all(20),
-                          child: Center(child: Text('Создать новую историю', style: _current_style,),),
+                FilledButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => CreateNewStory(_name),
                         ),
-                      ],
-                    ),
-                  ),
+                      );
+                    },
+                    child: Center(child: Text('Создать новую историю', style: _current_style,),),
                 ),
+                // InkWell(
+                //   onTap: () {
+                //     Navigator.push(
+                //       context,
+                //       MaterialPageRoute(
+                //         builder: (context) => CreateNewStory(_name),
+                //       ),
+                //     );
+                //   },
+                //   child: SizedBox(
+                //     height: 150,
+                //     child: Column(
+                //       children: <Widget>[
+                //         Container(
+                //           height: 100,
+                //           width: 300,
+                //           decoration: BoxDecoration(
+                //             borderRadius: BorderRadius.circular(20.0),
+                //             color: Colors.blue,
+                //           ),
+                //           margin: const EdgeInsets.all(20),
+                //           child: Center(child: Text('Создать новую историю', style: _current_style,),),
+                //         ),
+                //       ],
+                //     ),
+                //   ),
+                // ),
               ],
             ),
           )

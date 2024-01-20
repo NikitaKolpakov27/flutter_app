@@ -66,7 +66,7 @@ createNewUser(id, login, password) {
   final new_entry = jsonDecode(encoded); // Новый пользователь без кавычек
 
   // Запись в БД
-  File file = File("./lib/db/users.json");
+  File file = File("./assets/users.json");
   final data = file.readAsStringSync();
 
   var decoded = json.decode(data);
