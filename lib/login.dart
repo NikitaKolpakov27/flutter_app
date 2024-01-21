@@ -1,7 +1,7 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:test_flutter/user/user.dart';
+import 'adding/add_entity.dart';
 import 'main.dart';
 
 
@@ -16,16 +16,21 @@ class LoginProcess extends StatelessWidget {
   late BuildContext _context;
   final Registration reg = Registration();
 
+  Color primaryColor = const Color(0xffe36b44);
 
   @override
   Widget build(BuildContext context) {
     _context = context;
     return MaterialApp(
-        theme: ThemeData(primaryColor: Colors.indigoAccent),
+        theme: ThemeData(
+            primaryColor: const Color(0xffe79521),
+            scaffoldBackgroundColor: const Color(0xffffe5b9)
+        ),
         home: Scaffold(
           appBar: AppBar(
             title: const Text("Приложение для писателей"),
             centerTitle: true,
+            backgroundColor: primaryColor,
           ),
           body: Center(
             child: Form(
@@ -34,9 +39,9 @@ class LoginProcess extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   SizedBox(
-                    width: 400.0,
+                    width: 350.0,
                       child: TextFormField(
-                      decoration: const InputDecoration(labelText: "Login"),
+                      decoration: const InputDecoration(labelText: "Логин"),
                       keyboardType: TextInputType.name,
                       style: _sizeTextBlack,
                       onSaved: (val) => _name = val!,
@@ -45,10 +50,9 @@ class LoginProcess extends StatelessWidget {
                     ),
                   ),
                   Container(
-                    width: 400.0,
-                    padding: const EdgeInsets.only(top: 10.0),
+                    width: 350.0,
                     child: TextFormField(
-                        decoration: const InputDecoration(labelText: "Password"),
+                        decoration: const InputDecoration(labelText: "Пароль"),
                         keyboardType: TextInputType.visiblePassword,
                         obscureText: true,
                         style: _sizeTextBlack,
@@ -57,40 +61,39 @@ class LoginProcess extends StatelessWidget {
                         validator: (val) => passwordValidator(_password, _name)
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 25.0, right: 25.0),
-                      child: Row(
-                        children: [
-                          MaterialButton(
-                              color: Colors.indigoAccent,
-                              height: 50.0,
-                              minWidth: 150.0,
-                              onPressed: submit,
-                              child: Text(
-                                "LOG IN",
-                                style: _sizeTextWhite,
-                              )
-                          ),
-                          MaterialButton(
-                              color: Colors.indigoAccent,
-                              height: 50.0,
-                              minWidth: 150.0,
-                              onPressed: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => Registration(),
-                                    ),
-                                  );
-                              },
-                              child: Text(
-                                "Back to Registration",
-                                style: _sizeTextWhite,
-                              )
+                  const Divider(),
+                  Row(
+                    children: [
+                      MaterialButton(
+                          color: primaryColor,
+                          height: 48.0,
+                          minWidth: 80.0,
+                          onPressed: submit,
+                          child: Text(
+                            "Войти",
+                            style: _sizeTextWhite,
                           )
-                        ],
                       ),
-                    ),
+                      const Divider(),
+                      MaterialButton(
+                          color: primaryColor,
+                          height: 48.0,
+                          minWidth: 80.0,
+                          onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => Registration(),
+                                ),
+                              );
+                          },
+                          child: Text(
+                            "Вернуться",
+                            style: _sizeTextWhite,
+                          )
+                      )
+                    ],
+                  ),
                 ],
               ),
             ),

@@ -39,9 +39,7 @@ class _SettingsState extends State<Settings> {
   FontWeight? selectedFontWeight = FontWeight.normal;
 
   Color selectedColor = Colors.white;
-
   String? selectedFont = 'Times New Roman';
-
   var current_style = TextStyle(fontSize: 20.0, color: Colors.white, fontFamily: 'Courier New');
 
 
@@ -50,29 +48,41 @@ class _SettingsState extends State<Settings> {
     return Scaffold(
 
       appBar: AppBar(
-        title: const Text(
-          "Настройки приложения",
-          style: TextStyle(
-              fontSize: 20.0,
-              color: Colors.white
+        title: const Center(
+          child: Text(
+            "Настройки приложения",
+            style: TextStyle(
+                fontSize: 20.0,
+                color: Colors.white
+            ),
           ),
         ),
       ),
 
       body: Center(
-
-        child: Column(
+        child: ListView(
+            scrollDirection: Axis.vertical,
             children: <Widget>[
+              const Divider(
+                height: 5.0,
+                thickness: 0.0,
+                indent: double.infinity,
+              ),
+
               const Center(
                 child: Text(
                   'Начертание:',
-                  style: TextStyle(fontSize: 20.0, color: Colors.black),
+                  style: TextStyle(fontSize: 18.0, color: Colors.black),
                 ),
               ),
-              const Divider(),
+              const Divider(
+                height: 10.0,
+                thickness: 0.0,
+                indent: double.infinity,
+              ),
               ListTile(
                 title: const Text(
-                    'Курсив', style: TextStyle(fontSize: 20.0, fontStyle: FontStyle.italic),
+                    'Курсив', style: TextStyle(fontSize: 18.0, fontStyle: FontStyle.italic),
                 ),
                 leading: Radio<FontStyle>(
                   value: FontStyle.italic,
@@ -86,7 +96,7 @@ class _SettingsState extends State<Settings> {
               ),
               ListTile(
                 title: const Text(
-                    'Полужирный текст', style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+                    'Полужирный текст', style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
                 ),
                 leading: Radio<FontWeight>(
                   value: FontWeight.bold,
@@ -109,17 +119,21 @@ class _SettingsState extends State<Settings> {
                   'Очистить выбор',
                 ),
               ),
-              const Divider(),
+              const Divider(
+                indent: double.infinity,
+              ),
               const Center(
                 child: Text(
                   'Цвет:',
-                  style: TextStyle(fontSize: 20.0, color: Colors.black),
+                  style: TextStyle(fontSize: 18.0, color: Colors.black),
                 ),
               ),
-              const Divider(),
+              const Divider(
+                indent: double.infinity,
+              ),
               ListTile(
                 title: const Text(
-                    'Синий', style: TextStyle(fontSize: 20.0, color: Colors.blue),
+                    'Синий', style: TextStyle(fontSize: 18.0, color: Colors.blue),
                 ),
                 leading: Radio<Color>(
                   value: Colors.blue,
@@ -133,7 +147,7 @@ class _SettingsState extends State<Settings> {
               ),
               ListTile(
                 title: const Text(
-                    'Черный', style: TextStyle(fontSize: 20.0, color: Colors.black),
+                    'Черный', style: TextStyle(fontSize: 18.0, color: Colors.black),
                 ),
                 leading: Radio<Color>(
                   value: Colors.black,
@@ -147,7 +161,7 @@ class _SettingsState extends State<Settings> {
               ),
               ListTile(
                 title: const Text(
-                  'Желтый', style: TextStyle(fontSize: 20.0, color: Colors.yellow),
+                  'Желтый', style: TextStyle(fontSize: 18.0, color: Colors.yellow),
                 ),
                 leading: Radio<Color>(
                   value: Colors.yellow,
@@ -160,17 +174,24 @@ class _SettingsState extends State<Settings> {
                 ),
               ),
 
-              const Divider(),
+              const Divider(
+                indent: double.infinity,
+              ),
+
               const Center(
                 child: Text(
                   'Шрифт:',
-                  style: TextStyle(fontSize: 20.0, color: Colors.black),
+                  style: TextStyle(fontSize: 18.0, color: Colors.black),
                 ),
               ),
-              const Divider(),
+
+              const Divider(
+                indent: double.infinity,
+              ),
+
               ListTile(
                 title: const Text(
-                  'Courier New', style: TextStyle(fontSize: 20.0),
+                  'Courier New', style: TextStyle(fontSize: 18.0),
                 ),
                 leading: Radio<String>(
                   value: 'Courier New',
@@ -182,9 +203,10 @@ class _SettingsState extends State<Settings> {
                   },
                 ),
               ),
+
               ListTile(
                 title: const Text(
-                  'Arial', style: TextStyle(fontSize: 20.0),
+                  'Arial', style: TextStyle(fontSize: 18.0),
                 ),
                 leading: Radio<String>(
                   value: 'Arial',
@@ -196,9 +218,10 @@ class _SettingsState extends State<Settings> {
                   },
                 ),
               ),
+
               ListTile(
                 title: const Text(
-                  'Times New Roman', style: TextStyle(fontSize: 20.0),
+                  'Times New Roman', style: TextStyle(fontSize: 18.0),
                 ),
                 leading: Radio<String>(
                   value: 'Times New Roman',
@@ -210,12 +233,13 @@ class _SettingsState extends State<Settings> {
                   },
                 ),
               ),
+
               ElevatedButton(
                 style: ElevatedButton.styleFrom(textStyle: current_style),
                 onPressed: () {
                   setState(() {
                     current_style = TextStyle(
-                        fontSize: 20.0,
+                        fontSize: 18.0,
                         color: selectedColor,
                         fontFamily: selectedFont,
                         fontStyle: selectedFontStyle,

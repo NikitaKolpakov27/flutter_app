@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:test_flutter/main.dart';
+import '../adding/add_entity.dart';
 
 class FavoriteSetter extends StatelessWidget {
   const FavoriteSetter({super.key});

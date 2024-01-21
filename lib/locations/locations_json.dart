@@ -9,10 +9,10 @@ class JsonLocation extends StatefulWidget {
   const JsonLocation({Key? key}) : super(key: key);
 
   @override
-  State<JsonLocation> createState() => _JsonHomeState();
+  State<JsonLocation> createState() => _JsonLocState();
 }
 
-class _JsonHomeState extends State<JsonLocation> {
+class _JsonLocState extends State<JsonLocation> {
   List _locations = [];
 
   // Fetch content from the json file

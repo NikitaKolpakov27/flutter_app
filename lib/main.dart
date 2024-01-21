@@ -1,18 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:test_flutter/file_utils/file_utils.dart';
-import 'package:test_flutter/character/pers.dart';
-import 'package:test_flutter/character/perses_json.dart';
-import 'package:test_flutter/locations/locations_json.dart';
-import 'package:test_flutter/notes/new_note.dart';
-import 'package:test_flutter/settings/settings.dart';
-import 'package:test_flutter/story/stories_json.dart';
 import 'package:test_flutter/user/user.dart';
-import 'package:test_flutter/user/users_json.dart';
-import 'character/new_character.dart';
-import 'locations/new_location.dart';
-import 'notes/notes_json.dart';
-import 'story/new_story.dart';
+import 'adding/add_entity.dart';
 import 'login.dart';
 
 void main() => runApp(MaterialApp(
@@ -34,6 +24,9 @@ class Registration extends StatelessWidget {
   late String _confirmPassword;
   TextStyle sizeTextBlack = const TextStyle(fontSize: 20.0, color: Colors.black);
   TextStyle _sizeTextWhite = const TextStyle(fontSize: 20.0, color: Colors.white);
+
+  Color primaryColor = const Color(0xffe36b44);
+
   final formKey = GlobalKey<FormState>();
   late BuildContext _context;
 
@@ -42,13 +35,14 @@ class Registration extends StatelessWidget {
     _context = context;
     return MaterialApp(
         theme: ThemeData(
-            primaryColor: Colors.indigoAccent,
-            // scaffoldBackgroundColor: const Color(0xffffe5b9)
+            primaryColor: const Color(0xffe79521),
+            scaffoldBackgroundColor: const Color(0xffffe5b9)
         ),
         home: Scaffold(
           appBar: AppBar(
             title: const Text("Приложение для писателей"),
             centerTitle: true,
+            backgroundColor: primaryColor,
           ),
           body: Center(
               child: Form(
@@ -70,14 +64,14 @@ class Registration extends StatelessWidget {
                     SizedBox(
                       width: 400.0,
                       child: TextFormField(
-                        decoration: const InputDecoration(labelText: "Login"),
+                        decoration: const InputDecoration(labelText: "Логин"),
                         keyboardType: TextInputType.name,
                         style: sizeTextBlack,
                         onSaved: (val) => _name = val!,
                         onChanged: (val) => _name = val,
                         validator: (val) =>
                         val!.length < 8
-                            ? 'Too short name'
+                            ? 'Слишком короткий логин'
                             : null,
                       ),
                     ),
@@ -85,7 +79,7 @@ class Registration extends StatelessWidget {
                       width: 400.0,
                       padding: const EdgeInsets.only(top: 10.0),
                       child: TextFormField(
-                        decoration: const InputDecoration(labelText: "Password"),
+                        decoration: const InputDecoration(labelText: "Пароль"),
                         keyboardType: TextInputType.visiblePassword,
                         obscureText: true,
                         style: sizeTextBlack,
@@ -93,7 +87,7 @@ class Registration extends StatelessWidget {
                         onChanged: (val) => _password = val,
                         validator: (val) =>
                         val!.length < 8
-                            ? 'Too short password'
+                            ? 'Слишком короткий пароль'
                             : null,
                       ),
                     ),
@@ -101,14 +95,14 @@ class Registration extends StatelessWidget {
                       width: 400.0,
                       padding: const EdgeInsets.only(top: 10.0),
                       child: TextFormField(
-                        decoration: const InputDecoration(labelText: "Confirm Password"),
+                        decoration: const InputDecoration(labelText: "Подтвердите пароль"),
                         keyboardType: TextInputType.visiblePassword,
                         obscureText: true,
                         style: sizeTextBlack,
                         onSaved: (val) => _confirmPassword = val!,
                         validator: (val) {
                           if (val! != _password) {
-                            return 'Passwords are not the same!';
+                            return 'Пароли отличаются';
                           } else {
                             return null;
                           }
@@ -118,12 +112,12 @@ class Registration extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.only(top: 10.0),
                       child: MaterialButton(
-                        color: Colors.indigoAccent,
+                        color: primaryColor,
                         height: 50.0,
                         minWidth: 150.0,
                         onPressed: submit,
                         child: Text(
-                          "REGISTER",
+                          "Зарегистрироваться",
                           style: _sizeTextWhite,
                         ),
                       ),
@@ -132,13 +126,13 @@ class Registration extends StatelessWidget {
                     InkWell(
                       child: RichText(
                         text: TextSpan(
-                          text: "Already have an account? ",
+                          text: "У Вас уже есть аккаунт? ",
                           style: sizeTextBlack,
-                          children: const <TextSpan>[
+                          children: <TextSpan>[
                             TextSpan(
-                              text: "Sign in",
+                              text: "Войдите",
                               style: TextStyle(
-                                color: Colors.indigoAccent
+                                color: primaryColor
                               )
                             )
                           ]
@@ -198,284 +192,6 @@ class Registration extends StatelessWidget {
 
   void hideKeyboard() {
     SystemChannels.textInput.invokeMethod('TextInput.hide');
-  }
-
-}
-
-class AddMenu extends StatefulWidget {
-  @override
-  _AddMenu createState() {
-    return _AddMenu();
-  }
-}
-
-class _AddMenu extends State<AddMenu> {
-  String _name = '';
-  String _password = '';
-  String _email = '';
-
-  TextStyle _current_style = const TextStyle(fontSize: 15.0, color: Colors.white);
-  final _sizeTitleDrawer = const TextStyle(fontSize: 30.0, fontStyle: FontStyle.italic, color: Colors.lightBlue);
-
-  // AddMenu(String name, String email, String password) {
-  //   _name = name;
-  //   _password = password;
-  //   _email = email;
-  // }
-  //
-  // AddMenu.copy(AddMenu addMenu, {super.key}) {
-  //   _name = addMenu._name;
-  //   _password = addMenu._password;
-  // }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: const Text(
-            "Приложение для писателей",
-            style: TextStyle(
-              fontSize: 22.0,
-              fontStyle: FontStyle.italic,
-              color: Colors.white
-            ),
-
-          ),
-        ),
-        bottomNavigationBar: BottomNavigationBar(
-          items: const [
-            BottomNavigationBarItem(
-              icon: Icon(Icons.add),
-              label: "Создание"
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.account_tree),
-              label: "Генерация"
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.star),
-              label: "Избранное"
-            )
-          ],
-        ),
-
-
-        drawer: Drawer(
-          child: Column(
-                children: [
-                  Container(
-                    height: 150,
-                    width: 300,
-                    color: Colors.blueAccent,
-                    child: SizedBox(
-                      width: 300,
-                      height: 150,
-                      child: Row(
-                        children: [
-                          const Icon(
-                            Icons.account_circle_sharp,
-                            color: Colors.greenAccent,
-                            size: 75,
-                          ),
-                          Text(
-                            "Здравствуйте, $_name",
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontStyle: FontStyle.italic,
-                              fontSize: 20.0,
-                            ),
-                          ),
-                        ],
-                      )
-                    ),
-                  ),
-              const Divider(),
-
-              SizedBox(
-                height: 550,
-                width: 250,
-                child: ListView(
-                  scrollDirection: Axis.vertical,
-                  children: [
-                    FilledButton(
-                      style: ButtonStyle(
-                        overlayColor: MaterialStateProperty.all(Colors.indigo),
-                        padding: MaterialStateProperty.all(const EdgeInsets.all(30)),
-                      ),
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const JsonChar(),
-                          ),
-                        );
-                      },
-                      child: Center(child: Text('Персонажи', style: _current_style,),),
-                    ),
-                    const Divider(),
-
-                    FilledButton(
-                      style: ButtonStyle(
-                        overlayColor: MaterialStateProperty.all(Colors.indigo),
-                        padding: MaterialStateProperty.all(const EdgeInsets.all(30)),
-                      ),
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const JsonStory(),
-                          ),
-                        );
-                      },
-                      child: Center(child: Text('Истории', style: _current_style,),),
-                    ),
-                    const Divider(),
-
-
-                    FilledButton(
-                      style: ButtonStyle(
-                        overlayColor: MaterialStateProperty.all(Colors.indigo),
-                        padding: MaterialStateProperty.all(const EdgeInsets.all(30)),
-                      ),
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const JsonLocation(),
-                          ),
-                        );
-                      },
-                      child: Center(child: Text('Локации', style: _current_style,),),
-                    ),
-                    const Divider(),
-                    const Divider(),
-
-                    FilledButton(
-                      style: ButtonStyle(
-                        overlayColor: MaterialStateProperty.all(Colors.indigo),
-                        padding: MaterialStateProperty.all(const EdgeInsets.all(30)),
-                      ),
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const JsonNote(),
-                          ),
-                        );
-                      },
-                      child: Center(child: Text('Заметки', style: _current_style,),),
-                    ),
-                    const Divider(),
-                    const Divider(),
-                    const Divider(),
-                    const Divider(),
-
-                    FilledButton(
-                      style: ButtonStyle(
-                        overlayColor: MaterialStateProperty.all(Colors.indigo),
-                        padding: MaterialStateProperty.all(const EdgeInsets.all(30)),
-                      ),
-                      onPressed: () async {
-                        var custom_style = await Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const Settings(),
-                          ),
-                        );
-                        setState(() {
-                          _current_style = custom_style;
-                        });
-                      },
-                      child: Center(child: Text('Настройки', style: _current_style,),),
-                    ),
-                    const Divider(),
-                  ],
-                ),
-              )
-            ],
-          ),
-        ),
-
-
-        body: SizedBox(
-          height: double.infinity,
-          width: double.infinity,
-          child: Column(
-            children: [
-              const Divider(),
-
-              Text(
-                'Главное меню',
-                style: TextStyle(fontSize: 35.0, color: Colors.deepPurple.shade500, fontFamily: 'Arial'),
-              ),
-              const Divider(),
-
-              FilledButton(
-                style: ButtonStyle(
-                  padding: MaterialStateProperty.all(const EdgeInsets.all(30)),
-                ),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => NewCharacter(),
-                    ),
-                  );
-                },
-                child: Center(child: Text('Создать нового персонажа', style: _current_style,),),
-              ),
-              const Divider(),
-
-
-              FilledButton(
-                style: ButtonStyle(
-                  padding: MaterialStateProperty.all(const EdgeInsets.all(30)),
-                ),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const NewLocation(),
-                    ),
-                  );
-                },
-                child: Center(child: Text('Создать новую локацию', style: _current_style,),),
-              ),
-              const Divider(),
-
-              FilledButton(
-                  style: ButtonStyle(
-                    padding: MaterialStateProperty.all(const EdgeInsets.all(30)),
-                  ),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => CreateNewStory(_name),
-                      ),
-                    );
-                  },
-                  child: Center(child: Text('Создать новую историю', style: _current_style,),),
-              ),
-              const Divider(),
-
-              FilledButton(
-                style: ButtonStyle(
-                  padding: MaterialStateProperty.all(const EdgeInsets.all(30)),
-                ),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => CreateNewNote(_name),
-                    ),
-                  );
-                },
-                child: Center(child: Text('Новая заметка', style: _current_style,),),
-              ),
-            ],
-          )
-        ));
   }
 }
 

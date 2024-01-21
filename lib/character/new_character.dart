@@ -42,6 +42,8 @@ class _CreateNewCharacter extends State<NewCharacter> {
 
   bool isFavorite = false;
 
+  Color primaryColor = const Color(0xffe36b44);
+
   // _CreateNewCharacter(String name) {
   //   _name = name;
   // }
@@ -49,206 +51,224 @@ class _CreateNewCharacter extends State<NewCharacter> {
   @override
   Widget build(BuildContext context) {
     _context = context;
-    return Scaffold(
-
-      appBar: AppBar(
-        title: const Text(
-          "Создание персонажа",
-          style: TextStyle(
-              fontSize: 20.0,
-              fontStyle: FontStyle.italic,
-              color: Colors.white
+    return MaterialApp(
+      theme: ThemeData(
+          primaryColor: const Color(0xffe79521),
+          scaffoldBackgroundColor: const Color(0xffffe5b9)
+      ),
+      home: Scaffold(
+        appBar: AppBar(
+          backgroundColor: primaryColor,
+          title: const Text(
+            "Создание персонажа",
+            style: TextStyle(
+                fontSize: 20.0,
+                fontStyle: FontStyle.italic,
+                color: Colors.white
+            ),
           ),
         ),
-      ),
 
-      bottomNavigationBar: BottomNavigationBar(
-        items: const [
-          BottomNavigationBarItem(
+        bottomNavigationBar: BottomNavigationBar(
+          selectedItemColor: const Color(0xfffbff29),
+          unselectedItemColor: const Color(0xffd54a16),
+          type: BottomNavigationBarType.shifting,
+          iconSize: 35,
+          items: const [
+            BottomNavigationBarItem(
               icon: Icon(Icons.add),
-              label: "Создание"
-          ),
-          BottomNavigationBarItem(
+              label: "Создание",
+              backgroundColor: Color(0xfff38557),
+            ),
+            BottomNavigationBarItem(
               icon: Icon(Icons.account_tree),
-              label: "Генерация"
-          ),
-          BottomNavigationBarItem(
+              label: "Генерация",
+              backgroundColor: Color(0xfff38557),
+            ),
+            BottomNavigationBarItem(
               icon: Icon(Icons.star),
-              label: "Избранное"
-          )
-        ],
-      ),
+              label: "Избранное",
+              backgroundColor: Color(0xfff38557),
+            )
+          ],
+        ),
 
-      body: Center(
-        child: Form(
-          key: formKeyPers,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              const Text('Новый персонаж', style: TextStyle(fontSize: 25.0),),
-              SizedBox(
-                width: 400.0,
-                child: TextFormField(
-                  decoration: const InputDecoration(labelText: "Name"),
-                  keyboardType: TextInputType.name,
-                  onSaved: (val) => _persName = val!,
-                  validator: (val) {
-                    if (val!.isEmpty) {
-                      return "Too short character's name";
-                    }
-                    return null;
-                  },
+        body: Center(
+          child: Form(
+            key: formKeyPers,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                const Text(
+                  'Новый персонаж',
+                  style: TextStyle(fontSize: 25.0, fontFamily: 'Bajkal'),
                 ),
-              ),
-              SizedBox(
-                width: 400.0,
-                child: TextFormField(
-                  decoration: const InputDecoration(labelText: "Last Name"),
-                  keyboardType: TextInputType.name,
-                  onSaved: (val) => _persLastName = val!,
-                  validator: (val) =>
-                  val!.length < 8
-                      ? 'Too short last name'
-                      : null,
-                ),
-              ),
-              Container(
-                width: 400.0,
-                padding: const EdgeInsets.only(top: 10.0),
-                child: TextFormField(
-                  decoration: const InputDecoration(labelText: "Patronymic"),
-                  keyboardType: TextInputType.name,
-                  onSaved: (val) => _persPatronymic = val!,
-                  validator: (val) =>
-                  val!.length < 6
-                      ? 'Too short patronymic'
-                      : null,
-                ),
-              ),
-
-              Row(
-                children: [
-                  const Flexible(
-                    child: Text(
-                      'Пол:',
-                      style: TextStyle(fontSize: 20.0, color: Colors.black),
-                    ),
-                  ),
-                  // const Divider(),
-                  Flexible(
-                    child: ListTile(
-                      title: const Text(
-                        'Мужчина', style: TextStyle(fontSize: 15.0),
-                      ),
-                      leading: Radio<bool>(
-                        value: true,
-                        groupValue: _persSex,
-                        onChanged: (bool? value) {
-                          setState(() {
-                            _persSex = value!;
-                          });
-                        },
-                      ),
-                    ),
-                  ),
-                  Flexible(
-                    child: ListTile(
-                      title: const Text(
-                        'Женщина', style: TextStyle(fontSize: 15.0),
-                      ),
-                      leading: Radio<bool>(
-                        value: false,
-                        groupValue: _persSex,
-                        onChanged: (bool? value) {
-                          setState(() {
-                            _persSex = value!;
-                          });
-                        },
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-
-              Container(
-                width: 400.0,
-                padding: const EdgeInsets.only(top: 10.0),
-                child: TextFormField(
-                  decoration: const InputDecoration(labelText: "Age"),
-                  keyboardType: TextInputType.number,
-                  onSaved: (val) => _persAge = int.parse(val!),
-                  validator: (val) {
-                    try {
-                      var age = int.parse(val!);
-
-                      if (age <= 0) {
-                        return 'Too small age';
+                SizedBox(
+                  width: 400.0,
+                  child: TextFormField(
+                    decoration: const InputDecoration(labelText: "Имя"),
+                    keyboardType: TextInputType.name,
+                    onSaved: (val) => _persName = val!,
+                    validator: (val) {
+                      if (val!.isEmpty) {
+                        return "Слишком короткое имя персонажа";
                       }
-                    } catch (e) {
-                      return 'It\'s not a number!';
-                    }
-
-                    return null;
-                  }
-                ),
-              ),
-
-              const Flexible(
-                  child: Text(
-                    'Личность:',
-                    style: TextStyle(fontSize: 15.0),
-                  )
-              ),
-
-              Flexible(
-                child: Container(
-                  width: 400.0,
-                  padding: const EdgeInsets.only(top: 10.0),
-                  child: DropdownButton(
-                      value: selectedMBTI,
-                      items: dropdownMBTI,
-                      onChanged: (String? val){
-                        setState(() {
-                          selectedMBTI = val!;
-                        });
-                      },
-                  ),
-                ),
-              ),
-
-              Flexible(
-                child: Container(
-                  width: 400.0,
-                  padding: const EdgeInsets.only(top: 10.0),
-                  child: DropdownButton(
-                    value: selectedTemper,
-                    items: dropdownTempers,
-                    onChanged: (String? val){
-                      setState(() {
-                        selectedTemper = val!;
-                      });
+                      return null;
                     },
                   ),
                 ),
-              ),
+                SizedBox(
+                  width: 400.0,
+                  child: TextFormField(
+                    decoration: const InputDecoration(labelText: "Фамилия"),
+                    keyboardType: TextInputType.name,
+                    onSaved: (val) => _persLastName = val!,
+                    validator: (val) =>
+                    val!.isEmpty
+                        ? 'Слишком короткая фамилия'
+                        : null,
+                  ),
+                ),
+                Container(
+                  width: 400.0,
+                  padding: const EdgeInsets.only(top: 10.0),
+                  child: TextFormField(
+                    decoration: const InputDecoration(labelText: "Отчество"),
+                    keyboardType: TextInputType.name,
+                    onSaved: (val) => _persPatronymic = val!,
+                    validator: (val) =>
+                    val!.length < 6
+                        ? 'Слишком короткое отчество'
+                        : null,
+                  ),
+                ),
 
+                Row(
+                  children: [
+                    const Flexible(
+                      child: Text(
+                        'Пол:',
+                        style: TextStyle(fontSize: 20.0, color: Colors.black),
+                      ),
+                    ),
+                    // const Divider(),
+                    Flexible(
+                      child: ListTile(
+                        title: const Text(
+                          'Мужчина', style: TextStyle(fontSize: 15.0),
+                        ),
+                        leading: Radio<bool>(
+                          value: true,
+                          activeColor: const Color(0xff5191CA),
+                          groupValue: _persSex,
+                          onChanged: (bool? value) {
+                            setState(() {
+                              _persSex = value!;
+                            });
+                          },
+                        ),
+                      ),
+                    ),
+                    Flexible(
+                      child: ListTile(
+                        title: const Text(
+                          'Женщина', style: TextStyle(fontSize: 15.0),
+                        ),
+                        leading: Radio<bool>(
+                          activeColor: const Color(0xff5191CA),
+                          value: false,
+                          groupValue: _persSex,
+                          onChanged: (bool? value) {
+                            setState(() {
+                              _persSex = value!;
+                            });
+                          },
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
 
-              Padding(
-                padding: const EdgeInsets.only(top: 25.0),
-                child: MaterialButton(
-                  color: Colors.indigoAccent,
-                  height: 50.0,
-                  minWidth: 150.0,
-                  onPressed: submitPers,
-                  child: const Text(
-                    "Создать персонажа",
-                    style: TextStyle(
-                      color: Colors.white
+                Container(
+                  width: 400.0,
+                  padding: const EdgeInsets.only(top: 10.0),
+                  child: TextFormField(
+                    decoration: const InputDecoration(labelText: "Возраст"),
+                    keyboardType: TextInputType.number,
+                    onSaved: (val) => _persAge = int.parse(val!),
+                    validator: (val) {
+                      try {
+                        var age = int.parse(val!);
+
+                        if (age <= 0) {
+                          return 'Слишком малый возраст';
+                        }
+                      } catch (e) {
+                        return 'Это не число!';
+                      }
+
+                      return null;
+                    }
+                  ),
+                ),
+
+                const Flexible(
+                    child: Text(
+                      'Личность:',
+                      style: TextStyle(fontSize: 15.0, fontFamily: 'Bajkal'),
+                    )
+                ),
+
+                Flexible(
+                  child: Container(
+                    width: 400.0,
+                    padding: const EdgeInsets.only(top: 10.0),
+                    child: DropdownButton(
+                        value: selectedMBTI,
+                        items: dropdownMBTI,
+                        onChanged: (String? val){
+                          setState(() {
+                            selectedMBTI = val!;
+                          });
+                        },
                     ),
                   ),
                 ),
-              ),
-            ],
+
+                Flexible(
+                  child: Container(
+                    width: 400.0,
+                    padding: const EdgeInsets.only(top: 10.0),
+                    child: DropdownButton(
+                      value: selectedTemper,
+                      items: dropdownTempers,
+                      onChanged: (String? val){
+                        setState(() {
+                          selectedTemper = val!;
+                        });
+                      },
+                    ),
+                  ),
+                ),
+
+
+                Padding(
+                  padding: const EdgeInsets.only(top: 25.0),
+                  child: MaterialButton(
+                    color: primaryColor,
+                    height: 50.0,
+                    minWidth: 150.0,
+                    onPressed: submitPers,
+                    child: const Text(
+                      "Создать персонажа",
+                      style: TextStyle(
+                        color: Colors.white
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

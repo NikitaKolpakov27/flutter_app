@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'character/new_character.dart';
-import 'locations/new_location.dart';
-import 'story/new_story.dart';
+import '../character/new_character.dart';
+import '../locations/new_location.dart';
+import '../story/new_story.dart';
 
 class GenerateMenu extends StatelessWidget {
   String _name = '';
