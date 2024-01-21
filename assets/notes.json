@@ -3,11 +3,13 @@
     {
       "id": 0,
       "note_title": "The Grand Canyon",
+      "favorite": false,
       "note_text": "I hurt myself today, to see if i still feel, i focus on the pain the only thing that's real"
     },
     {
       "id": 1,
       "note_title": "Baikal Lake",
+      "favorite": false,
       "note_text": "Одно из самых живописных мест в мире!"
     }
   ]

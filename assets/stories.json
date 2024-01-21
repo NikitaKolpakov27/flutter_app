@@ -4,6 +4,7 @@
       "id": 0,
       "title": "How I spent the summer",
       "genre": "Narrative",
+      "favorite": false,
       "characters": [
         {
           "charID": 0
@@ -14,6 +15,7 @@
       "id": 1,
       "title": "Stranger things",
       "genre": "Horror",
+      "favorite": false,
       "characters": [
         {
           "charID": 0

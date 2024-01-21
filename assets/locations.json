@@ -3,11 +3,13 @@
     {
       "id": 0,
       "location_name": "The Grand Canyon",
+      "favorite": false,
       "description": "Massive open natural landscape"
     },
     {
       "id": 1,
       "location_name": "Baikal Lake",
+      "favorite": false,
       "description": "Huge and purest lake in the World"
     }
   ]

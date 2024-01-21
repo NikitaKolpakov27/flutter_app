@@ -41,7 +41,6 @@ class _JsonHomeState extends State<JsonLocation> {
               onPressed: readJsonFile,
               child: const Text('Загрузить локации'),
             ),
-            // Display the data loaded from movies.json
             _locations.isNotEmpty
                 ? Expanded(
               child: ListView.builder(
@@ -52,9 +51,10 @@ class _JsonHomeState extends State<JsonLocation> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => LocationView(
+                            builder: (context) => LocView(
                                 _locations[index]["id"],
                                 _locations[index]["location_name"],
+                                _locations[index]["favorite"],
                                 _locations[index]["description"]
                             ),
                           ),

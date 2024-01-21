@@ -1,5 +1,3 @@
-import 'dart:io';
-import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:test_flutter/file_utils/file_utils.dart';
@@ -43,7 +41,10 @@ class Registration extends StatelessWidget {
   Widget build(BuildContext context) {
     _context = context;
     return MaterialApp(
-        theme: ThemeData(primaryColor: Colors.indigoAccent),
+        theme: ThemeData(
+            primaryColor: Colors.indigoAccent,
+            // scaffoldBackgroundColor: const Color(0xffffe5b9)
+        ),
         home: Scaffold(
           appBar: AppBar(
             title: const Text("Приложение для писателей"),
@@ -434,7 +435,7 @@ class _AddMenu extends State<AddMenu> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => CreateNewLocation(_name),
+                      builder: (context) => const NewLocation(),
                     ),
                   );
                 },
