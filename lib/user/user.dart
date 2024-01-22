@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
-
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 
@@ -39,22 +39,20 @@ getUsersData(type_data) async {
   return userData;
 }
 
-// Функция, возвращающая данные пользователя по логину (ID, emial, пароль)
-getUsersDataByLogin(type_data, login) async {
-  WidgetsFlutterBinding.ensureInitialized();
+// Функция, возвращающая данные пользователя по логину (ID, email, пароль)
+getUsersDataByLogin(typeData, login) async {
+  var users = FirebaseFirestore.instance.collection('users');
+  var dbData = await users.get();
+  dynamic userData = '';
 
-  final String data = await rootBundle.loadString('assets/users.json');
-  var decoded = json.decode(data);
-  var users = decoded["users"] as List;
+  for (var queryDocumentSnapshot in dbData.docs) {
+    Map<String, dynamic> data = queryDocumentSnapshot.data();
 
-  dynamic userData;
-
-  for (var user in users) {
-
-    if (user['login'] == login) {
-      userData = user[type_data];
+    if (data['login'] == login) {
+      userData = data[typeData];
     }
   }
+  print('Получаем данные о пользователе. USERDATA = ${userData}');
 
   return userData;
 }

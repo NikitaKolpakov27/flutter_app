@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -192,9 +193,19 @@ class Registration extends StatelessWidget {
   void performLogin() async {
     hideKeyboard();
 
-    // ДОБАВИТЬ ЗАПИСЬ В БД !!!
-    var us_id = await getAllUsers(); // Это работает
-    writeUser(us_id.length, _name, _password);
+    var users = FirebaseFirestore.instance.collection('users');
+    var usersAsync = await users.get();
+
+    var _userID = usersAsync.docs.length;
+
+    FirebaseFirestore.instance.collection('users').add(
+        {
+          'id': _userID,
+          'login': _name,
+          'password': _password,
+          'email': _email
+        }
+    );
 
     Navigator.push(
         _context,

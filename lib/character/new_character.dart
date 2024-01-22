@@ -309,11 +309,14 @@ class _CreateNewCharacter extends State<NewCharacter> {
 
   void performLogin() async {
     hideKeyboard();
-
     _personality = Personality(_persID, selectedMBTI, selectedTemper);
 
-    var chars = await getAllChars();
-    _persID = chars.length;
+    // var chars = await getAllChars();
+    var chars = FirebaseFirestore.instance.collection('perses');
+    var charsAsync = await chars.get();
+
+    _persID = charsAsync.docs.length;
+
     FirebaseFirestore.instance.collection('perses').add(
         {
           'id': _persID,
