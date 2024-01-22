@@ -1,21 +1,29 @@
+import 'dart:io';
+
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:test_flutter/character/perses_fire.dart';
 import 'package:test_flutter/file_utils/file_utils.dart';
 import 'package:test_flutter/user/user.dart';
 import 'adding/add_entity.dart';
 import 'login.dart';
 
-void main() => runApp(MaterialApp(
-  home: Registration(),
-));
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
 
-// void main() async {
-//   WidgetsFlutterBinding.ensureInitialized();
-//
-//   final String data = await rootBundle.loadString('assets/perses.json');
-//   var decoded = json.decode(data);
-//   print(decoded);
-// }
+  Platform.isAndroid
+  ? await Firebase.initializeApp(
+    options: const FirebaseOptions(
+        apiKey: 'AIzaSyC7H3JUJGOuFO8G8tzzo1g528UCG48J4-w',
+        appId: '1:420289599985:android:fd9221f21110463ca70c50',
+        messagingSenderId: '420289599985',
+        projectId: 'writersflutter'
+    )
+  )
+  : await Firebase.initializeApp();
+  runApp(MaterialApp(home: Registration()));
+}
 
 class Registration extends StatelessWidget {
   late String _name;
@@ -29,6 +37,11 @@ class Registration extends StatelessWidget {
 
   final formKey = GlobalKey<FormState>();
   late BuildContext _context;
+
+  void initFirebase() async {
+    WidgetsFlutterBinding.ensureInitialized();
+    await Firebase.initializeApp();
+  }
 
   @override
   Widget build(BuildContext context) {

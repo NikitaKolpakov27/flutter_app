@@ -12,7 +12,6 @@ class NewLocation extends StatefulWidget {
 class _CreateNewLocation extends State<NewLocation> {
   final formKeyLocation = GlobalKey<FormState>();
   late BuildContext _context;
-  late String _name = '';
 
   // Location's properties
   late int _locationID = 0;
@@ -20,15 +19,16 @@ class _CreateNewLocation extends State<NewLocation> {
   late String _locationName = '';
   late String _description = '';
 
-  // _CreateNewLocation(String name) {
-  //   _name = name;
-  // }
+  static const Color primaryColor =  Color(0xffe36b44);
+  static const Color backColor = Color(0xffffe5b9);
 
   @override
   Widget build(BuildContext context) {
     _context = context;
     return Scaffold(
+      backgroundColor: backColor,
       appBar: AppBar(
+        backgroundColor: primaryColor,
         title: const Text(
           "Создание локации",
           style: TextStyle(
@@ -40,19 +40,25 @@ class _CreateNewLocation extends State<NewLocation> {
       ),
 
       bottomNavigationBar: BottomNavigationBar(
-        iconSize: 30,
+        selectedItemColor: const Color(0xfffbff29),
+        unselectedItemColor: const Color(0xffd54a16),
+        type: BottomNavigationBarType.shifting,
+        iconSize: 35,
         items: const [
           BottomNavigationBarItem(
-              icon: Icon(Icons.add),
-              label: "Создание"
+            icon: Icon(Icons.add),
+            label: "Создание",
+            backgroundColor: Color(0xfff38557),
           ),
           BottomNavigationBarItem(
-              icon: Icon(Icons.account_tree),
-              label: "Генерация"
+            icon: Icon(Icons.account_tree),
+            label: "Генерация",
+            backgroundColor: Color(0xfff38557),
           ),
           BottomNavigationBarItem(
-              icon: Icon(Icons.star),
-              label: "Избранное",
+            icon: Icon(Icons.star),
+            label: "Избранное",
+            backgroundColor: Color(0xfff38557),
           )
         ],
       ),
@@ -63,6 +69,13 @@ class _CreateNewLocation extends State<NewLocation> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
+              const Text(
+                'Новая локация',
+                style: TextStyle(fontSize: 25.0, fontFamily: 'Bajkal'),
+              ),
+              const Divider(
+                indent: double.infinity,
+              ),
               SizedBox(
                 width: 400.0,
                 child: TextFormField(
@@ -77,24 +90,29 @@ class _CreateNewLocation extends State<NewLocation> {
                   },
                 ),
               ),
-              SizedBox(
-                width: 400.0,
-                child: TextFormField(
-                  decoration: const InputDecoration(labelText: "Описание"),
-                  keyboardType: TextInputType.name,
-                  onSaved: (val) => _description = val!,
-                  validator: (val) {
-                    if (val!.isEmpty) {
-                      return "Слишком короткое описание";
-                    }
-                    return null;
-                  },
+              const Divider(
+                indent: double.infinity,
+              ),
+              TextFormField(
+                minLines: 2,
+                maxLines: 5,
+                decoration: const InputDecoration(
+                  hintText: "Опишите свою локацию",
+                  border: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(20))),
                 ),
+                keyboardType: TextInputType.multiline,
+                onSaved: (val) => _description = val!,
+                validator: (val) {
+                  if (val!.isEmpty) {
+                    return "Слишком мало написано";
+                  }
+                  return null;
+                },
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 25.0),
                 child: MaterialButton(
-                  color: Colors.indigoAccent,
+                  color: primaryColor,
                   height: 50.0,
                   minWidth: 150.0,
                   onPressed: submitLocation,
@@ -106,7 +124,6 @@ class _CreateNewLocation extends State<NewLocation> {
                   ),
                 ),
               ),
-              const Divider(),
             ],
           ),
         ),
@@ -164,16 +181,10 @@ class LocationView extends State<LocView> {
   late String _locationName = widget._locationName;
   late String _description = widget._description;
 
-  // LocationView(int locationID, bool isFavorite, String locationName, String description) {
-  //   _locationID = locationID;
-  //   _isFavorite = isFavorite;
-  //   _locationName = locationName;
-  //   _description = description;
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: const Color(0xffffe5b9),
         appBar: AppBar(
           title: const Text(
               "Созданная локация",

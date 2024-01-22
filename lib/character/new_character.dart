@@ -1,4 +1,4 @@
-import 'dart:io';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:test_flutter/character/pers.dart';
@@ -26,7 +26,6 @@ class NewCharacter extends StatefulWidget {
 class _CreateNewCharacter extends State<NewCharacter> {
   final formKeyPers = GlobalKey<FormState>();
   late BuildContext _context;
-  late String _name = '';
 
   // Character's properties
   late int _persID = 0;
@@ -41,22 +40,13 @@ class _CreateNewCharacter extends State<NewCharacter> {
   late Personality _personality;
 
   bool isFavorite = false;
-
   Color primaryColor = const Color(0xffe36b44);
-
-  // _CreateNewCharacter(String name) {
-  //   _name = name;
-  // }
 
   @override
   Widget build(BuildContext context) {
     _context = context;
-    return MaterialApp(
-      theme: ThemeData(
-          primaryColor: const Color(0xffe79521),
-          scaffoldBackgroundColor: const Color(0xffffe5b9)
-      ),
-      home: Scaffold(
+    return Scaffold(
+        backgroundColor: const Color(0xffffe5b9),
         appBar: AppBar(
           backgroundColor: primaryColor,
           title: const Text(
@@ -271,7 +261,6 @@ class _CreateNewCharacter extends State<NewCharacter> {
             ),
           ),
         ),
-      ),
     );
   }
 
@@ -323,9 +312,23 @@ class _CreateNewCharacter extends State<NewCharacter> {
 
     _personality = Personality(_persID, selectedMBTI, selectedTemper);
 
-    // var chars = await getAllChars();
-    _persID = 12;
-    // createNewChar(_persID, _persName, _persLastName, _persPatronymic, _persSex, _persAge, _personality);
+    var chars = await getAllChars();
+    _persID = chars.length;
+    FirebaseFirestore.instance.collection('perses').add(
+        {
+          'id': _persID,
+          'name': _persName,
+          'lastname': _persLastName,
+          'patronymic': _persPatronymic,
+          'sex': _persSex,
+          'age': _persAge,
+          'personality':
+            {
+              'mbti': _personality.getMBTI,
+              'temper': _personality.getTemper
+            }
+        }
+    );
 
     Navigator.push(
         _context,
@@ -339,6 +342,7 @@ class _CreateNewCharacter extends State<NewCharacter> {
 }
 
 class CharacterView extends StatelessWidget {
+  static const Color primaryColor = Color(0xffe36b44);
 
   // Character's properties
   late int _persID;
