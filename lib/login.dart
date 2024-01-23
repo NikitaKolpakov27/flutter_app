@@ -38,10 +38,40 @@ class LoginProcess extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  SizedBox(
-                    width: 350.0,
+
+                  Padding(
+                    padding: const EdgeInsets.only(left: 8, top: 0, bottom: 32, right: 8),
+                    child: Text(
+                      'Вход',
+                      style: TextStyle(
+                        fontSize: 40.0,
+                        fontFamily: 'Bajkal',
+                        fontWeight: FontWeight.bold,
+                        color: primaryColor,
+                      ),
+                    ),
+                  ),
+                  const Divider(
+                    indent: double.infinity,
+                  ),
+
+                  Padding(
+                    padding: const EdgeInsets.only(left: 32, top: 0, right: 32, bottom: 8),
                       child: TextFormField(
-                      decoration: const InputDecoration(labelText: "Логин"),
+                      decoration: InputDecoration(
+                          labelText: "Логин",
+                          enabledBorder: OutlineInputBorder(
+                              borderSide: const BorderSide(color: Color(0xff5191CA)),
+                              borderRadius: BorderRadius.circular(20.0)
+                          ),
+                          border: OutlineInputBorder(
+                              borderSide: const BorderSide(color: Color(0xff5191CA)),
+                              borderRadius: BorderRadius.circular(20.0)
+                          ),
+                          errorBorder: const OutlineInputBorder(
+                            borderSide: BorderSide(color: Color(0xffde0202)),
+                          ),
+                      ),
                       keyboardType: TextInputType.name,
                       style: _sizeTextBlack,
                       onSaved: (val) => _name = val!,
@@ -49,10 +79,25 @@ class LoginProcess extends StatelessWidget {
                       validator: (val) => usernameValidator(_name)
                     ),
                   ),
-                  Container(
-                    width: 350.0,
+
+
+                  Padding(
+                    padding: const EdgeInsets.only(left: 32, top: 0, right: 32, bottom: 0),
                     child: TextFormField(
-                        decoration: const InputDecoration(labelText: "Пароль"),
+                        decoration: InputDecoration(
+                            labelText: "Пароль",
+                            enabledBorder: OutlineInputBorder(
+                                borderSide: const BorderSide(color: Color(0xff5191CA)),
+                                borderRadius: BorderRadius.circular(20.0)
+                            ),
+                            border: OutlineInputBorder(
+                                borderSide: const BorderSide(color: Color(0xff5191CA)),
+                                borderRadius: BorderRadius.circular(20.0)
+                            ),
+                            errorBorder: const OutlineInputBorder(
+                              borderSide: BorderSide(color: Color(0xffde0202)),
+                            ),
+                        ),
                         keyboardType: TextInputType.visiblePassword,
                         obscureText: true,
                         style: _sizeTextBlack,
@@ -61,36 +106,51 @@ class LoginProcess extends StatelessWidget {
                         validator: (val) => passwordValidator(_password, _name)
                     ),
                   ),
-                  const Divider(),
+
+                  const Divider(
+                    indent: double.infinity,
+                  ),
+
+
                   Row(
                     children: [
-                      MaterialButton(
-                          color: primaryColor,
-                          height: 48.0,
-                          minWidth: 80.0,
-                          onPressed: submit,
-                          child: Text(
-                            "Войти",
-                            style: _sizeTextWhite,
-                          )
+                      Padding(
+                        padding: const EdgeInsets.only(left: 72, top: 0, bottom: 0, right: 32),
+                        child: MaterialButton(
+                            splashColor: const Color(0xff5191CA),
+                            color: primaryColor,
+                            height: 48.0,
+                            minWidth: 80.0,
+                            onPressed: submit,
+                            child: Text(
+                              "Войти",
+                              style: _sizeTextWhite,
+                            )
+                        ),
                       ),
+
                       const Divider(),
-                      MaterialButton(
-                          color: primaryColor,
-                          height: 48.0,
-                          minWidth: 80.0,
-                          onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => Registration(),
-                                ),
-                              );
-                          },
-                          child: Text(
-                            "Вернуться",
-                            style: _sizeTextWhite,
-                          )
+
+                      Padding(
+                        padding: const EdgeInsets.only(left: 0, top: 0, bottom: 0, right: 0),
+                        child: MaterialButton(
+                            splashColor: const Color(0xff5191CA),
+                            color: primaryColor,
+                            height: 48.0,
+                            minWidth: 80.0,
+                            onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => Registration(),
+                                  ),
+                                );
+                            },
+                            child: Text(
+                              "Вернуться",
+                              style: _sizeTextWhite,
+                            )
+                        ),
                       )
                     ],
                   ),

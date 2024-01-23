@@ -71,17 +71,38 @@ class _CreateNewLocation extends State<NewLocation> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              const Text(
-                'Новая локация',
-                style: TextStyle(fontSize: 25.0, fontFamily: 'Bajkal'),
+              const Padding(
+                padding: EdgeInsets.only(left: 8, top: 0, bottom: 32, right: 8),
+                child: Text(
+                  'Новая локация',
+                  style: TextStyle(
+                    fontSize: 32.0,
+                    fontFamily: 'Bajkal',
+                    fontWeight: FontWeight.bold,
+                    color: primaryColor,
+                  ),
+                ),
               ),
               const Divider(
                 indent: double.infinity,
               ),
-              SizedBox(
-                width: 400.0,
+              Padding(
+                padding: const EdgeInsets.only(left: 32, top: 0, right: 32, bottom: 0),
                 child: TextFormField(
-                  decoration: const InputDecoration(labelText: "Название локации"),
+                  decoration: InputDecoration(
+                      labelText: "Название локации",
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: const BorderSide(color: Color(0xff5191CA)),
+                        borderRadius: BorderRadius.circular(20.0)
+                      ),
+                      border: OutlineInputBorder(
+                          borderSide: const BorderSide(color: Color(0xff5191CA)),
+                          borderRadius: BorderRadius.circular(20.0)
+                      ),
+                      errorBorder: const OutlineInputBorder(
+                          borderSide: BorderSide(color: Color(0xffde0202)),
+                      ),
+                  ),
                   keyboardType: TextInputType.name,
                   onSaved: (val) => _locationName = val!,
                   validator: (val) {
@@ -92,24 +113,39 @@ class _CreateNewLocation extends State<NewLocation> {
                   },
                 ),
               ),
+
               const Divider(
                 indent: double.infinity,
               ),
-              TextFormField(
-                minLines: 2,
-                maxLines: 5,
-                decoration: const InputDecoration(
-                  hintText: "Опишите свою локацию",
-                  border: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(20))),
+
+              Padding(
+                padding: const EdgeInsets.only(left: 32, top: 0, right: 32, bottom: 0),
+                child: TextFormField(
+                  minLines: 2,
+                  maxLines: 5,
+                  decoration: InputDecoration(
+                    hintText: "Опишите свою локацию",
+                    enabledBorder: OutlineInputBorder(
+                        borderSide: const BorderSide(color: Color(0xff5191CA)),
+                        borderRadius: BorderRadius.circular(20.0)
+                    ),
+                    border: OutlineInputBorder(
+                        borderSide: const BorderSide(color: Color(0xff5191CA)),
+                        borderRadius: BorderRadius.circular(20.0)
+                    ),
+                    errorBorder: const OutlineInputBorder(
+                      borderSide: BorderSide(color: Color(0xffde0202)),
+                    ),
+                  ),
+                  keyboardType: TextInputType.multiline,
+                  onSaved: (val) => _description = val!,
+                  validator: (val) {
+                    if (val!.isEmpty) {
+                      return "Слишком мало написано";
+                    }
+                    return null;
+                  },
                 ),
-                keyboardType: TextInputType.multiline,
-                onSaved: (val) => _description = val!,
-                validator: (val) {
-                  if (val!.isEmpty) {
-                    return "Слишком мало написано";
-                  }
-                  return null;
-                },
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 25.0),
@@ -210,11 +246,64 @@ class LocationView extends State<LocView> {
 
         body: Column(
           children: [
-            Text('Название локации: $_locationName'),
+
             const Divider(
               indent: double.infinity,
             ),
-            Text('Описание локации: $_description'),
+
+            Text(
+              'Локация №$_locationID',
+              style: const TextStyle(
+                  fontSize: 25.0,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: 'Bajkal',
+                  color: primaryColor
+              ),
+            ),
+            const Divider(
+              indent: double.infinity,
+            ),
+
+            Row(
+              children: [
+                const Flexible(
+                  child: Text(
+                    'Название:',
+                    style: TextStyle(
+                        fontSize: 24.0, color: primaryColor
+                    ),
+                  ),
+                ),
+                Flexible(
+                  child: Text(
+                    ' $_locationName',
+                    style: const TextStyle(fontSize: 24.0),
+                  ),
+                ),
+              ],
+            ),
+            const Divider(
+              indent: double.infinity,
+            ),
+
+            Row(
+              children: [
+                const Flexible(
+                  child: Text(
+                    'Описание:',
+                    style: TextStyle(
+                        fontSize: 24.0, color: primaryColor
+                    ),
+                  ),
+                ),
+                Flexible(
+                  child: Text(
+                    ' $_description',
+                    style: const TextStyle(fontSize: 24.0),
+                  ),
+                ),
+              ],
+            ),
             const Divider(
               indent: double.infinity,
             ),

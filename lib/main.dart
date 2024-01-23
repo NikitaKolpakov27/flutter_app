@@ -1,12 +1,8 @@
 import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:test_flutter/character/perses_fire.dart';
-import 'package:test_flutter/file_utils/file_utils.dart';
-import 'package:test_flutter/user/user.dart';
 import 'adding/add_entity.dart';
 import 'login.dart';
 
@@ -64,10 +60,40 @@ class Registration extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    SizedBox(
-                      width: 400.0,
+
+                    Padding(
+                      padding: const EdgeInsets.only(left: 8, top: 0, bottom: 32, right: 8),
+                      child: Text(
+                        'Регистрация',
+                        style: TextStyle(
+                          fontSize: 40.0,
+                          fontFamily: 'Bajkal',
+                          fontWeight: FontWeight.bold,
+                          color: primaryColor,
+                        ),
+                      ),
+                    ),
+                    const Divider(
+                      indent: double.infinity,
+                    ),
+
+                    Padding(
+                      padding: const EdgeInsets.only(left: 32, top: 0, right: 32, bottom: 8),
                       child: TextFormField(
-                        decoration: const InputDecoration(labelText: "E-mail"),
+                        decoration: InputDecoration(
+                            labelText: "E-mail",
+                            enabledBorder: OutlineInputBorder(
+                                borderSide: const BorderSide(color: Color(0xff5191CA)),
+                                borderRadius: BorderRadius.circular(20.0)
+                            ),
+                            border: OutlineInputBorder(
+                                borderSide: const BorderSide(color: Color(0xff5191CA)),
+                                borderRadius: BorderRadius.circular(20.0)
+                            ),
+                            errorBorder: const OutlineInputBorder(
+                              borderSide: BorderSide(color: Color(0xffde0202)),
+                            ),
+                        ),
                         keyboardType: TextInputType.emailAddress,
                         style: sizeTextBlack,
                         onSaved: (val) => _email = val!,
@@ -75,10 +101,23 @@ class Registration extends StatelessWidget {
                         validator: (val) => emailValidator(_email)
                       ),
                     ),
-                    SizedBox(
-                      width: 400.0,
+                    Padding(
+                      padding: const EdgeInsets.only(left: 32, top: 0, right: 32, bottom: 8),
                       child: TextFormField(
-                        decoration: const InputDecoration(labelText: "Логин"),
+                        decoration: InputDecoration(
+                            labelText: "Логин",
+                            enabledBorder: OutlineInputBorder(
+                                borderSide: const BorderSide(color: Color(0xff5191CA)),
+                                borderRadius: BorderRadius.circular(20.0)
+                            ),
+                            border: OutlineInputBorder(
+                                borderSide: const BorderSide(color: Color(0xff5191CA)),
+                                borderRadius: BorderRadius.circular(20.0)
+                            ),
+                            errorBorder: const OutlineInputBorder(
+                              borderSide: BorderSide(color: Color(0xffde0202)),
+                            ),
+                        ),
                         keyboardType: TextInputType.name,
                         style: sizeTextBlack,
                         onSaved: (val) => _name = val!,
@@ -89,11 +128,24 @@ class Registration extends StatelessWidget {
                             : null,
                       ),
                     ),
-                    Container(
-                      width: 400.0,
-                      padding: const EdgeInsets.only(top: 10.0),
+
+                    Padding(
+                      padding: const EdgeInsets.only(left: 32, top: 0, right: 32, bottom: 8),
                       child: TextFormField(
-                        decoration: const InputDecoration(labelText: "Пароль"),
+                        decoration: InputDecoration(
+                            labelText: "Пароль",
+                            enabledBorder: OutlineInputBorder(
+                                borderSide: const BorderSide(color: Color(0xff5191CA)),
+                                borderRadius: BorderRadius.circular(20.0)
+                            ),
+                            border: OutlineInputBorder(
+                                borderSide: const BorderSide(color: Color(0xff5191CA)),
+                                borderRadius: BorderRadius.circular(20.0)
+                            ),
+                            errorBorder: const OutlineInputBorder(
+                              borderSide: BorderSide(color: Color(0xffde0202)),
+                            ),
+                        ),
                         keyboardType: TextInputType.visiblePassword,
                         obscureText: true,
                         style: sizeTextBlack,
@@ -105,11 +157,25 @@ class Registration extends StatelessWidget {
                             : null,
                       ),
                     ),
-                    Container(
-                      width: 400.0,
-                      padding: const EdgeInsets.only(top: 10.0),
+
+
+                    Padding(
+                      padding: const EdgeInsets.only(left: 32, top: 0, right: 32, bottom: 8),
                       child: TextFormField(
-                        decoration: const InputDecoration(labelText: "Подтвердите пароль"),
+                        decoration: InputDecoration(
+                          labelText: "Подтвердите пароль",
+                          enabledBorder: OutlineInputBorder(
+                              borderSide: const BorderSide(color: Color(0xff5191CA)),
+                              borderRadius: BorderRadius.circular(20.0)
+                          ),
+                          border: OutlineInputBorder(
+                              borderSide: const BorderSide(color: Color(0xff5191CA)),
+                              borderRadius: BorderRadius.circular(20.0)
+                          ),
+                          errorBorder: const OutlineInputBorder(
+                            borderSide: BorderSide(color: Color(0xffde0202)),
+                          ),
+                        ),
                         keyboardType: TextInputType.visiblePassword,
                         obscureText: true,
                         style: sizeTextBlack,
@@ -126,6 +192,7 @@ class Registration extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.only(top: 10.0),
                       child: MaterialButton(
+                        splashColor: const Color(0xff5191CA),
                         color: primaryColor,
                         height: 50.0,
                         minWidth: 150.0,

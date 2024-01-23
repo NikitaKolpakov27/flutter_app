@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:test_flutter/character/perses_fire.dart';
 import 'package:test_flutter/locations/location_fire.dart';
+import 'package:test_flutter/story/stories_fire.dart';
 import '../character/new_character.dart';
 import '../character/perses_json.dart';
 import '../locations/locations_json.dart';
@@ -149,7 +150,7 @@ class _AddMenu extends State<AddMenu> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => const JsonStory(),
+                                builder: (context) => const FireStory(),
                               ),
                             );
                           },

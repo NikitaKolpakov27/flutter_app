@@ -1,15 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'new_location.dart';
+import 'new_story.dart';
 
-class FireLocation extends StatefulWidget {
-  const FireLocation({super.key});
+class FireStory extends StatefulWidget {
+  const FireStory({super.key});
 
   @override
-  State<FireLocation> createState() => _FireLocState();
+  State<FireStory> createState() => _FireStoryState();
 }
 
-class _FireLocState extends State<FireLocation> {
+class _FireStoryState extends State<FireStory> {
   static const Color primaryColor = Color(0xffe36b44);
   static const Color backColor = Color(0xffffe5b9);
 
@@ -21,11 +21,11 @@ class _FireLocState extends State<FireLocation> {
         backgroundColor: primaryColor,
         centerTitle: true,
         title: const Text(
-          'Созданные локации',
+          'Созданные истории',
         ),
       ),
       body: StreamBuilder(
-        stream: FirebaseFirestore.instance.collection('locations').snapshots(),
+        stream: FirebaseFirestore.instance.collection('stories').snapshots(),
         builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (!snapshot.hasData) {
             return const CircularProgressIndicator();
@@ -39,11 +39,11 @@ class _FireLocState extends State<FireLocation> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => LocView(
+                        builder: (context) => StoryView(
                             snapshot.data?.docs[index].get('id'),
-                            snapshot.data?.docs[index].get('location_name'),
-                            false,
-                            snapshot.data?.docs[index].get("description")
+                            snapshot.data?.docs[index].get('title'),
+                            snapshot.data?.docs[index].get("genre"),
+                            snapshot.data?.docs[index].get("location"),
                         ),
                       ),
                     );
@@ -57,11 +57,11 @@ class _FireLocState extends State<FireLocation> {
                         style: const TextStyle(color: Color(0xffffffff)),
                       ),
                       title: Text(
-                        snapshot.data?.docs[index].get('location_name'),
+                        snapshot.data?.docs[index].get('title'),
                         style: const TextStyle(color: Color(0xffffffff)),
                       ),
                       subtitle: Text(
-                        snapshot.data?.docs[index].get("description"),
+                        snapshot.data?.docs[index].get("genre"),
                         style: const TextStyle(color: Color(0xffffffff)),
                       ),
                     ),

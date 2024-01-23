@@ -73,15 +73,42 @@ class _CreateNewStory extends State<NewStory> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
 
-            const Text(
-              'Новая история',
-              style: TextStyle(fontSize: 25.0, fontFamily: 'Bajkal'),
+            Padding(
+              padding: const EdgeInsets.only(left: 8, top: 0, bottom: 32, right: 8),
+              child: Text(
+                'Новая история',
+                style: TextStyle(
+                    fontSize: 32.0,
+                    fontFamily: 'Bajkal',
+                    fontWeight: FontWeight.bold,
+                    color: primaryColor,
+                ),
+              ),
             ),
 
 
-            SizedBox(
+            Padding(
+              padding: const EdgeInsets.only(left: 32, top: 0, right: 32, bottom: 0),
               child: TextFormField(
-                decoration: const InputDecoration(labelText: "Название истории"),
+                decoration: InputDecoration(
+                    labelText: "Название истории",
+                    
+                    // labelStyle: const TextStyle(
+                    //   color: Color(0xff5191CA)
+                    // ),
+
+                    enabledBorder: OutlineInputBorder(
+                        borderSide: const BorderSide(color: Color(0xff5191CA)),
+                        borderRadius: BorderRadius.circular(20.0)
+                    ),
+                    border: OutlineInputBorder(
+                        borderSide: const BorderSide(color: Color(0xff5191CA)),
+                        borderRadius: BorderRadius.circular(20.0)
+                    ),
+                    errorBorder: const OutlineInputBorder(
+                      borderSide: BorderSide(color: Color(0xffde0202)),
+                    ),
+                ),
                 keyboardType: TextInputType.name,
                 onSaved: (val) => _storyTitle = val!,
                 validator: (val) {
@@ -165,6 +192,7 @@ class _CreateNewStory extends State<NewStory> {
             Padding(
               padding: const EdgeInsets.only(top: 25.0),
               child: MaterialButton(
+                splashColor: const Color(0xff5191CA),
                 color: primaryColor,
                 height: 50.0,
                 minWidth: 150.0,
