@@ -50,9 +50,9 @@ class _AddMenu extends State<AddMenu> {
           appBar: AppBar(
             backgroundColor: primaryColor,
             title: const Text(
-              "Приложение для писателей",
+              "StoryForge",
               style: TextStyle(
-                  fontSize: 22.0,
+                  fontSize: 24.0,
                   fontStyle: FontStyle.italic,
                   color: Colors.white,
               ),
@@ -92,7 +92,7 @@ class _AddMenu extends State<AddMenu> {
                 children: [
                   Container(
                     height: 150,
-                    width: 300,
+                    width: 310,
                     color: primaryColor,
                     child: SizedBox(
                         width: 300,
@@ -102,135 +102,177 @@ class _AddMenu extends State<AddMenu> {
                             const Icon(
                               Icons.account_circle_sharp,
                               color: Color(0xfffbff4b),
-                              size: 75,
+                              size: 64,
                             ),
                             Text(
                               "Здравствуйте, $_name",
                               style: const TextStyle(
                                 color: Color(0xfffff7c3),
-                                fontStyle: FontStyle.italic,
-                                fontSize: 20.0,
+                                fontFamily: 'Bajkal',
+                                fontSize: 24.0,
                               ),
                             ),
                           ],
                         )
                     ),
                   ),
-                  const Divider(),
 
                   SizedBox(
                     height: 550,
-                    width: 250,
+                    width: 300,
                     child: ListView(
                       scrollDirection: Axis.vertical,
                       children: [
-                        FilledButton(
-                          style: ButtonStyle(
-                            backgroundColor: MaterialStateProperty.all(Color(0xffe79521)),
-                            padding: MaterialStateProperty.all(const EdgeInsets.all(30)),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 32.0, right: 32.0, bottom: 8),
+                          child: FilledButton(
+                            style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all(const Color(0xffe79521)),
+                              padding: MaterialStateProperty.all(const EdgeInsets.all(25)),
+                              overlayColor: MaterialStateProperty.all(const Color(0xff5191CA)),
+                            ),
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const FireChar(),
+                                ),
+                              );
+                            },
+                            child: Center(child: Text('Персонажи', style: _current_style,),),
                           ),
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const FireChar(),
-                              ),
-                            );
-                          },
-                          child: Center(child: Text('Персонажи', style: _current_style,),),
                         ),
-                        const Divider(),
-
-                        FilledButton(
-                          style: ButtonStyle(
-                            backgroundColor: MaterialStateProperty.all(Color(0xffe79521)),
-                            padding: MaterialStateProperty.all(const EdgeInsets.all(30)),
-                          ),
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const FireStory(),
-                              ),
-                            );
-                          },
-                          child: Center(child: Text('Истории', style: _current_style,),),
+                        const Divider(
+                          indent: double.infinity,
                         ),
-                        const Divider(),
 
 
-                        FilledButton(
-                          style: ButtonStyle(
-                            backgroundColor: MaterialStateProperty.all(Color(0xffe79521)),
-                            padding: MaterialStateProperty.all(const EdgeInsets.all(30)),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 32.0, right: 32.0, bottom: 8),
+                          child: FilledButton(
+                            style: ButtonStyle(
+                              overlayColor: MaterialStateProperty.all(const Color(0xff5191CA)),
+                              backgroundColor: MaterialStateProperty.all(const Color(0xffe79521)),
+                              padding: MaterialStateProperty.all(const EdgeInsets.all(25)),
+                            ),
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const FireLocation(),
+                                ),
+                              );
+                            },
+                            child: Center(child: Text('Локации', style: _current_style,),),
                           ),
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const FireLocation(),
-                              ),
-                            );
-                          },
-                          child: Center(child: Text('Локации', style: _current_style,),),
                         ),
-                        const Divider(),
-                        const Divider(),
-
-                        FilledButton(
-                          style: ButtonStyle(
-                            backgroundColor: MaterialStateProperty.all(Color(0xffe79521)),
-                            padding: MaterialStateProperty.all(const EdgeInsets.all(30)),
-                          ),
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const JsonNote(),
-                              ),
-                            );
-                          },
-                          child: Center(child: Text('Заметки', style: _current_style,),),
+                        const Divider(
+                          indent: double.infinity,
                         ),
-                        const Divider(),
-                        const Divider(),
-                        const Divider(),
-                        const Divider(),
 
-                        FilledButton(
-                          style: ButtonStyle(
-                            backgroundColor: MaterialStateProperty.all(Color(0xffe79521)),
-                            padding: MaterialStateProperty.all(const EdgeInsets.all(15)),
+
+                        Padding(
+                          padding: const EdgeInsets.only(left: 32.0, right: 32.0, bottom: 8),
+                          child: FilledButton(
+                            style: ButtonStyle(
+                              overlayColor: MaterialStateProperty.all(const Color(0xff5191CA)),
+                              backgroundColor: MaterialStateProperty.all(const Color(0xffe79521)),
+                              padding: MaterialStateProperty.all(const EdgeInsets.all(25)),
+                            ),
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const FireStory(),
+                                ),
+                              );
+                            },
+                            child: Center(child: Text('Истории', style: _current_style,),),
                           ),
-                          onPressed: () async {
-                            var custom_style = await Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const Settings(),
-                              ),
-                            );
-                            setState(() {
-                              _current_style = custom_style;
-                            });
-                          },
-                          child: Center(child: Text('Настройки', style: _current_style,),),
                         ),
-                        const Divider(),
+                        const Divider(
+                          indent: double.infinity,
+                        ),
+                        const Divider(
+                          indent: double.infinity,
+                        ),
 
-                        FilledButton(
-                          style: ButtonStyle(
-                            backgroundColor: MaterialStateProperty.all(Color(0xffe79521)),
-                            padding: MaterialStateProperty.all(const EdgeInsets.all(15)),
+
+                        Padding(
+                          padding: const EdgeInsets.only(left: 32.0, right: 32.0, bottom: 8),
+                          child: FilledButton(
+                            style: ButtonStyle(
+                              overlayColor: MaterialStateProperty.all(const Color(0xff5191CA)),
+                              backgroundColor: MaterialStateProperty.all(const Color(0xffe79521)),
+                              padding: MaterialStateProperty.all(const EdgeInsets.all(25)),
+                            ),
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const JsonNote(),
+                                ),
+                              );
+                            },
+                            child: Center(child: Text('Заметки', style: _current_style,),),
                           ),
-                          onPressed: () async {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const Settings(),
-                              ),
-                            );
-                          },
-                          child: Center(child: Text('Избранное', style: _current_style,),),
+                        ),
+                        const Divider(
+                          indent: double.infinity,
+                        ),
+                        const Divider(
+                          indent: double.infinity,
+                        ),
+                        const Divider(
+                          indent: double.infinity,
+                        ),
+                        const Divider(
+                          indent: double.infinity,
+                        ),
+
+                        Padding(
+                          padding: const EdgeInsets.only(left: 32.0, right: 32.0, bottom: 8),
+                          child: FilledButton(
+                            style: ButtonStyle(
+                              overlayColor: MaterialStateProperty.all(const Color(0xff5191CA)),
+                              backgroundColor: MaterialStateProperty.all(const Color(0xffd57705)),
+                              padding: MaterialStateProperty.all(const EdgeInsets.all(15)),
+                            ),
+                            onPressed: () async {
+                              var custom_style = await Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const Settings(),
+                                ),
+                              );
+                              setState(() {
+                                _current_style = custom_style;
+                              });
+                            },
+                            child: Center(child: Text('Настройки', style: _current_style,),),
+                          ),
+                        ),
+                        const Divider(
+                          indent: double.infinity,
+                        ),
+
+                        Padding(
+                          padding: const EdgeInsets.only(left: 32.0, right: 32.0, bottom: 8),
+                          child: FilledButton(
+                            style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all(const Color(0xffd57705)),
+                              padding: MaterialStateProperty.all(const EdgeInsets.all(15)),
+                            ),
+                            onPressed: () async {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const Settings(),
+                                ),
+                              );
+                            },
+                            child: Center(child: Text('Избранное', style: _current_style,),),
+                          ),
                         ),
                       ],
                     ),
@@ -250,80 +292,117 @@ class _AddMenu extends State<AddMenu> {
 
                   const Text(
                     'Главное меню',
-                    style: TextStyle(fontSize: 35.0, color: Color(0xffe75c21), fontFamily: 'Bajkal'),
-                  ),
-                  const Divider(),
-
-                  FilledButton(
-                    style: ButtonStyle(
-                      padding: MaterialStateProperty.all(const EdgeInsets.all(30)),
-                      backgroundColor: MaterialStateProperty.all(const Color(0xffe79521)),
-                      overlayColor: MaterialStateProperty.all(const Color(0xff5191CA)),
+                    style: TextStyle(
+                        fontSize: 32.0,
+                        color: Color(0xffe75c21),
+                        fontFamily: 'Bajkal',
+                        fontWeight: FontWeight.bold
                     ),
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => NewCharacter(),
-                        ),
-                      );
-                    },
-                    child: Center(child: Text('Создать нового персонажа', style: _current_style,),),
                   ),
-                  const Divider(),
-
-
-                  FilledButton(
-                    style: ButtonStyle(
-                      padding: MaterialStateProperty.all(const EdgeInsets.all(30)),
-                      backgroundColor: MaterialStateProperty.all(Color(0xffe79521)),
-                      overlayColor: MaterialStateProperty.all(const Color(0xff5191CA)),
-                    ),
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const NewLocation(),
-                        ),
-                      );
-                    },
-                    child: Center(child: Text('Создать новую локацию', style: _current_style,),),
+                  const Divider(
+                    indent: double.infinity,
                   ),
-                  const Divider(),
 
-                  FilledButton(
-                    style: ButtonStyle(
-                      padding: MaterialStateProperty.all(const EdgeInsets.all(30)),
-                      backgroundColor: MaterialStateProperty.all(Color(0xffe79521)),
-                      overlayColor: MaterialStateProperty.all(const Color(0xff5191CA)),
+                  const Text(
+                    'Создание',
+                    style: TextStyle(
+                        fontSize: 32.0,
+                        color: Color(0xffe75c21),
+                        fontFamily: 'Bajkal',
                     ),
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const NewStory(),
-                        ),
-                      );
-                    },
-                    child: Center(child: Text('Создать новую историю', style: _current_style,),),
                   ),
-                  const Divider(),
+                  const Divider(
+                    indent: double.infinity,
+                  ),
 
-                  FilledButton(
-                    style: ButtonStyle(
-                      padding: MaterialStateProperty.all(const EdgeInsets.all(30)),
-                      backgroundColor: MaterialStateProperty.all(Color(0xffe79521)),
-                      overlayColor: MaterialStateProperty.all(const Color(0xff5191CA)),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 32, right: 32, top: 8.0),
+                    child: FilledButton(
+                      style: ButtonStyle(
+                        padding: MaterialStateProperty.all(const EdgeInsets.all(30)),
+                        backgroundColor: MaterialStateProperty.all(const Color(0xffe79521)),
+                        overlayColor: MaterialStateProperty.all(const Color(0xff5191CA)),
+                      ),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => NewCharacter(),
+                          ),
+                        );
+                      },
+                      child: Center(child: Text('Новый персонаж', style: _current_style,),),
                     ),
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => CreateNewNote(),
-                        ),
-                      );
-                    },
-                    child: Center(child: Text('Новая заметка', style: _current_style,),),
+                  ),
+                  const Divider(
+                    indent: double.infinity,
+                  ),
+
+
+                  Padding(
+                    padding: const EdgeInsets.only(left: 32, right: 32, top: 8.0),
+                    child: FilledButton(
+                      style: ButtonStyle(
+                        padding: MaterialStateProperty.all(const EdgeInsets.all(30)),
+                        backgroundColor: MaterialStateProperty.all(const Color(0xffe79521)),
+                        overlayColor: MaterialStateProperty.all(const Color(0xff5191CA)),
+                      ),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const NewLocation(),
+                          ),
+                        );
+                      },
+                      child: Center(child: Text('Новая локация', style: _current_style,),),
+                    ),
+                  ),
+                  const Divider(
+                    indent: double.infinity,
+                  ),
+
+                  Padding(
+                    padding: const EdgeInsets.only(left: 32, right: 32, top: 8.0),
+                    child: FilledButton(
+                      style: ButtonStyle(
+                        padding: MaterialStateProperty.all(const EdgeInsets.all(30)),
+                        backgroundColor: MaterialStateProperty.all(const Color(0xffe79521)),
+                        overlayColor: MaterialStateProperty.all(const Color(0xff5191CA)),
+                      ),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const NewStory(),
+                          ),
+                        );
+                      },
+                      child: Center(child: Text('Новая история', style: _current_style,),),
+                    ),
+                  ),
+                  const Divider(
+                    indent: double.infinity,
+                  ),
+
+                  Padding(
+                    padding: const EdgeInsets.only(left: 32, right: 32, top: 32.0),
+                    child: FilledButton(
+                      style: ButtonStyle(
+                        padding: MaterialStateProperty.all(const EdgeInsets.all(30)),
+                        backgroundColor: MaterialStateProperty.all(Color(0xffe79521)),
+                        overlayColor: MaterialStateProperty.all(const Color(0xff5191CA)),
+                      ),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => CreateNewNote(),
+                          ),
+                        );
+                      },
+                      child: Center(child: Text('Новая заметка', style: _current_style,),),
+                    ),
                   ),
                 ],
               )

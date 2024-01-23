@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:test_flutter/adding/add_entity.dart';
+import 'package:test_flutter/locations/edit_location.dart';
 import '../favorite/new_favorite.dart';
 
 class NewLocation extends StatefulWidget {
@@ -254,8 +255,22 @@ class LocationView extends State<LocView> {
             Text(
               'Локация №$_locationID',
               style: const TextStyle(
-                  fontSize: 25.0,
+                  fontSize: 32.0,
                   fontWeight: FontWeight.bold,
+                  fontFamily: 'Bajkal',
+                  color: primaryColor
+              ),
+            ),
+            const Divider(
+              indent: double.infinity,
+            ),
+
+
+            const Text(
+              'ИНФО',
+              style: TextStyle(
+                  fontSize: 32.0,
+                  fontStyle: FontStyle.italic,
                   fontFamily: 'Bajkal',
                   color: primaryColor
               ),
@@ -266,7 +281,9 @@ class LocationView extends State<LocView> {
 
             Row(
               children: [
-                const Flexible(
+
+                const Padding(
+                  padding: EdgeInsets.only(left: 32, right: 0),
                   child: Text(
                     'Название:',
                     style: TextStyle(
@@ -274,7 +291,9 @@ class LocationView extends State<LocView> {
                     ),
                   ),
                 ),
-                Flexible(
+
+                Padding(
+                  padding: const EdgeInsets.only(right: 32),
                   child: Text(
                     ' $_locationName',
                     style: const TextStyle(fontSize: 24.0),
@@ -286,9 +305,11 @@ class LocationView extends State<LocView> {
               indent: double.infinity,
             ),
 
-            Row(
+            Column(
               children: [
-                const Flexible(
+
+                const Padding(
+                  padding: EdgeInsets.only(left: 16, right: 0, bottom: 8),
                   child: Text(
                     'Описание:',
                     style: TextStyle(
@@ -296,7 +317,9 @@ class LocationView extends State<LocView> {
                     ),
                   ),
                 ),
-                Flexible(
+
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 0),
                   child: Text(
                     ' $_description',
                     style: const TextStyle(fontSize: 24.0),
@@ -308,30 +331,65 @@ class LocationView extends State<LocView> {
               indent: double.infinity,
             ),
 
-            Padding(
-              padding: const EdgeInsets.only(top: 25.0),
-              child: MaterialButton(
-                color: primaryColor,
-                height: 50.0,
-                minWidth: 150.0,
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const AddMenu(),
+            Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 24.0, top: 24.0, right: 16),
+                  child: MaterialButton(
+                    color: primaryColor,
+                    height: 50.0,
+                    minWidth: 150.0,
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const AddMenu(),
+                        ),
+                      );
+                      setState(() {
+                        _isFavorite = true;
+                      });
+                    },
+                    child: const Text(
+                      "ОК",
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16.0
+                      ),
                     ),
-                  );
-                  setState(() {
-                    _isFavorite = true;
-                  });
-                },
-                child: const Text(
-                  "ОК",
-                  style: TextStyle(
-                      color: Colors.white
                   ),
                 ),
-              ),
+
+                Padding(
+                  padding: const EdgeInsets.only(left: 24.0, top: 24.0, right: 16),
+                  child: MaterialButton(
+                    color: primaryColor,
+                    height: 50.0,
+                    minWidth: 150.0,
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          // builder: (context) => LocationEditor(
+                          //     _locationID, _locationName, _isFavorite, _description
+                          // ),
+                          builder: (context) => const AddMenu(),
+                        ),
+                      );
+                      setState(() {
+                        _isFavorite = true;
+                      });
+                    },
+                    child: const Text(
+                      "Редактировать",
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16.0
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
 
             const Divider(
@@ -339,7 +397,7 @@ class LocationView extends State<LocView> {
             ),
 
             Padding(
-              padding: const EdgeInsets.only(top: 25.0),
+              padding: const EdgeInsets.only(top: 24.0),
               child: MaterialButton(
                 color: primaryColor,
                 height: 50.0,
@@ -358,7 +416,8 @@ class LocationView extends State<LocView> {
                 child: const Text(
                   "Добавить в избранное",
                   style: TextStyle(
-                      color: Colors.white
+                      color: Colors.white,
+                      fontSize: 16.0
                   ),
                 ),
               ),
