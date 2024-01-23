@@ -209,11 +209,11 @@ class Registration extends StatelessWidget {
                         text: TextSpan(
                           text: "У Вас уже есть аккаунт? ",
                           style: sizeTextBlack,
-                          children: <TextSpan>[
+                          children: const <TextSpan>[
                             TextSpan(
                               text: "Войдите",
                               style: TextStyle(
-                                color: primaryColor
+                                color: Color(0xff5191CA)
                               )
                             )
                           ]

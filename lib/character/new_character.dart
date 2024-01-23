@@ -89,14 +89,38 @@ class _CreateNewCharacter extends State<NewCharacter> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                const Text(
-                  'Новый персонаж',
-                  style: TextStyle(fontSize: 25.0, fontFamily: 'Bajkal'),
+
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 16, right: 8, left: 8),
+                  child: Text(
+                    'Новый персонаж',
+                    style: TextStyle(
+                        fontSize: 40.0,
+                        fontFamily: 'Bajkal',
+                        fontWeight: FontWeight.bold,
+                        color: primaryColor
+                    ),
+                  ),
                 ),
-                SizedBox(
-                  width: 400.0,
+
+
+                Padding(
+                  padding: const EdgeInsets.only(left: 32, top: 0, right: 32, bottom: 8),
                   child: TextFormField(
-                    decoration: const InputDecoration(labelText: "Имя"),
+                    decoration: InputDecoration(
+                        labelText: "Имя",
+                        enabledBorder: OutlineInputBorder(
+                            borderSide: const BorderSide(color: Color(0xff5191CA)),
+                            borderRadius: BorderRadius.circular(20.0)
+                        ),
+                        border: OutlineInputBorder(
+                            borderSide: const BorderSide(color: Color(0xff5191CA)),
+                            borderRadius: BorderRadius.circular(20.0)
+                        ),
+                        errorBorder: const OutlineInputBorder(
+                          borderSide: BorderSide(color: Color(0xffde0202)),
+                        ),
+                    ),
                     keyboardType: TextInputType.name,
                     onSaved: (val) => _persName = val!,
                     validator: (val) {
@@ -107,10 +131,24 @@ class _CreateNewCharacter extends State<NewCharacter> {
                     },
                   ),
                 ),
-                SizedBox(
-                  width: 400.0,
+
+                Padding(
+                  padding: const EdgeInsets.only(left: 32, top: 0, right: 32, bottom: 8),
                   child: TextFormField(
-                    decoration: const InputDecoration(labelText: "Фамилия"),
+                    decoration: InputDecoration(
+                      labelText: "Фамилия",
+                      enabledBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(color: Color(0xff5191CA)),
+                          borderRadius: BorderRadius.circular(20.0)
+                      ),
+                      border: OutlineInputBorder(
+                          borderSide: const BorderSide(color: Color(0xff5191CA)),
+                          borderRadius: BorderRadius.circular(20.0)
+                      ),
+                      errorBorder: const OutlineInputBorder(
+                        borderSide: BorderSide(color: Color(0xffde0202)),
+                      ),
+                    ),
                     keyboardType: TextInputType.name,
                     onSaved: (val) => _persLastName = val!,
                     validator: (val) =>
@@ -119,11 +157,25 @@ class _CreateNewCharacter extends State<NewCharacter> {
                         : null,
                   ),
                 ),
-                Container(
-                  width: 400.0,
-                  padding: const EdgeInsets.only(top: 10.0),
+
+
+                Padding(
+                  padding: const EdgeInsets.only(left: 32, top: 0, right: 32, bottom: 8),
                   child: TextFormField(
-                    decoration: const InputDecoration(labelText: "Отчество"),
+                    decoration: InputDecoration(
+                      labelText: "Отчество",
+                      enabledBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(color: Color(0xff5191CA)),
+                          borderRadius: BorderRadius.circular(20.0)
+                      ),
+                      border: OutlineInputBorder(
+                          borderSide: const BorderSide(color: Color(0xff5191CA)),
+                          borderRadius: BorderRadius.circular(20.0)
+                      ),
+                      errorBorder: const OutlineInputBorder(
+                        borderSide: BorderSide(color: Color(0xffde0202)),
+                      ),
+                    ),
                     keyboardType: TextInputType.name,
                     onSaved: (val) => _persPatronymic = val!,
                     validator: (val) =>
@@ -133,57 +185,75 @@ class _CreateNewCharacter extends State<NewCharacter> {
                   ),
                 ),
 
-                Row(
-                  children: [
-                    const Flexible(
-                      child: Text(
+                Padding(
+                  padding: const EdgeInsets.only(left: 32, bottom: 8),
+                  child: Row(
+                    children: [
+                      Text(
                         'Пол:',
-                        style: TextStyle(fontSize: 20.0, color: Colors.black),
-                      ),
-                    ),
-                    // const Divider(),
-                    Flexible(
-                      child: ListTile(
-                        title: const Text(
-                          'Мужчина', style: TextStyle(fontSize: 15.0),
-                        ),
-                        leading: Radio<bool>(
-                          value: true,
-                          activeColor: const Color(0xff5191CA),
-                          groupValue: _persSex,
-                          onChanged: (bool? value) {
-                            setState(() {
-                              _persSex = value!;
-                            });
-                          },
+                        style: TextStyle(
+                            fontSize: 24.0,
+                            color: primaryColor,
+                            fontFamily: 'Bajkal',
                         ),
                       ),
-                    ),
-                    Flexible(
-                      child: ListTile(
-                        title: const Text(
-                          'Женщина', style: TextStyle(fontSize: 15.0),
-                        ),
-                        leading: Radio<bool>(
-                          activeColor: const Color(0xff5191CA),
-                          value: false,
-                          groupValue: _persSex,
-                          onChanged: (bool? value) {
-                            setState(() {
-                              _persSex = value!;
-                            });
-                          },
+
+                      Flexible(
+                        child: ListTile(
+                          title: const Text(
+                            'Муж.', style: TextStyle(fontSize: 16.0),
+                          ),
+                          leading: Radio<bool>(
+                            value: true,
+                            activeColor: const Color(0xff5191CA),
+                            groupValue: _persSex,
+                            onChanged: (bool? value) {
+                              setState(() {
+                                _persSex = value!;
+                              });
+                            },
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+
+                      Flexible(
+                        child: ListTile(
+                          title: const Text(
+                            'Жен.', style: TextStyle(fontSize: 16.0),
+                          ),
+                          leading: Radio<bool>(
+                            activeColor: const Color(0xff5191CA),
+                            value: false,
+                            groupValue: _persSex,
+                            onChanged: (bool? value) {
+                              setState(() {
+                                _persSex = value!;
+                              });
+                            },
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
 
-                Container(
-                  width: 400.0,
-                  padding: const EdgeInsets.only(top: 10.0),
+                Padding(
+                  padding: const EdgeInsets.only(left: 80, top: 0, right: 80, bottom: 8),
                   child: TextFormField(
-                    decoration: const InputDecoration(labelText: "Возраст"),
+                      decoration: InputDecoration(
+                        labelText: "Возраст",
+                        enabledBorder: OutlineInputBorder(
+                            borderSide: const BorderSide(color: Color(0xff5191CA)),
+                            borderRadius: BorderRadius.circular(20.0)
+                        ),
+                        border: OutlineInputBorder(
+                            borderSide: const BorderSide(color: Color(0xff5191CA)),
+                            borderRadius: BorderRadius.circular(20.0)
+                        ),
+                        errorBorder: const OutlineInputBorder(
+                          borderSide: BorderSide(color: Color(0xffde0202)),
+                        ),
+                      ),
                     keyboardType: TextInputType.number,
                     onSaved: (val) => _persAge = int.parse(val!),
                     validator: (val) {
@@ -202,57 +272,58 @@ class _CreateNewCharacter extends State<NewCharacter> {
                   ),
                 ),
 
-                const Flexible(
-                    child: Text(
-                      'Личность:',
-                      style: TextStyle(fontSize: 15.0, fontFamily: 'Bajkal'),
-                    )
-                ),
-
-                Flexible(
-                  child: Container(
-                    width: 400.0,
-                    padding: const EdgeInsets.only(top: 10.0),
-                    child: DropdownButton(
-                        value: selectedMBTI,
-                        items: dropdownMBTI,
-                        onChanged: (String? val){
-                          setState(() {
-                            selectedMBTI = val!;
-                          });
-                        },
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    'Личность:',
+                    style: TextStyle(
+                        fontSize: 24.0,
+                        fontFamily: 'Bajkal',
+                        color: primaryColor
                     ),
                   ),
                 ),
 
-                Flexible(
-                  child: Container(
-                    width: 400.0,
-                    padding: const EdgeInsets.only(top: 10.0),
-                    child: DropdownButton(
-                      value: selectedTemper,
-                      items: dropdownTempers,
-                      onChanged: (String? val) {
+                Padding(
+                  padding: const EdgeInsets.only(left: 32, top: 0, right: 32, bottom: 8),
+                  child: DropdownButton(
+                      value: selectedMBTI,
+                      items: dropdownMBTI,
+                      onChanged: (String? val){
                         setState(() {
-                          selectedTemper = val!;
+                          selectedMBTI = val!;
                         });
                       },
-                    ),
+                  ),
+                ),
+
+                Padding(
+                  padding: const EdgeInsets.only(left: 32, top: 0, right: 32, bottom: 8),
+                  child: DropdownButton(
+                    value: selectedTemper,
+                    items: dropdownTempers,
+                    onChanged: (String? val) {
+                      setState(() {
+                        selectedTemper = val!;
+                      });
+                    },
                   ),
                 ),
 
 
                 Padding(
-                  padding: const EdgeInsets.only(top: 25.0),
+                  padding: const EdgeInsets.only(top: 0.0),
                   child: MaterialButton(
+                    splashColor: const Color(0xff5191CA),
                     color: primaryColor,
-                    height: 50.0,
-                    minWidth: 150.0,
+                    height: 48.0,
+                    minWidth: 160.0,
                     onPressed: submitPers,
                     child: const Text(
                       "Создать персонажа",
                       style: TextStyle(
-                        color: Colors.white
+                        color: Colors.white,
+                        fontSize: 16.0
                       ),
                     ),
                   ),
@@ -470,7 +541,7 @@ class CharacterView extends StatelessWidget {
               Flexible(
                 child: Text(
                   ' $_persSex',
-                  style: TextStyle(fontSize: 24.0),
+                  style: const TextStyle(fontSize: 24.0),
                 ),
               ),
             ],
