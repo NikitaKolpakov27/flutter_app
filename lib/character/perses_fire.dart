@@ -29,12 +29,7 @@ class _FireHomeState extends State<FireChar> {
           stream: FirebaseFirestore.instance.collection('perses').snapshots(),
           builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
             if (!snapshot.hasData) {
-              return const Center(
-                child: Text(
-                    'Ошибка! Нет записей!',
-                    style: TextStyle(fontFamily: 'Bajkal', fontSize: 25.0, color: primaryColor),
-                ),
-              );
+              return const CircularProgressIndicator();
             }
             return ListView.builder(
                 itemCount: snapshot.data?.docs.length,

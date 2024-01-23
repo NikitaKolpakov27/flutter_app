@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:test_flutter/adding/add_entity.dart';
 import '../favorite/new_favorite.dart';
 
 class NewLocation extends StatefulWidget {
@@ -139,13 +141,26 @@ class _CreateNewLocation extends State<NewLocation> {
     }
   }
 
-  void performLocation() {
+  void performLocation() async {
     hideKeyboard();
+
+    var locations = FirebaseFirestore.instance.collection('locations');
+    var locationsAsync = await locations.get();
+
+    _locationID = locationsAsync.docs.length;
+
+    FirebaseFirestore.instance.collection('locations').add(
+        {
+          'id': _locationID,
+          'location_name': _locationName,
+          'description': _description
+        }
+    );
+
     Navigator.push(
         _context,
         MaterialPageRoute(
-            // builder: (context) => LocationView(_locationID, _isFavorite, _locationName, _description)));
-            builder: (context) => LocView(_locationID, _locationName, _isFavorite,  _description)));
+            builder: (context) => LocView(_locationID, _locationName, _isFavorite, _description)));
   }
 
   void hideKeyboard() {
@@ -154,8 +169,6 @@ class _CreateNewLocation extends State<NewLocation> {
 }
 
 class LocView extends StatefulWidget {
-  // final int locID;
-  // const LocView({Key? key, required this.locID}) : super(key: key);
 
   late int _locationID;
   late String _locationName;
@@ -174,6 +187,8 @@ class LocView extends StatefulWidget {
 }
 
 class LocationView extends State<LocView> {
+  static const Color primaryColor = Color(0xffe36b44);
+  static const Color backColor =  Color(0xffffe5b9);
 
   // Location properties
   late int _locationID = widget._locationID;
@@ -184,8 +199,9 @@ class LocationView extends State<LocView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: const Color(0xffffe5b9),
+        backgroundColor: backColor,
         appBar: AppBar(
+          backgroundColor: primaryColor,
           title: const Text(
               "Созданная локация",
               style: TextStyle(fontSize: 25.0),
@@ -195,14 +211,48 @@ class LocationView extends State<LocView> {
         body: Column(
           children: [
             Text('Название локации: $_locationName'),
-            const Divider(),
+            const Divider(
+              indent: double.infinity,
+            ),
             Text('Описание локации: $_description'),
-            const Divider(),
+            const Divider(
+              indent: double.infinity,
+            ),
 
             Padding(
               padding: const EdgeInsets.only(top: 25.0),
               child: MaterialButton(
-                color: Colors.indigoAccent,
+                color: primaryColor,
+                height: 50.0,
+                minWidth: 150.0,
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const AddMenu(),
+                    ),
+                  );
+                  setState(() {
+                    _isFavorite = true;
+                  });
+                },
+                child: const Text(
+                  "ОК",
+                  style: TextStyle(
+                      color: Colors.white
+                  ),
+                ),
+              ),
+            ),
+
+            const Divider(
+              indent: double.infinity,
+            ),
+
+            Padding(
+              padding: const EdgeInsets.only(top: 25.0),
+              child: MaterialButton(
+                color: primaryColor,
                 height: 50.0,
                 minWidth: 150.0,
                 onPressed: () {

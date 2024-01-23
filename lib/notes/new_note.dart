@@ -4,16 +4,14 @@ import 'package:flutter/services.dart';
 class CreateNewNote extends StatelessWidget {
   final formKeyNote = GlobalKey<FormState>();
   late BuildContext _context;
-  late String _name = '';
 
   // Location's properties
   late int _noteID = 0;
   late String _noteTitle = '';
   late String _noteText = '';
 
-  CreateNewNote(String name) {
-    _name = name;
-  }
+  Color primaryColor = const Color(0xffe36b44);
+  Color backColor = const Color(0xffffe5b9);
 
   @override
   Widget build(BuildContext context) {

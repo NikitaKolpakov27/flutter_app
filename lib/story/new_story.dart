@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:test_flutter/character/pers.dart';
 
 class NewStory extends StatefulWidget {
   const NewStory({super.key});
@@ -16,21 +16,23 @@ class _CreateNewStory extends State<NewStory> {
 
   // Story's properties
   late int _storyID = 0;
-  late List<Character> _characters = [];
   late String _storyTitle = '';
   late String _genre = '';
-  // late String _persPatronymic = ''; // late List<Location> locations;
-
+  late String _location;
 
   late String selectedGenre = 'Хоррор';
+  late String selectedLocation = 'The Grand Canyon. The most huge landscape in North America';
 
   Color primaryColor = const Color(0xffe36b44);
+  Color backColor = const Color(0xffffe5b9);
 
   @override
   Widget build(BuildContext context) {
     _context = context;
     return Scaffold(
+      backgroundColor: backColor,
       appBar: AppBar(
+        backgroundColor: primaryColor,
         title: const Text(
           "Создание истории",
           style: TextStyle(
@@ -65,70 +67,123 @@ class _CreateNewStory extends State<NewStory> {
         ],
       ),
 
-      body: Center(
-        child: Form(
-          key: formKeyStory,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              SizedBox(
-                width: 400.0,
-                child: TextFormField(
-                  decoration: const InputDecoration(labelText: "Название истории"),
-                  keyboardType: TextInputType.name,
-                  onSaved: (val) => _storyTitle = val!,
-                  validator: (val) {
-                    if (val!.isEmpty) {
-                      return "Слишком короткое название истории";
-                    }
-                    return null;
-                  },
-                ),
+      body: Form(
+        key: formKeyStory,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+
+            const Text(
+              'Новая история',
+              style: TextStyle(fontSize: 25.0, fontFamily: 'Bajkal'),
+            ),
+
+
+            SizedBox(
+              child: TextFormField(
+                decoration: const InputDecoration(labelText: "Название истории"),
+                keyboardType: TextInputType.name,
+                onSaved: (val) => _storyTitle = val!,
+                validator: (val) {
+                  if (val!.isEmpty) {
+                    return "Слишком короткое название истории";
+                  }
+                  return null;
+                },
               ),
-              SizedBox(
-                width: 400.0,
-                child: DropdownButton(
+            ),
+            const Divider(
+              indent: double.infinity,
+            ),
+            Text(
+                'Жанр',
+                textAlign: TextAlign.left,
+                style: TextStyle(
+                  color: primaryColor,
+                  fontSize: 20.0,
+                  fontFamily: 'Bajkal'
+                ),
+            ),
+            SizedBox(
+              child: DropdownButton(
                 value: selectedGenre,
                 items: dropdownGenres,
-                onChanged: (String? val){
+                onChanged: (String? val) {
                   setState(() {
                     selectedGenre = val!;
                   });
                 },
+                isExpanded: false,
               ),
-              ),
-              Container(
-                width: 400.0,
-                padding: const EdgeInsets.only(top: 10.0),
-                child: DropdownButton(
-                  items: dropdownCharacters,
-                  onChanged: (val) => _characters = val as List<Character>,
+            ),
 
-                ),
+            const Divider(
+              indent: double.infinity,
+            ),
+
+            Text(
+              'Локация',
+              textAlign: TextAlign.left,
+              style: TextStyle(
+                color: primaryColor,
+                fontSize: 20.0,
+                fontFamily: 'Bajkal'
               ),
-              Padding(
-                padding: const EdgeInsets.only(top: 25.0),
-                child: MaterialButton(
-                  color: primaryColor,
-                  height: 50.0,
-                  minWidth: 150.0,
-                  onPressed: submitStory,
-                  child: const Text(
-                    "Создать историю",
-                    style: TextStyle(
-                        color: Colors.white
-                    ),
+            ),
+            StreamBuilder(
+              stream: FirebaseFirestore.instance.collection('locations').snapshots(),
+              builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                List<DropdownMenuItem<String>> locationItems = [];
+                if (!snapshot.hasData) {
+                  return const CircularProgressIndicator();
+                }
+
+                final locations = snapshot.data?.docs.toList();
+                for (var loc in locations!) {
+                  locationItems.add(DropdownMenuItem<String>(
+                      value: loc['location_name'] + ". " + loc['description'],
+                      child: Text(
+                          loc['location_name']
+                      )
+                  ));
+                }
+                return DropdownButton<String>(
+                    value: selectedLocation,
+                    items: locationItems,
+                    onChanged: (String? val) {
+                      setState(() {
+                        selectedLocation = val!;
+                      });
+                    },
+                  isExpanded: false,
+                );
+              },
+            ),
+            const Divider(
+              indent: double.infinity,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 25.0),
+              child: MaterialButton(
+                color: primaryColor,
+                height: 50.0,
+                minWidth: 150.0,
+                onPressed: submitStory,
+                child: const Text(
+                  "Создать историю",
+                  style: TextStyle(
+                      color: Colors.white
                   ),
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
   }
 
-  List<DropdownMenuItem<String>> get dropdownGenres{
+  List<DropdownMenuItem<String>> get dropdownGenres {
     List<DropdownMenuItem<String>> menuItems = [
       const DropdownMenuItem(value: "Хоррор", child: Text("Хоррор")),
       const DropdownMenuItem(value: "Драма", child: Text("Драма")),
@@ -139,19 +194,6 @@ class _CreateNewStory extends State<NewStory> {
       const DropdownMenuItem(value: "Научная фанатастика", child: Text("Научная фанатастика")),
     ];
     return menuItems;
-  }
-
-  List<DropdownMenuItem<String>> get dropdownCharacters {
-    List<DropdownMenuItem<String>> characters = [];
-    getAllChars().then((val) {
-      for (var char in val) {
-        characters.insert(
-            characters.length,
-            DropdownMenuItem(child: Text(char.toString()), value: char.toString())
-        );
-      }
-    });
-    return characters;
   }
 
   void submitStory() {
@@ -172,7 +214,7 @@ class _CreateNewStory extends State<NewStory> {
     Navigator.push(
         _context,
         MaterialPageRoute(
-            builder: (context) => StoryView(_storyID, _storyTitle, _genre, _characters)));
+            builder: (context) => StoryView(_storyID, _storyTitle, _genre, selectedLocation)));
   }
 
   void hideKeyboard() {
@@ -188,13 +230,13 @@ class StoryView extends StatelessWidget {
   late int _storyID;
   late String _storyTitle = '';
   late String _genre = '';
-  late List<Character> _characters = [];
+  late String _location = '';
 
-  StoryView(int storyID, String storyTitle, String genre, List<Character> characters) {
+  StoryView(int storyID, String storyTitle, String genre, String location) {
     _storyID = storyID;
     _storyTitle = storyTitle;
     _genre = genre;
-    _characters = characters;
+    _location = location;
   }
 
   @override
@@ -202,6 +244,7 @@ class StoryView extends StatelessWidget {
     return Scaffold(
         backgroundColor: backColor,
         appBar: AppBar(
+          backgroundColor: primaryColor,
           title: const Text(
             "Созданная история",
             style: TextStyle(fontSize: 25.0),),
@@ -268,8 +311,22 @@ class StoryView extends StatelessWidget {
               indent: double.infinity,
             ),
 
-            Text('Персонажи: ${_characters.toString()}'),
-            Divider(),
+            Row(
+              children: [
+                const Flexible(
+                  child: Text(
+                    'Локация:',
+                    style: TextStyle(fontSize: 24.0, color: primaryColor),
+                  ),
+                ),
+                Flexible(
+                  child: Text(
+                    ' $_location',
+                    style: const TextStyle(fontSize: 24.0),
+                  ),
+                ),
+              ],
+            ),
           ],
         )
 

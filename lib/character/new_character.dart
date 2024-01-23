@@ -232,7 +232,7 @@ class _CreateNewCharacter extends State<NewCharacter> {
                     child: DropdownButton(
                       value: selectedTemper,
                       items: dropdownTempers,
-                      onChanged: (String? val){
+                      onChanged: (String? val) {
                         setState(() {
                           selectedTemper = val!;
                         });
@@ -311,7 +311,6 @@ class _CreateNewCharacter extends State<NewCharacter> {
     hideKeyboard();
     _personality = Personality(_persID, selectedMBTI, selectedTemper);
 
-    // var chars = await getAllChars();
     var chars = FirebaseFirestore.instance.collection('perses');
     var charsAsync = await chars.get();
 
@@ -431,7 +430,7 @@ class CharacterView extends StatelessWidget {
               Flexible(
                 child: Text(
                   ' $_persLastName',
-                  style: TextStyle(fontSize: 24.0),
+                  style: const TextStyle(fontSize: 24.0),
                 ),
               ),
             ],
