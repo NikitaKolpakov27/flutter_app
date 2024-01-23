@@ -300,7 +300,7 @@ class _AddMenu extends State<AddMenu> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => CreateNewStory(_name),
+                          builder: (context) => const NewStory(),
                         ),
                       );
                     },

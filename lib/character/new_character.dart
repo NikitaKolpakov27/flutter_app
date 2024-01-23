@@ -346,6 +346,7 @@ class _CreateNewCharacter extends State<NewCharacter> {
 
 class CharacterView extends StatelessWidget {
   static const Color primaryColor = Color(0xffe36b44);
+  static const Color backColor =  Color(0xffffe5b9);
 
   // Character's properties
   late int _persID;
@@ -369,7 +370,9 @@ class CharacterView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: backColor,
       appBar: AppBar(
+        backgroundColor: primaryColor,
         title: const Text(
             'Созданный персонаж',
             style: TextStyle(fontSize: 25.0),
@@ -378,133 +381,157 @@ class CharacterView extends StatelessWidget {
 
       body: Column(
         children: [
+          const Divider(
+            indent: double.infinity,
+          ),
 
           Text(
             'Персонаж №$_persID',
-            style: const TextStyle(fontSize: 25.0, fontWeight: FontWeight.bold),
+            style: const TextStyle(
+                fontSize: 25.0,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'Bajkal',
+                color: primaryColor
+            ),
           ),
-          const Divider(),
+          const Divider(
+            indent: double.infinity,
+          ),
 
           Row(
             children: [
                 const Flexible(
                     child: Text(
-                      'Имя персонажа:',
-                      style: TextStyle(fontSize: 17.0, color: Colors.indigo),
+                      'Имя:',
+                      style: TextStyle(
+                          fontSize: 24.0, color: primaryColor
+                      ),
                     ),
                 ),
                 Flexible(
                     child: Text(
                       ' $_persName',
-                      style: TextStyle(fontSize: 17.0),
+                      style: TextStyle(fontSize: 24.0),
                     ),
                   ),
             ],
           ),
-          Divider(),
+          const Divider(
+            indent: double.infinity,
+          ),
 
           Row(
             children: [
               const Flexible(
                   child: Text(
-                    'Фамилия персонажа:',
-                    style: TextStyle(fontSize: 17.0, color: Colors.indigo),
+                    'Фамилия:',
+                    style: TextStyle(fontSize: 24.0, color: primaryColor),
                   ),
                 ),
               Flexible(
                 child: Text(
                   ' $_persLastName',
-                  style: TextStyle(fontSize: 17.0),
+                  style: TextStyle(fontSize: 24.0),
                 ),
               ),
             ],
           ),
-          Divider(),
+          const Divider(
+            indent: double.infinity,
+          ),
 
           Row(
             children: [
               const Flexible(
                 child: Text(
-                  'Отчество персонажа:',
-                  style: TextStyle(fontSize: 17.0, color: Colors.indigo),
+                  'Отчество:',
+                  style: TextStyle(fontSize: 24.0, color: primaryColor),
                 ),
               ),
               Flexible(
                 child: Text(
                   ' $_persPatronymic',
-                  style: TextStyle(fontSize: 17.0),
+                  style: TextStyle(fontSize: 24.0),
                 ),
               ),
             ],
           ),
-          Divider(),
+          const Divider(
+            indent: double.infinity,
+          ),
 
           Row(
             children: [
               const Flexible(
                 child: Text(
-                  'Пол персонажа:',
-                  style: TextStyle(fontSize: 17.0, color: Colors.indigo),
+                  'Пол:',
+                  style: TextStyle(fontSize: 24.0, color: primaryColor),
                 ),
               ),
               Flexible(
                 child: Text(
                   ' $_persSex',
-                  style: TextStyle(fontSize: 17.0),
+                  style: TextStyle(fontSize: 24.0),
                 ),
               ),
             ],
           ),
-          Divider(),
+          const Divider(
+            indent: double.infinity,
+          ),
 
           Row(
             children: [
               const Flexible(
                 child: Text(
-                  'Возраст персонажа:',
-                  style: TextStyle(fontSize: 17.0, color: Colors.indigo),
+                  'Возраст:',
+                  style: TextStyle(fontSize: 24.0, color: primaryColor),
                 ),
               ),
               Flexible(
                 child: Text(
                   ' $_persAge',
-                  style: TextStyle(fontSize: 17.0),
+                  style: TextStyle(fontSize: 24.0),
                 ),
               ),
             ],
           ),
-          Divider(),
+          const Divider(
+            indent: double.infinity,
+          ),
 
           Row(
             children: [
               const Flexible(
                 child: Text(
                   'Тип личности по MBTI:',
-                  style: TextStyle(fontSize: 17.0, color: Colors.indigo),
+                  style: TextStyle(fontSize: 24.0, color: primaryColor),
                 ),
               ),
               Flexible(
                 child: Text(
                   ' ${_personality.getMBTI}',
-                  style: TextStyle(fontSize: 17.0),
+                  style: TextStyle(fontSize: 24.0),
                 ),
               ),
             ],
           ),
-          Divider(),
+          const Divider(
+            indent: double.infinity,
+          ),
 
           Row(
             children: [
               const Flexible(
                 child: Text(
                   'Характер персонажа:',
-                  style: TextStyle(fontSize: 17.0, color: Colors.indigo),
+                  style: TextStyle(fontSize: 24.0, color: primaryColor),
                 ),
               ),
               Flexible(
                 child: Text(
                   ' ${_personality.getTemper}',
-                  style: TextStyle(fontSize: 17.0),
+                  style: TextStyle(fontSize: 24.0),
                 ),
               ),
             ],
