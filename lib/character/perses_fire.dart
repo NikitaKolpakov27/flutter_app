@@ -66,7 +66,7 @@ class _FireHomeState extends State<FireChar> {
                         ),
                         title: Text(
                             snapshot.data?.docs[index].get('name') + " " + snapshot.data?.docs[index].get("lastname") + " " + snapshot.data?.docs[index].get("patronymic"),
-                            style: const TextStyle(color: Color(0xffffffff)),
+                            style: const TextStyle(color: Color(0xffc5eafd)),
                         ),
                         subtitle: Text(
                             "Age: ${snapshot.data?.docs[index].get("age")}",

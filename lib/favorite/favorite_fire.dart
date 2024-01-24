@@ -1,15 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'new_location.dart';
 
-class FireLocation extends StatefulWidget {
-  const FireLocation({super.key});
+class FireFavorite extends StatefulWidget {
+  const FireFavorite({super.key});
 
   @override
-  State<FireLocation> createState() => _FireLocState();
+  State<FireFavorite> createState() => _FireFavState();
 }
 
-class _FireLocState extends State<FireLocation> {
+class _FireFavState extends State<FireFavorite> {
   static const Color primaryColor = Color(0xffe36b44);
   static const Color backColor = Color(0xffffe5b9);
 
@@ -21,11 +20,11 @@ class _FireLocState extends State<FireLocation> {
         backgroundColor: primaryColor,
         centerTitle: true,
         title: const Text(
-          'Созданные локации',
+          'Избранное',
         ),
       ),
       body: StreamBuilder(
-        stream: FirebaseFirestore.instance.collection('locations').orderBy('id', descending: false).snapshots(),
+        stream: FirebaseFirestore.instance.collection('favorites').orderBy('id', descending: false).snapshots(),
         builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (!snapshot.hasData) {
             return const CircularProgressIndicator();
@@ -33,35 +32,22 @@ class _FireLocState extends State<FireLocation> {
           return ListView.builder(
               itemCount: snapshot.data?.docs.length,
               itemBuilder: (context, index) {
-                return InkWell(
-                  // overlayColor: MaterialStateProperty.all(Color(0xff5191CA)),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => LocView(
-                            snapshot.data?.docs[index].get('id'),
-                            snapshot.data?.docs[index].get('location_name'),
-                            false,
-                            snapshot.data?.docs[index].get("description")
-                        ),
-                      ),
-                    );
-                  },
+                return Padding(
+                  padding: const EdgeInsets.all(8.0),
                   child: Card(
                     color: const Color(0xfff38557),
-                    margin: const EdgeInsets.all(20),
+                    margin: const EdgeInsets.all(8),
                     child: ListTile(
                       leading: Text(
                         snapshot.data!.docs[index].get('id').toString(),
                         style: const TextStyle(color: Color(0xffffffff)),
                       ),
                       title: Text(
-                        snapshot.data?.docs[index].get('location_name'),
+                        snapshot.data?.docs[index].get('name'),
                         style: const TextStyle(color: Color(0xffffffff)),
                       ),
                       subtitle: Text(
-                        snapshot.data?.docs[index].get("description"),
+                        snapshot.data?.docs[index].get("type"),
                         style: const TextStyle(color: Color(0xffc5eafd)),
                       ),
                     ),

@@ -1,15 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'new_location.dart';
+import 'new_note.dart';
 
-class FireLocation extends StatefulWidget {
-  const FireLocation({super.key});
+class FireNote extends StatefulWidget {
+  const FireNote({super.key});
 
   @override
-  State<FireLocation> createState() => _FireLocState();
+  State<FireNote> createState() => _FireNoteState();
 }
 
-class _FireLocState extends State<FireLocation> {
+class _FireNoteState extends State<FireNote> {
   static const Color primaryColor = Color(0xffe36b44);
   static const Color backColor = Color(0xffffe5b9);
 
@@ -21,11 +21,11 @@ class _FireLocState extends State<FireLocation> {
         backgroundColor: primaryColor,
         centerTitle: true,
         title: const Text(
-          'Созданные локации',
+          'Созданные заметки',
         ),
       ),
       body: StreamBuilder(
-        stream: FirebaseFirestore.instance.collection('locations').orderBy('id', descending: false).snapshots(),
+        stream: FirebaseFirestore.instance.collection('notes').orderBy('id', descending: false).snapshots(),
         builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (!snapshot.hasData) {
             return const CircularProgressIndicator();
@@ -39,30 +39,26 @@ class _FireLocState extends State<FireLocation> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => LocView(
+                        builder: (context) => NoteView(
                             snapshot.data?.docs[index].get('id'),
-                            snapshot.data?.docs[index].get('location_name'),
-                            false,
-                            snapshot.data?.docs[index].get("description")
+                            snapshot.data?.docs[index].get('note_title'),
+                            snapshot.data?.docs[index].get('isFavorite'),
+                            snapshot.data?.docs[index].get("note_text")
                         ),
                       ),
                     );
                   },
                   child: Card(
                     color: const Color(0xfff38557),
-                    margin: const EdgeInsets.all(20),
+                    margin: const EdgeInsets.all(16),
                     child: ListTile(
                       leading: Text(
                         snapshot.data!.docs[index].get('id').toString(),
                         style: const TextStyle(color: Color(0xffffffff)),
                       ),
                       title: Text(
-                        snapshot.data?.docs[index].get('location_name'),
+                        snapshot.data?.docs[index].get('note_title'),
                         style: const TextStyle(color: Color(0xffffffff)),
-                      ),
-                      subtitle: Text(
-                        snapshot.data?.docs[index].get("description"),
-                        style: const TextStyle(color: Color(0xffc5eafd)),
                       ),
                     ),
                   ),

@@ -50,7 +50,13 @@ class Registration extends StatelessWidget {
         ),
         home: Scaffold(
           appBar: AppBar(
-            title: const Text("Приложение для писателей"),
+            title: const Text(
+                "StoryForge",
+                style: TextStyle(
+                  fontStyle: FontStyle.italic,
+                  fontSize: 24
+                ),
+            ),
             centerTitle: true,
             backgroundColor: primaryColor,
           ),

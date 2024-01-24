@@ -55,6 +55,7 @@ class _JsonHomeState extends State<JsonNote> {
                             builder: (context) => NoteView(
                                 _notes[index]["id"],
                                 _notes[index]["note_title"],
+                                false,
                                 _notes[index]["note_text"]
                             ),
                           ),

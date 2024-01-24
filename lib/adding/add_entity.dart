@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:test_flutter/character/perses_fire.dart';
+import 'package:test_flutter/favorite/favorite_fire.dart';
 import 'package:test_flutter/locations/location_fire.dart';
+import 'package:test_flutter/notes/notes_fire.dart';
 import 'package:test_flutter/story/stories_fire.dart';
 import '../character/new_character.dart';
 import '../character/perses_json.dart';
@@ -210,7 +212,7 @@ class _AddMenu extends State<AddMenu> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => const JsonNote(),
+                                  builder: (context) => const FireNote(),
                                 ),
                               );
                             },
@@ -267,7 +269,7 @@ class _AddMenu extends State<AddMenu> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => const Settings(),
+                                  builder: (context) => const FireFavorite(),
                                 ),
                               );
                             },

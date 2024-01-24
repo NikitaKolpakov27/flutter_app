@@ -62,7 +62,7 @@ class _FireStoryState extends State<FireStory> {
                       ),
                       subtitle: Text(
                         snapshot.data?.docs[index].get("genre"),
-                        style: const TextStyle(color: Color(0xffffffff)),
+                        style: const TextStyle(color: Color(0xffc5eafd)),
                       ),
                     ),
                   ),

@@ -406,7 +406,9 @@ class _CreateNewCharacter extends State<NewCharacter> {
     Navigator.push(
         _context,
         MaterialPageRoute(
-            builder: (context) => CharacterView(_persID, _persName, _persLastName, _persPatronymic, _persSex, _persAge, _personality)));
+            builder: (context) => CharView(
+                _persID, _persName, _persLastName, _persPatronymic, _persSex, _persAge, _personality
+            )));
   }
 
   void hideKeyboard() {
@@ -414,28 +416,46 @@ class _CreateNewCharacter extends State<NewCharacter> {
   }
 }
 
-class CharacterView extends StatelessWidget {
-  static const Color primaryColor = Color(0xffe36b44);
-  static const Color backColor =  Color(0xffffe5b9);
+class CharView extends StatefulWidget {
 
-  // Character's properties
   late int _persID;
   late String _persName = '';
   late String _persLastName = '';
   late String _persPatronymic = '';
-  late String _persSex = '';
+  late bool _persSex = false;
   late int _persAge = 0;
   late Personality _personality;
 
-  CharacterView(int persID, String persName, String persLastName, String persPatronymic, bool persSex, int persAge, Personality personality) {
+  CharView(
+      int persID, String persName, String persLastName, String persPatronymic, bool persSex,
+        int persAge, Personality personality
+      ) {
+
     _persID = persID;
     _persName = persName;
     _persLastName = persLastName;
     _persPatronymic = persPatronymic;
-    _persSex = (persSex == true ? 'Male' : 'Female');
+    _persSex = persSex;
     _persAge = persAge;
     _personality = personality;
   }
+
+  @override
+  State<CharView> createState() => CharacterView();
+}
+
+class CharacterView extends State<CharView> {
+  static const Color primaryColor = Color(0xffe36b44);
+  static const Color backColor =  Color(0xffffe5b9);
+
+  // Character's properties
+  late int _persID = widget._persID;
+  late String _persName = widget._persName;
+  late String _persLastName = widget._persLastName;
+  late String _persPatronymic = widget._persPatronymic;
+  late bool _persSex = widget._persSex;
+  late int _persAge = widget._persAge;
+  late Personality _personality = widget._personality;
 
   @override
   Widget build(BuildContext context) {
@@ -605,6 +625,68 @@ class CharacterView extends StatelessWidget {
                 ),
               ),
             ],
+          ),
+
+
+          Row(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 24.0, top: 24.0, right: 16),
+                child: MaterialButton(
+                  splashColor: contrastColor,
+                  color: primaryColor,
+                  height: 50.0,
+                  minWidth: 150.0,
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const AddMenu(),
+                      ),
+                    );
+                  },
+                  child: const Text(
+                    "ОК",
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16.0
+                    ),
+                  ),
+                ),
+              ),
+
+              Padding(
+                padding: const EdgeInsets.only(left: 24.0, top: 24.0, right: 16),
+                child: MaterialButton(
+                  splashColor: contrastColor,
+                  color: primaryColor,
+                  height: 50.0,
+                  minWidth: 150.0,
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => LocationEditor(
+                            _locationID, _locationName, _isFavorite, _description
+                        ),
+                        // builder: (context) => const AddMenu(),
+                      ),
+                    );
+                  },
+                  child: const Text(
+                    "Редактировать",
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16.0
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+
+          const Divider(
+            indent: double.infinity,
           ),
         ],
       )

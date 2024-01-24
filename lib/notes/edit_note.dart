@@ -4,33 +4,33 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:test_flutter/locations/location_fire.dart';
 
-class LocationEditor extends StatefulWidget {
+class NoteEditor extends StatefulWidget {
 
-  late int _locationID;
-  late String _locationName;
+  late int _noteID;
+  late String _noteTitle;
   late bool _isFavorite;
-  late String _description;
+  late String _noteText;
 
-  LocationEditor(int locationID, String locationName, bool isFavorite, String description) {
-    _locationID = locationID;
-    _locationName = locationName;
+  NoteEditor(int noteID, String noteTitle, bool isFavorite, String noteText) {
+    _noteID = noteID;
+    _noteTitle = noteTitle;
     _isFavorite = isFavorite;
-    _description = description;
+    _noteText = noteText;
   }
 
   @override
-  State<LocationEditor> createState() => _LocationEditor();
+  State<NoteEditor> createState() => _NoteEditor();
 }
 
-class _LocationEditor extends State<LocationEditor> {
+class _NoteEditor extends State<NoteEditor> {
   final formKeyLocation = GlobalKey<FormState>();
   late BuildContext _context;
 
   // Location's properties
-  late int _locationID = widget._locationID;
+  late int _noteID = widget._noteID;
   late bool _isFavorite = widget._isFavorite;
-  late String _locationName = widget._locationName;
-  late String _description = widget._description;
+  late String _noteTitle = widget._noteTitle;
+  late String _noteText = widget._noteText;
 
   static const Color primaryColor =  Color(0xffe36b44);
   static const Color backColor = Color(0xffffe5b9);
@@ -44,7 +44,7 @@ class _LocationEditor extends State<LocationEditor> {
         appBar: AppBar(
           backgroundColor: primaryColor,
           title: const Text(
-            "Изменение локации",
+            "Изменение заметки",
             style: TextStyle(
                 fontSize: 20.0,
                 fontStyle: FontStyle.italic,
@@ -86,7 +86,7 @@ class _LocationEditor extends State<LocationEditor> {
                 const Padding(
                   padding: EdgeInsets.only(left: 8, top: 0, bottom: 32, right: 8),
                   child: Text(
-                    'Локация',
+                    'Заметка',
                     style: TextStyle(
                       fontSize: 32.0,
                       fontFamily: 'Bajkal',
@@ -101,9 +101,9 @@ class _LocationEditor extends State<LocationEditor> {
                 Padding(
                   padding: const EdgeInsets.only(left: 32, top: 0, right: 32, bottom: 0),
                   child: TextFormField(
-                    initialValue: _locationName,
+                    initialValue: _noteTitle,
                     decoration: InputDecoration(
-                      labelText: "Название локации",
+                      labelText: "Название",
                       enabledBorder: OutlineInputBorder(
                           borderSide: const BorderSide(color: Color(0xff5191CA)),
                           borderRadius: BorderRadius.circular(20.0)
@@ -117,7 +117,7 @@ class _LocationEditor extends State<LocationEditor> {
                       ),
                     ),
                     keyboardType: TextInputType.name,
-                    onSaved: (val) => _locationName = val!,
+                    onSaved: (val) => _noteTitle = val!,
                     validator: (val) {
                       if (val!.isEmpty) {
                         return "Слишком короткое название локации";
@@ -134,11 +134,11 @@ class _LocationEditor extends State<LocationEditor> {
                 Padding(
                   padding: const EdgeInsets.only(left: 32, top: 0, right: 32, bottom: 0),
                   child: TextFormField(
-                    initialValue: _description,
+                    initialValue: _noteText,
                     minLines: 2,
                     maxLines: 5,
                     decoration: InputDecoration(
-                      hintText: "Опишите свою локацию",
+                      hintText: 'Напишите здесь все, что угодно!',
                       enabledBorder: OutlineInputBorder(
                           borderSide: const BorderSide(color: Color(0xff5191CA)),
                           borderRadius: BorderRadius.circular(20.0)
@@ -152,7 +152,7 @@ class _LocationEditor extends State<LocationEditor> {
                       ),
                     ),
                     keyboardType: TextInputType.multiline,
-                    onSaved: (val) => _description = val!,
+                    onSaved: (val) => _noteText = val!,
                     validator: (val) {
                       if (val!.isEmpty) {
                         return "Слишком мало написано";
@@ -168,9 +168,9 @@ class _LocationEditor extends State<LocationEditor> {
                     color: primaryColor,
                     height: 50.0,
                     minWidth: 150.0,
-                    onPressed: submitLocation,
+                    onPressed: submitNote,
                     child: const Text(
-                      "Обновить локацию",
+                      "Обновить заметку",
                       style: TextStyle(
                           color: Colors.white
                       ),
@@ -185,28 +185,25 @@ class _LocationEditor extends State<LocationEditor> {
     );
   }
 
-  void submitLocation() {
+  void submitNote() {
     final form = formKeyLocation.currentState;
     if (form!.validate()) {
       form.save();
-      updateLocation(_locationID.toString());
+      updateNote(_noteID.toString());
     }
   }
 
-  void updateLocation(String locationID) async {
+  void updateNote(String locationID) async {
     hideKeyboard();
 
     Map<String, dynamic> updateInfo = {
-      // 'id': _locationID,
-      'location_name': _locationName,
-      'description': _description,
+      'note_title': _noteTitle,
+      'note_text': _noteText,
     };
 
-    print('LOCATION ID HERE: $_locationID');
-
-    var documents = await FirebaseFirestore.instance.collection('locations').get();
-    final String docName = documents.docs.elementAt(_locationID).id;
-    await FirebaseFirestore.instance.collection('locations').doc(docName).update(updateInfo);
+    var documents = await FirebaseFirestore.instance.collection('notes').get();
+    final String docName = documents.docs.elementAt(_noteID).id;
+    await FirebaseFirestore.instance.collection('notes').doc(docName).update(updateInfo);
 
     Navigator.push(
         _context,

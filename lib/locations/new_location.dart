@@ -24,6 +24,7 @@ class _CreateNewLocation extends State<NewLocation> {
 
   static const Color primaryColor =  Color(0xffe36b44);
   static const Color backColor = Color(0xffffe5b9);
+  static const Color contrastColor = Color(0xff5191CA);
 
   @override
   Widget build(BuildContext context) {
@@ -87,13 +88,15 @@ class _CreateNewLocation extends State<NewLocation> {
               const Divider(
                 indent: double.infinity,
               ),
+
+
               Padding(
                 padding: const EdgeInsets.only(left: 32, top: 0, right: 32, bottom: 0),
                 child: TextFormField(
                   decoration: InputDecoration(
                       labelText: "Название локации",
                       enabledBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(color: Color(0xff5191CA)),
+                        borderSide: const BorderSide(color: contrastColor),
                         borderRadius: BorderRadius.circular(20.0)
                       ),
                       border: OutlineInputBorder(
@@ -226,6 +229,7 @@ class LocView extends StatefulWidget {
 class LocationView extends State<LocView> {
   static const Color primaryColor = Color(0xffe36b44);
   static const Color backColor =  Color(0xffffe5b9);
+  static const Color contrastColor = Color(0xff5191CA);
 
   // Location properties
   late int _locationID = widget._locationID;
@@ -336,6 +340,7 @@ class LocationView extends State<LocView> {
                 Padding(
                   padding: const EdgeInsets.only(left: 24.0, top: 24.0, right: 16),
                   child: MaterialButton(
+                    splashColor: contrastColor,
                     color: primaryColor,
                     height: 50.0,
                     minWidth: 150.0,
@@ -346,9 +351,6 @@ class LocationView extends State<LocView> {
                           builder: (context) => const AddMenu(),
                         ),
                       );
-                      setState(() {
-                        _isFavorite = true;
-                      });
                     },
                     child: const Text(
                       "ОК",
@@ -363,6 +365,7 @@ class LocationView extends State<LocView> {
                 Padding(
                   padding: const EdgeInsets.only(left: 24.0, top: 24.0, right: 16),
                   child: MaterialButton(
+                    splashColor: contrastColor,
                     color: primaryColor,
                     height: 50.0,
                     minWidth: 150.0,
@@ -370,15 +373,12 @@ class LocationView extends State<LocView> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          // builder: (context) => LocationEditor(
-                          //     _locationID, _locationName, _isFavorite, _description
-                          // ),
-                          builder: (context) => const AddMenu(),
+                          builder: (context) => LocationEditor(
+                              _locationID, _locationName, _isFavorite, _description
+                          ),
+                          // builder: (context) => const AddMenu(),
                         ),
                       );
-                      setState(() {
-                        _isFavorite = true;
-                      });
                     },
                     child: const Text(
                       "Редактировать",
@@ -399,10 +399,25 @@ class LocationView extends State<LocView> {
             Padding(
               padding: const EdgeInsets.only(top: 24.0),
               child: MaterialButton(
-                color: primaryColor,
+                splashColor: contrastColor,
+                color: const Color(0xffb44c1a),
                 height: 50.0,
                 minWidth: 150.0,
-                onPressed: () {
+                onPressed: () async {
+
+                  var favorites = FirebaseFirestore.instance.collection('favorites');
+                  var favoritesAsync = await favorites.get();
+
+                  var favID = favoritesAsync.docs.length;
+
+                  FirebaseFirestore.instance.collection('favorites').add(
+                      {
+                        'id': favID,
+                        'name': _locationName,
+                        'type': 'Локация'
+                      }
+                  );
+
                   Navigator.push(
                     context,
                     MaterialPageRoute(
