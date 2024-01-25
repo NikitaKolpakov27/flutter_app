@@ -3,6 +3,10 @@ import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../adding/add_entity.dart';
+import '../favorite/new_favorite.dart';
+import 'edit_story.dart';
+
 class NewStory extends StatefulWidget {
   const NewStory({super.key});
 
@@ -18,10 +22,11 @@ class _CreateNewStory extends State<NewStory> {
   late int _storyID = 0;
   late String _storyTitle = '';
   late String _genre = '';
+  late bool _isFavorite = false;
   late String _location;
 
   late String selectedGenre = 'Хоррор';
-  late String selectedLocation = 'The Grand Canyon. The most huge landscape in North America';
+  late String selectedLocation = 'The Grand Canyon. The most huge landscape in North America. Also known as a popular site';
 
   Color primaryColor = const Color(0xffe36b44);
   Color backColor = const Color(0xffffe5b9);
@@ -92,11 +97,6 @@ class _CreateNewStory extends State<NewStory> {
               child: TextFormField(
                 decoration: InputDecoration(
                     labelText: "Название истории",
-                    
-                    // labelStyle: const TextStyle(
-                    //   color: Color(0xff5191CA)
-                    // ),
-
                     enabledBorder: OutlineInputBorder(
                         borderSide: const BorderSide(color: Color(0xff5191CA)),
                         borderRadius: BorderRadius.circular(20.0)
@@ -122,6 +122,7 @@ class _CreateNewStory extends State<NewStory> {
             const Divider(
               indent: double.infinity,
             ),
+
             Text(
                 'Жанр',
                 textAlign: TextAlign.left,
@@ -143,7 +144,6 @@ class _CreateNewStory extends State<NewStory> {
                 isExpanded: false,
               ),
             ),
-
             const Divider(
               indent: double.infinity,
             ),
@@ -189,6 +189,8 @@ class _CreateNewStory extends State<NewStory> {
             const Divider(
               indent: double.infinity,
             ),
+
+
             Padding(
               padding: const EdgeInsets.only(top: 25.0),
               child: MaterialButton(
@@ -239,10 +241,23 @@ class _CreateNewStory extends State<NewStory> {
     var storiesAsync = await stories.get();
 
     _storyID = storiesAsync.docs.length;
+    _genre = selectedGenre;
+    _location = selectedLocation;
+
+    FirebaseFirestore.instance.collection('stories').add(
+        {
+          'id': _storyID,
+          'title': _storyTitle,
+          'genre': _genre,
+          'isFavorite': _isFavorite,
+          'location': _location
+        }
+    );
+
     Navigator.push(
         _context,
         MaterialPageRoute(
-            builder: (context) => StoryView(_storyID, _storyTitle, _genre, selectedLocation)));
+            builder: (context) => StoryView(_storyID, _storyTitle, _genre, _isFavorite, selectedLocation)));
   }
 
   void hideKeyboard() {
@@ -250,22 +265,37 @@ class _CreateNewStory extends State<NewStory> {
   }
 }
 
-class StoryView extends StatelessWidget {
-  static const Color primaryColor = Color(0xffe36b44);
-  static const Color backColor =  Color(0xffffe5b9);
+class StoryView extends StatefulWidget {
 
-  // Story's properties
   late int _storyID;
   late String _storyTitle = '';
   late String _genre = '';
+  late bool _isFavorite = false;
   late String _location = '';
 
-  StoryView(int storyID, String storyTitle, String genre, String location) {
-    _storyID = storyID;
-    _storyTitle = storyTitle;
+  StoryView(int id, String title, String genre, bool fav, String loc) {
+    _storyID = id;
+    _storyTitle = title;
     _genre = genre;
-    _location = location;
+    _isFavorite = fav;
+    _location = loc;
   }
+
+  @override
+  State<StoryView> createState() => _StoryView();
+}
+
+class _StoryView extends State<StoryView> {
+  static const Color primaryColor = Color(0xffe36b44);
+  static const Color backColor =  Color(0xffffe5b9);
+  static const Color contrastColor = Color(0xff5191CA);
+
+  // Story's properties
+  late final int _storyID = widget._storyID;
+  late String _storyTitle = widget._storyTitle;
+  late String _genre = widget._genre;
+  late bool _isFavorite = widget._isFavorite;
+  late String _location = widget._location;
 
   @override
   Widget build(BuildContext context) {
@@ -275,7 +305,7 @@ class StoryView extends StatelessWidget {
           backgroundColor: primaryColor,
           title: const Text(
             "Созданная история",
-            style: TextStyle(fontSize: 25.0),),
+            style: TextStyle(fontSize: 24.0),),
         ),
 
         body: Column(
@@ -287,7 +317,7 @@ class StoryView extends StatelessWidget {
             Text(
               'История №$_storyID',
               style: const TextStyle(
-                  fontSize: 25.0,
+                  fontSize: 24.0,
                   fontWeight: FontWeight.bold,
                   fontFamily: 'Bajkal',
                   color: primaryColor
@@ -355,6 +385,110 @@ class StoryView extends StatelessWidget {
                 ),
               ],
             ),
+
+            Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 48.0, top: 24.0, right: 48),
+                  child: MaterialButton(
+                    splashColor: contrastColor,
+                    color: primaryColor,
+                    height: 50.0,
+                    minWidth: 72.0,
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const AddMenu(),
+                        ),
+                      );
+                    },
+                    child: const Text(
+                      "ОК",
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16.0
+                      ),
+                    ),
+                  ),
+                ),
+
+                Padding(
+                  padding: const EdgeInsets.only(left: 24.0, top: 24.0, right: 16),
+                  child: MaterialButton(
+                    splashColor: contrastColor,
+                    color: primaryColor,
+                    height: 50.0,
+                    minWidth: 150.0,
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => StoryEditor(
+                              _storyID, _storyTitle, _genre, _isFavorite, _location
+                          ),
+                          // builder: (context) => const AddMenu(),
+                        ),
+                      );
+                    },
+                    child: const Text(
+                      "Редактировать",
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16.0
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+
+            const Divider(
+              indent: double.infinity,
+            ),
+
+            Padding(
+              padding: const EdgeInsets.only(top: 24.0),
+              child: MaterialButton(
+                splashColor: contrastColor,
+                color: const Color(0xffb44c1a),
+                height: 50.0,
+                minWidth: 150.0,
+                onPressed: () async {
+
+                  var favorites = FirebaseFirestore.instance.collection('favorites');
+                  var favoritesAsync = await favorites.get();
+
+                  var favID = favoritesAsync.docs.length;
+
+                  FirebaseFirestore.instance.collection('favorites').add(
+                      {
+                        'id': favID,
+                        'name': _storyTitle,
+                        'type': 'История'
+                      }
+                  );
+
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const FavoriteSetter(),
+                    ),
+                  );
+                  setState(() {
+                    _isFavorite = true;
+                  });
+                },
+                child: const Text(
+                  "Добавить в избранное",
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16.0
+                  ),
+                ),
+              ),
+            ),
+
           ],
         )
 

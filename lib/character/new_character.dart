@@ -4,6 +4,10 @@ import 'package:flutter/services.dart';
 import 'package:test_flutter/character/pers.dart';
 import 'package:test_flutter/character/personality.dart';
 
+import '../adding/add_entity.dart';
+import '../favorite/new_favorite.dart';
+import 'edit_character.dart';
+
 class CreateNewCharacter extends StatelessWidget {
 
   // This widget is the root of your application.
@@ -33,6 +37,7 @@ class _CreateNewCharacter extends State<NewCharacter> {
   late String _persLastName = '';
   late String _persPatronymic = '';
   late bool _persSex = false;
+  late bool _isFavorite = false;
   late int _persAge = 0;
 
   late String selectedMBTI = 'ISTJ';
@@ -86,8 +91,8 @@ class _CreateNewCharacter extends State<NewCharacter> {
         body: Center(
           child: Form(
             key: formKeyPers,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+            child: ListView(
+              // mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
 
                 Padding(
@@ -407,7 +412,7 @@ class _CreateNewCharacter extends State<NewCharacter> {
         _context,
         MaterialPageRoute(
             builder: (context) => CharView(
-                _persID, _persName, _persLastName, _persPatronymic, _persSex, _persAge, _personality
+                _persID, _persName, _persLastName, _persPatronymic, _isFavorite, _persSex, _persAge, _personality
             )));
   }
 
@@ -422,12 +427,13 @@ class CharView extends StatefulWidget {
   late String _persName = '';
   late String _persLastName = '';
   late String _persPatronymic = '';
+  late bool _isFavorite = false;
   late bool _persSex = false;
   late int _persAge = 0;
   late Personality _personality;
 
   CharView(
-      int persID, String persName, String persLastName, String persPatronymic, bool persSex,
+      int persID, String persName, String persLastName, String persPatronymic, bool fav, bool persSex,
         int persAge, Personality personality
       ) {
 
@@ -435,6 +441,7 @@ class CharView extends StatefulWidget {
     _persName = persName;
     _persLastName = persLastName;
     _persPatronymic = persPatronymic;
+    _isFavorite = fav;
     _persSex = persSex;
     _persAge = persAge;
     _personality = personality;
@@ -447,12 +454,14 @@ class CharView extends StatefulWidget {
 class CharacterView extends State<CharView> {
   static const Color primaryColor = Color(0xffe36b44);
   static const Color backColor =  Color(0xffffe5b9);
+  static const Color contrastColor = Color(0xff5191CA);
 
   // Character's properties
   late int _persID = widget._persID;
   late String _persName = widget._persName;
   late String _persLastName = widget._persLastName;
   late String _persPatronymic = widget._persPatronymic;
+  late bool _isFavorite = widget._isFavorite;
   late bool _persSex = widget._persSex;
   late int _persAge = widget._persAge;
   late Personality _personality = widget._personality;
@@ -465,7 +474,7 @@ class CharacterView extends State<CharView> {
         backgroundColor: primaryColor,
         title: const Text(
             'Созданный персонаж',
-            style: TextStyle(fontSize: 25.0),
+            style: TextStyle(fontSize: 24.0),
           ),
       ),
 
@@ -490,20 +499,24 @@ class CharacterView extends State<CharView> {
 
           Row(
             children: [
-                const Flexible(
-                    child: Text(
-                      'Имя:',
-                      style: TextStyle(
-                          fontSize: 24.0, color: primaryColor
-                      ),
-                    ),
-                ),
-                Flexible(
-                    child: Text(
-                      ' $_persName',
-                      style: TextStyle(fontSize: 24.0),
+
+                const Padding(
+                  padding: EdgeInsets.only(left: 32, right: 0),
+                  child: Text(
+                    'Имя:',
+                    style: TextStyle(
+                        fontSize: 24.0, color: primaryColor
                     ),
                   ),
+                ),
+
+                Padding(
+                  padding: EdgeInsets.only(right: 32),
+                  child: Text(
+                    ' $_persName',
+                    style: const TextStyle(fontSize: 24.0),
+                  ),
+                ),
             ],
           ),
           const Divider(
@@ -666,8 +679,8 @@ class CharacterView extends State<CharView> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => LocationEditor(
-                            _locationID, _locationName, _isFavorite, _description
+                        builder: (context) => CharEditor(
+                            _persID, _persName, _persLastName, _persPatronymic, _persSex, _persAge, _personality
                         ),
                         // builder: (context) => const AddMenu(),
                       ),
@@ -684,12 +697,54 @@ class CharacterView extends State<CharView> {
               ),
             ],
           ),
-
           const Divider(
             indent: double.infinity,
           ),
+
+          Padding(
+            padding: const EdgeInsets.only(top: 24.0),
+            child: MaterialButton(
+              splashColor: contrastColor,
+              color: const Color(0xffb44c1a),
+              height: 50.0,
+              minWidth: 150.0,
+              onPressed: () async {
+
+                var favorites = FirebaseFirestore.instance.collection('favorites');
+                var favoritesAsync = await favorites.get();
+
+                var favID = favoritesAsync.docs.length;
+
+                FirebaseFirestore.instance.collection('favorites').add(
+                    {
+                      'id': favID,
+                      'name': "$_persName $_persLastName $_persPatronymic",
+                      'type': 'Персонаж'
+                    }
+                );
+
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const FavoriteSetter(),
+                  ),
+                );
+                setState(() {
+                  _isFavorite = true;
+                });
+              },
+              child: const Text(
+                "Добавить в избранное",
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16.0
+                ),
+              ),
+            ),
+          ),
+
         ],
-      )
+      ),
 
     );
   }

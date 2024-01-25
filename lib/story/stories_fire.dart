@@ -43,6 +43,7 @@ class _FireStoryState extends State<FireStory> {
                             snapshot.data?.docs[index].get('id'),
                             snapshot.data?.docs[index].get('title'),
                             snapshot.data?.docs[index].get("genre"),
+                            false,
                             snapshot.data?.docs[index].get("location"),
                         ),
                       ),

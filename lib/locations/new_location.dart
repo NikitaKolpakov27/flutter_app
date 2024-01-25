@@ -70,8 +70,8 @@ class _CreateNewLocation extends State<NewLocation> {
       body: Center(
         child: Form(
           key: formKeyLocation,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+          child: ListView(
+            // mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               const Padding(
                 padding: EdgeInsets.only(left: 8, top: 0, bottom: 32, right: 8),
@@ -261,20 +261,6 @@ class LocationView extends State<LocView> {
               style: const TextStyle(
                   fontSize: 32.0,
                   fontWeight: FontWeight.bold,
-                  fontFamily: 'Bajkal',
-                  color: primaryColor
-              ),
-            ),
-            const Divider(
-              indent: double.infinity,
-            ),
-
-
-            const Text(
-              'ИНФО',
-              style: TextStyle(
-                  fontSize: 32.0,
-                  fontStyle: FontStyle.italic,
                   fontFamily: 'Bajkal',
                   color: primaryColor
               ),

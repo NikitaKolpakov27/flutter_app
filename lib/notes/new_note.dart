@@ -261,21 +261,10 @@ class NotesView extends State<NoteView> {
             ),
             const Divider(
               indent: double.infinity,
+              // color: contrastColor,
+              // thickness: 2,
             ),
 
-
-            const Text(
-              'ИНФО',
-              style: TextStyle(
-                  fontSize: 32.0,
-                  fontStyle: FontStyle.italic,
-                  fontFamily: 'Bajkal',
-                  color: primaryColor
-              ),
-            ),
-            const Divider(
-              indent: double.infinity,
-            ),
 
             Row(
               children: [
@@ -322,12 +311,12 @@ class NotesView extends State<NoteView> {
             Row(
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(left: 24.0, top: 24.0, right: 16),
+                  padding: const EdgeInsets.only(left: 48.0, top: 24.0, right: 48),
                   child: MaterialButton(
                     splashColor: contrastColor,
                     color: primaryColor,
                     height: 50.0,
-                    minWidth: 150.0,
+                    minWidth: 72.0,
                     onPressed: () {
                       Navigator.push(
                         context,
@@ -401,7 +390,6 @@ class NotesView extends State<NoteView> {
                         'type': 'Заметка'
                       }
                   );
-
 
                   Navigator.push(
                     context,

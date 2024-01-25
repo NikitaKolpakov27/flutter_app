@@ -36,7 +36,7 @@ class _FireFavState extends State<FireFavorite> {
                   padding: const EdgeInsets.all(8.0),
                   child: Card(
                     color: const Color(0xfff38557),
-                    margin: const EdgeInsets.all(8),
+                    margin: const EdgeInsets.only(left: 8, right: 8),
                     child: ListTile(
                       leading: Text(
                         snapshot.data!.docs[index].get('id').toString(),

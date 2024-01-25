@@ -5,14 +5,10 @@ import 'package:test_flutter/locations/location_fire.dart';
 import 'package:test_flutter/notes/notes_fire.dart';
 import 'package:test_flutter/story/stories_fire.dart';
 import '../character/new_character.dart';
-import '../character/perses_json.dart';
-import '../locations/locations_json.dart';
 import '../locations/new_location.dart';
 import '../notes/new_note.dart';
-import '../notes/notes_json.dart';
 import '../settings/settings.dart';
 import '../story/new_story.dart';
-import '../story/stories_json.dart';
 
 class AddMenu extends StatefulWidget {
   const AddMenu({super.key});
@@ -329,7 +325,7 @@ class _AddMenu extends State<AddMenu> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => NewCharacter(),
+                            builder: (context) => const NewCharacter(),
                           ),
                         );
                       },

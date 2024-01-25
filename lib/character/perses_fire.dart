@@ -26,7 +26,7 @@ class _FireHomeState extends State<FireChar> {
           ),
         ),
         body: StreamBuilder(
-          stream: FirebaseFirestore.instance.collection('perses').snapshots(),
+          stream: FirebaseFirestore.instance.collection('perses').orderBy('id', descending: false).snapshots(),
           builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
             if (!snapshot.hasData) {
               return const CircularProgressIndicator();
@@ -40,11 +40,12 @@ class _FireHomeState extends State<FireChar> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => CharacterView(
+                          builder: (context) => CharView(
                               snapshot.data?.docs[index].get('id'),
                               snapshot.data?.docs[index].get('name'),
                               snapshot.data?.docs[index].get("lastname"),
                               snapshot.data?.docs[index].get("patronymic"),
+                              false,
                               snapshot.data?.docs[index].get("sex"),
                               snapshot.data?.docs[index].get("age"),
                               Personality(
