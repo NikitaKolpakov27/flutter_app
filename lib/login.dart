@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:test_flutter/navigation/main_menu.dart';
 import 'package:test_flutter/user/user.dart';
 import 'adding/add_entity.dart';
 import 'main.dart';
@@ -239,8 +240,8 @@ class LoginProcess extends StatelessWidget {
     Navigator.push(
         _context,
         MaterialPageRoute(
-            // builder: (context) => AddMenu(_name, _email, _password)));
-              builder: (context) => AddMenu()));
+              // builder: (context) => AddMenu()));
+            builder: (context) => MainMenu()));
   }
 
   void hideKeyboard() {

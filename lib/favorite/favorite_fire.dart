@@ -9,20 +9,12 @@ class FireFavorite extends StatefulWidget {
 }
 
 class _FireFavState extends State<FireFavorite> {
-  static const Color primaryColor = Color(0xffe36b44);
   static const Color backColor = Color(0xffffe5b9);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: backColor,
-      appBar: AppBar(
-        backgroundColor: primaryColor,
-        centerTitle: true,
-        title: const Text(
-          'Избранное',
-        ),
-      ),
       body: StreamBuilder(
         stream: FirebaseFirestore.instance.collection('favorites').orderBy('id', descending: false).snapshots(),
         builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {

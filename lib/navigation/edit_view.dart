@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:test_flutter/adding/add_entity.dart';
+import 'package:test_flutter/navigation/main_menu.dart';
 
 class EditorView extends StatefulWidget {
   const EditorView({super.key});
@@ -56,7 +56,7 @@ class _EditorView extends State<EditorView> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const AddMenu(),
+                      builder: (context) => const MainMenu(),
                     ),
                   );
                 },

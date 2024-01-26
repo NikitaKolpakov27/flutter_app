@@ -49,6 +49,7 @@ class Registration extends StatelessWidget {
             scaffoldBackgroundColor: const Color(0xffffe5b9)
         ),
         home: Scaffold(
+          resizeToAvoidBottomInset: false,
           appBar: AppBar(
             title: const Text(
                 "StoryForge",
@@ -64,11 +65,10 @@ class Registration extends StatelessWidget {
               child: Form(
                 key: formKey,
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
 
                     Padding(
-                      padding: const EdgeInsets.only(left: 8, top: 0, bottom: 32, right: 8),
+                      padding: const EdgeInsets.only(left: 8, top: 16, bottom: 16, right: 8),
                       child: Text(
                         'Регистрация',
                         style: TextStyle(
@@ -283,7 +283,6 @@ class Registration extends StatelessWidget {
     Navigator.push(
         _context,
         MaterialPageRoute(
-            // builder: (context) => AddMenu(_name, _email, _password)));
               builder: (context) => AddMenu()));
   }
 

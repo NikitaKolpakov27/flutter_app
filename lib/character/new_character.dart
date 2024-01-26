@@ -51,52 +51,29 @@ class _CreateNewCharacter extends State<NewCharacter> {
   Widget build(BuildContext context) {
     _context = context;
     return Scaffold(
+        resizeToAvoidBottomInset: false,
         backgroundColor: const Color(0xffffe5b9),
         appBar: AppBar(
           backgroundColor: primaryColor,
           title: const Text(
             "Создание персонажа",
             style: TextStyle(
-                fontSize: 20.0,
+                fontSize: 22.0,
                 fontStyle: FontStyle.italic,
                 color: Colors.white
             ),
           ),
         ),
 
-        bottomNavigationBar: BottomNavigationBar(
-          selectedItemColor: const Color(0xfffbff29),
-          unselectedItemColor: const Color(0xffd54a16),
-          type: BottomNavigationBarType.shifting,
-          iconSize: 35,
-          items: const [
-            BottomNavigationBarItem(
-              icon: Icon(Icons.add),
-              label: "Создание",
-              backgroundColor: Color(0xfff38557),
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.account_tree),
-              label: "Генерация",
-              backgroundColor: Color(0xfff38557),
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.star),
-              label: "Избранное",
-              backgroundColor: Color(0xfff38557),
-            )
-          ],
-        ),
-
         body: Center(
           child: Form(
             key: formKeyPers,
-            child: ListView(
+            child: Column(
               // mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
 
                 Padding(
-                  padding: const EdgeInsets.only(bottom: 16, right: 8, left: 8),
+                  padding: const EdgeInsets.only(bottom: 32, right: 8, left: 8, top: 32),
                   child: Text(
                     'Новый персонаж',
                     style: TextStyle(

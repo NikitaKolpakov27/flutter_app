@@ -30,51 +30,28 @@ class _CreateNewLocation extends State<NewLocation> {
   Widget build(BuildContext context) {
     _context = context;
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: backColor,
       appBar: AppBar(
         backgroundColor: primaryColor,
         title: const Text(
           "Создание локации",
           style: TextStyle(
-              fontSize: 20.0,
+              fontSize: 22.0,
               fontStyle: FontStyle.italic,
               color: Colors.white
           ),
         ),
       ),
 
-      bottomNavigationBar: BottomNavigationBar(
-        selectedItemColor: const Color(0xfffbff29),
-        unselectedItemColor: const Color(0xffd54a16),
-        type: BottomNavigationBarType.shifting,
-        iconSize: 35,
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.add),
-            label: "Создание",
-            backgroundColor: Color(0xfff38557),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.account_tree),
-            label: "Генерация",
-            backgroundColor: Color(0xfff38557),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.star),
-            label: "Избранное",
-            backgroundColor: Color(0xfff38557),
-          )
-        ],
-      ),
-
       body: Center(
         child: Form(
           key: formKeyLocation,
-          child: ListView(
+          child: Column(
             // mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               const Padding(
-                padding: EdgeInsets.only(left: 8, top: 0, bottom: 32, right: 8),
+                padding: EdgeInsets.only(left: 8, top: 32, bottom: 32, right: 8),
                 child: Text(
                   'Новая локация',
                   style: TextStyle(

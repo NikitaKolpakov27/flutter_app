@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../adding/add_entity.dart';
+import 'package:test_flutter/navigation/main_menu.dart';
 
 class FavoriteSetter extends StatelessWidget {
   const FavoriteSetter({super.key});
@@ -50,7 +50,7 @@ class FavoriteSetter extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const AddMenu(),
+                        builder: (context) => const MainMenu(),
                       ),
                     );
                   },
