@@ -87,6 +87,7 @@ class _CharEditor extends State<CharEditor> {
     _context = context;
     return MaterialApp(
       home: Scaffold(
+        resizeToAvoidBottomInset: false,
         backgroundColor: backColor,
         appBar: AppBar(
           backgroundColor: primaryColor,

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:test_flutter/adding/add_entity.dart';
 import 'package:test_flutter/locations/edit_location.dart';
+import 'package:test_flutter/navigation/main_menu.dart';
 import '../favorite/new_favorite.dart';
 
 class NewLocation extends StatefulWidget {
@@ -311,7 +312,7 @@ class LocationView extends State<LocView> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const AddMenu(),
+                          builder: (context) => const MainMenu(),
                         ),
                       );
                     },

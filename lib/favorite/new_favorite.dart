@@ -25,7 +25,7 @@ class FavoriteSetter extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const Padding(
-                padding: EdgeInsets.only(top: 8.0, bottom: 16),
+                padding: EdgeInsets.only(left: 16, top: 8.0, bottom: 16),
                 child: Text(
                     'Объект был успешно добавлен в раздел Избранное!',
                     style: TextStyle(

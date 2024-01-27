@@ -154,7 +154,7 @@ class LoginProcess extends StatelessWidget {
                                 );
                             },
                             child: Text(
-                              "Вернуться",
+                              "Регистрация",
                               style: _sizeTextWhite,
                             )
                         ),

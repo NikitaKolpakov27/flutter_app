@@ -70,13 +70,14 @@ class Registration extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.only(left: 8, top: 16, bottom: 16, right: 8),
                       child: Text(
-                        'Регистрация',
+                        'Добро пожаловать!',
                         style: TextStyle(
                           fontSize: 40.0,
                           fontFamily: 'Bajkal',
                           fontWeight: FontWeight.bold,
                           color: primaryColor,
                         ),
+                        textAlign: TextAlign.center,
                       ),
                     ),
                     const Divider(

@@ -20,7 +20,6 @@ class AddMenu extends StatefulWidget {
 
 class _AddMenu extends State<AddMenu> {
   TextStyle _current_style = const TextStyle(fontSize: 20.0, color: Color(0xfffff7c3), fontFamily: 'Bajkal');
-  final _sizeTitleDrawer = const TextStyle(fontSize: 30.0, fontStyle: FontStyle.italic, color: Colors.lightBlue);
   Color primaryColor = const Color(0xffe36b44);
 
   @override

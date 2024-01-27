@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:test_flutter/character/pers.dart';
 import 'package:test_flutter/character/personality.dart';
+import 'package:test_flutter/navigation/main_menu.dart';
 
 import '../adding/add_entity.dart';
 import '../favorite/new_favorite.dart';
@@ -443,6 +444,8 @@ class CharacterView extends State<CharView> {
   late int _persAge = widget._persAge;
   late Personality _personality = widget._personality;
 
+  late String strSex = _persSex == true ? 'Муж.' : 'Жен.';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -478,7 +481,7 @@ class CharacterView extends State<CharView> {
             children: [
 
                 const Padding(
-                  padding: EdgeInsets.only(left: 32, right: 0),
+                  padding: EdgeInsets.only(left: 40, right: 0),
                   child: Text(
                     'Имя:',
                     style: TextStyle(
@@ -488,7 +491,7 @@ class CharacterView extends State<CharView> {
                 ),
 
                 Padding(
-                  padding: EdgeInsets.only(right: 32),
+                  padding: const EdgeInsets.only(right: 40),
                   child: Text(
                     ' $_persName',
                     style: const TextStyle(fontSize: 24.0),
@@ -502,13 +505,17 @@ class CharacterView extends State<CharView> {
 
           Row(
             children: [
-              const Flexible(
-                  child: Text(
-                    'Фамилия:',
-                    style: TextStyle(fontSize: 24.0, color: primaryColor),
-                  ),
+
+              const Padding(
+                padding: EdgeInsets.only(left: 40.0),
+                child: Text(
+                  'Фамилия:',
+                  style: TextStyle(fontSize: 24.0, color: primaryColor),
                 ),
-              Flexible(
+              ),
+
+              Padding(
+                padding: const EdgeInsets.only(right: 40.0),
                 child: Text(
                   ' $_persLastName',
                   style: const TextStyle(fontSize: 24.0),
@@ -522,35 +529,17 @@ class CharacterView extends State<CharView> {
 
           Row(
             children: [
-              const Flexible(
+              const Padding(
+                padding: EdgeInsets.only(left: 40.0),
                 child: Text(
                   'Отчество:',
                   style: TextStyle(fontSize: 24.0, color: primaryColor),
                 ),
               ),
+
               Flexible(
                 child: Text(
                   ' $_persPatronymic',
-                  style: TextStyle(fontSize: 24.0),
-                ),
-              ),
-            ],
-          ),
-          const Divider(
-            indent: double.infinity,
-          ),
-
-          Row(
-            children: [
-              const Flexible(
-                child: Text(
-                  'Пол:',
-                  style: TextStyle(fontSize: 24.0, color: primaryColor),
-                ),
-              ),
-              Flexible(
-                child: Text(
-                  ' $_persSex',
                   style: const TextStyle(fontSize: 24.0),
                 ),
               ),
@@ -562,16 +551,42 @@ class CharacterView extends State<CharView> {
 
           Row(
             children: [
-              const Flexible(
+              const Padding(
+                padding: EdgeInsets.only(left: 40.0),
+                child: Text(
+                  'Пол:',
+                  style: TextStyle(fontSize: 24.0, color: primaryColor),
+                ),
+              ),
+
+              Padding(
+                padding: const EdgeInsets.only(right: 40.0),
+                child: Text(
+                  ' $strSex',
+                  style: const TextStyle(fontSize: 24.0),
+                ),
+              ),
+            ],
+          ),
+          const Divider(
+            indent: double.infinity,
+          ),
+
+          Row(
+            children: [
+              const Padding(
+                padding: EdgeInsets.only(left: 40.0),
                 child: Text(
                   'Возраст:',
                   style: TextStyle(fontSize: 24.0, color: primaryColor),
                 ),
               ),
+
+
               Flexible(
                 child: Text(
                   ' $_persAge',
-                  style: TextStyle(fontSize: 24.0),
+                  style: const TextStyle(fontSize: 24.0),
                 ),
               ),
             ],
@@ -582,16 +597,18 @@ class CharacterView extends State<CharView> {
 
           Row(
             children: [
-              const Flexible(
+              const Padding(
+                padding: EdgeInsets.only(left: 40.0),
                 child: Text(
                   'Тип личности по MBTI:',
                   style: TextStyle(fontSize: 24.0, color: primaryColor),
                 ),
               ),
+
               Flexible(
                 child: Text(
                   ' ${_personality.getMBTI}',
-                  style: TextStyle(fontSize: 24.0),
+                  style: const TextStyle(fontSize: 24.0),
                 ),
               ),
             ],
@@ -600,18 +617,21 @@ class CharacterView extends State<CharView> {
             indent: double.infinity,
           ),
 
-          Row(
+          Column(
             children: [
-              const Flexible(
+              const Padding(
+                padding: EdgeInsets.only(left: 32.0),
                 child: Text(
                   'Характер персонажа:',
                   style: TextStyle(fontSize: 24.0, color: primaryColor),
                 ),
               ),
-              Flexible(
+
+              Padding(
+                padding: const EdgeInsets.only(left: 32.0),
                 child: Text(
                   ' ${_personality.getTemper}',
-                  style: TextStyle(fontSize: 24.0),
+                  style: const TextStyle(fontSize: 24.0),
                 ),
               ),
             ],
@@ -631,7 +651,7 @@ class CharacterView extends State<CharView> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const AddMenu(),
+                        builder: (context) => const MainMenu(),
                       ),
                     );
                   },

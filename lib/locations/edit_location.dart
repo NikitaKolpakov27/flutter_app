@@ -41,6 +41,7 @@ class _LocationEditor extends State<LocationEditor> {
     _context = context;
     return MaterialApp(
       home: Scaffold(
+        resizeToAvoidBottomInset: false,
         backgroundColor: backColor,
         appBar: AppBar(
           backgroundColor: primaryColor,

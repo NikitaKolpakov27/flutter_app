@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:test_flutter/navigation/main_menu.dart';
 
 import '../adding/add_entity.dart';
 import '../favorite/new_favorite.dart';
@@ -317,7 +318,7 @@ class _StoryView extends State<StoryView> {
             Text(
               'История №$_storyID',
               style: const TextStyle(
-                  fontSize: 24.0,
+                  fontSize: 25.0,
                   fontWeight: FontWeight.bold,
                   fontFamily: 'Bajkal',
                   color: primaryColor
@@ -329,7 +330,8 @@ class _StoryView extends State<StoryView> {
 
             Row(
               children: [
-                const Flexible(
+                const Padding(
+                  padding: EdgeInsets.only(left: 40.0, right: 8),
                   child: Text(
                     'Название:',
                     style: TextStyle(
@@ -337,6 +339,7 @@ class _StoryView extends State<StoryView> {
                     ),
                   ),
                 ),
+
                 Flexible(
                   child: Text(
                     ' $_storyTitle',
@@ -351,12 +354,14 @@ class _StoryView extends State<StoryView> {
 
             Row(
               children: [
-                const Flexible(
+                const Padding(
+                  padding: EdgeInsets.only(left: 40.0),
                   child: Text(
                     'Жанр:',
                     style: TextStyle(fontSize: 24.0, color: primaryColor),
                   ),
                 ),
+
                 Flexible(
                   child: Text(
                     ' $_genre',
@@ -371,12 +376,14 @@ class _StoryView extends State<StoryView> {
 
             Row(
               children: [
-                const Flexible(
+                const Padding(
+                  padding: EdgeInsets.only(left: 40.0, right: 8),
                   child: Text(
                     'Локация:',
                     style: TextStyle(fontSize: 24.0, color: primaryColor),
                   ),
                 ),
+
                 Flexible(
                   child: Text(
                     ' $_location',
@@ -399,7 +406,7 @@ class _StoryView extends State<StoryView> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const AddMenu(),
+                          builder: (context) => const MainMenu(),
                         ),
                       );
                     },

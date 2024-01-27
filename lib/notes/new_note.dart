@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:test_flutter/navigation/main_menu.dart';
 
 import '../adding/add_entity.dart';
 import '../favorite/new_favorite.dart';
@@ -321,7 +322,7 @@ class NotesView extends State<NoteView> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const AddMenu(),
+                          builder: (context) => const MainMenu(),
                         ),
                       );
                     },

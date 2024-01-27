@@ -120,7 +120,7 @@ class _MainMenu extends State<MainMenu> {
                   ),
 
                   SizedBox(
-                    height: 550,
+                    height: 630,
                     width: 300,
                     child: ListView(
                       scrollDirection: Axis.vertical,

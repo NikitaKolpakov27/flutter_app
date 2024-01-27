@@ -60,6 +60,7 @@ class _StoryEditor extends State<StoryEditor> {
     _context = context;
     return MaterialApp(
       home: Scaffold(
+        resizeToAvoidBottomInset: false,
         backgroundColor: backColor,
         appBar: AppBar(
           backgroundColor: primaryColor,
