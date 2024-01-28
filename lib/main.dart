@@ -1,8 +1,10 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:test_flutter/navigation/main_menu.dart';
 import 'adding/add_entity.dart';
 import 'login.dart';
 
@@ -272,6 +274,7 @@ class Registration extends StatelessWidget {
 
     var _userID = usersAsync.docs.length;
 
+    FirebaseAuth.instance.createUserWithEmailAndPassword(email: _email, password: _password);
     FirebaseFirestore.instance.collection('users').add(
         {
           'id': _userID,
@@ -284,7 +287,7 @@ class Registration extends StatelessWidget {
     Navigator.push(
         _context,
         MaterialPageRoute(
-              builder: (context) => AddMenu()));
+              builder: (context) => MainMenu()));
   }
 
   void hideKeyboard() {

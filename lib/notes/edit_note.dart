@@ -1,8 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:test_flutter/colors.dart';
 import 'package:test_flutter/locations/location_fire.dart';
+import 'package:test_flutter/navigation/main_menu.dart';
+
+import '../navigation/edit_view.dart';
 
 class NoteEditor extends StatefulWidget {
 
@@ -34,6 +39,7 @@ class _NoteEditor extends State<NoteEditor> {
 
   static const Color primaryColor =  Color(0xffe36b44);
   static const Color backColor = Color(0xffffe5b9);
+  final String currentUserID = FirebaseAuth.instance.currentUser!.uid;
 
   @override
   Widget build(BuildContext context) {
@@ -199,6 +205,7 @@ class _NoteEditor extends State<NoteEditor> {
     Map<String, dynamic> updateInfo = {
       'note_title': _noteTitle,
       'note_text': _noteText,
+      'user_id': currentUserID
     };
 
     var documents = await FirebaseFirestore.instance.collection('notes').get();
@@ -213,77 +220,5 @@ class _NoteEditor extends State<NoteEditor> {
 
   void hideKeyboard() {
     SystemChannels.textInput.invokeMethod('TextInput.hide');
-  }
-}
-
-class EditorView extends StatefulWidget {
-
-  @override
-  State<EditorView> createState() => _EditorView();
-}
-
-class _EditorView extends State<EditorView> {
-  static const Color primaryColor = Color(0xffe36b44);
-  static const Color backColor =  Color(0xffffe5b9);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: backColor,
-        appBar: AppBar(
-          backgroundColor: primaryColor,
-          title: const Text(
-            "Обновление данных",
-            style: TextStyle(fontSize: 25.0),
-          ),
-        ),
-
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-
-            const Divider(
-              indent: double.infinity,
-            ),
-
-            const Text(
-              'Локация была успешно изменена!',
-              style: TextStyle(
-                  fontSize: 32.0,
-                  fontWeight: FontWeight.bold,
-                  fontFamily: 'Bajkal',
-                  color: primaryColor
-              ),
-            ),
-            const Divider(
-              indent: double.infinity,
-            ),
-
-            Padding(
-              padding: const EdgeInsets.only(left: 24.0, top: 24.0, right: 16),
-              child: MaterialButton(
-                color: primaryColor,
-                height: 50.0,
-                minWidth: 150.0,
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const FireLocation(),
-                    ),
-                  );
-                },
-                child: const Text(
-                  "ОК",
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16.0
-                  ),
-                ),
-              ),
-            ),
-          ],
-        )
-    );
   }
 }

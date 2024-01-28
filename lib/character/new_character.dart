@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:test_flutter/character/pers.dart';
@@ -44,6 +45,7 @@ class _CreateNewCharacter extends State<NewCharacter> {
   late String selectedMBTI = 'ISTJ';
   late String selectedTemper = 'CHOLERIC';
   late Personality _personality;
+  final String currentUserID = FirebaseAuth.instance.currentUser!.uid;
 
   bool isFavorite = false;
   Color primaryColor = const Color(0xffe36b44);
@@ -382,7 +384,8 @@ class _CreateNewCharacter extends State<NewCharacter> {
             {
               'mbti': _personality.getMBTI,
               'temper': _personality.getTemper
-            }
+            },
+          'user_id': currentUserID
         }
     );
 
@@ -445,6 +448,7 @@ class CharacterView extends State<CharView> {
   late Personality _personality = widget._personality;
 
   late String strSex = _persSex == true ? 'Муж.' : 'Жен.';
+  final String currentUserID = FirebaseAuth.instance.currentUser!.uid;
 
   @override
   Widget build(BuildContext context) {
@@ -716,7 +720,8 @@ class CharacterView extends State<CharView> {
                     {
                       'id': favID,
                       'name': "$_persName $_persLastName $_persPatronymic",
-                      'type': 'Персонаж'
+                      'type': 'Персонаж',
+                      'user_id': currentUserID
                     }
                 );
 

@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dropdown_search/dropdown_search.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:test_flutter/navigation/main_menu.dart';
@@ -31,6 +32,7 @@ class _CreateNewStory extends State<NewStory> {
 
   Color primaryColor = const Color(0xffe36b44);
   Color backColor = const Color(0xffffe5b9);
+  final String currentUserID = FirebaseAuth.instance.currentUser!.uid;
 
   @override
   Widget build(BuildContext context) {
@@ -159,9 +161,20 @@ class _CreateNewStory extends State<NewStory> {
               ),
             ),
             StreamBuilder(
-              stream: FirebaseFirestore.instance.collection('locations').snapshots(),
+              stream: FirebaseFirestore.instance.collection('locations')
+                  .where('user_id', isEqualTo: currentUserID)
+                  .snapshots(),
               builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
                 List<DropdownMenuItem<String>> locationItems = [];
+
+                // Set default value
+                locationItems.add(const DropdownMenuItem<String>(
+                    value: 'The Grand Canyon. The most huge landscape in North America. Also known as a popular site',
+                    child: Text(
+                        'The Grand Canyon'
+                    )
+                ));
+
                 if (!snapshot.hasData) {
                   return const CircularProgressIndicator();
                 }
@@ -251,7 +264,8 @@ class _CreateNewStory extends State<NewStory> {
           'title': _storyTitle,
           'genre': _genre,
           'isFavorite': _isFavorite,
-          'location': _location
+          'location': _location,
+          'user_id': currentUserID
         }
     );
 
@@ -297,6 +311,7 @@ class _StoryView extends State<StoryView> {
   late String _genre = widget._genre;
   late bool _isFavorite = widget._isFavorite;
   late String _location = widget._location;
+  final String currentUserID = FirebaseAuth.instance.currentUser!.uid;
 
   @override
   Widget build(BuildContext context) {
@@ -472,7 +487,8 @@ class _StoryView extends State<StoryView> {
                       {
                         'id': favID,
                         'name': _storyTitle,
-                        'type': 'История'
+                        'type': 'История',
+                        'user_id': currentUserID
                       }
                   );
 

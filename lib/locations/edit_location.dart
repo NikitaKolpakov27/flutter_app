@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:test_flutter/locations/location_fire.dart';
@@ -35,6 +36,7 @@ class _LocationEditor extends State<LocationEditor> {
 
   static const Color primaryColor =  Color(0xffe36b44);
   static const Color backColor = Color(0xffffe5b9);
+  final String currentUserID = FirebaseAuth.instance.currentUser!.uid;
 
   @override
   Widget build(BuildContext context) {
@@ -201,6 +203,7 @@ class _LocationEditor extends State<LocationEditor> {
     Map<String, dynamic> updateInfo = {
       'location_name': _locationName,
       'description': _description,
+      'user_id': currentUserID
     };
 
     print('LOCATION ID HERE: $_locationID');

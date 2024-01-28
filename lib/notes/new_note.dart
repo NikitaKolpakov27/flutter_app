@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:test_flutter/navigation/main_menu.dart';
@@ -19,6 +20,7 @@ class CreateNewNote extends StatelessWidget {
 
   Color primaryColor = const Color(0xffe36b44);
   Color backColor = const Color(0xffffe5b9);
+  final String currentUserID = FirebaseAuth.instance.currentUser!.uid;
 
   @override
   Widget build(BuildContext context) {
@@ -188,7 +190,8 @@ class CreateNewNote extends StatelessWidget {
           'id': _noteID,
           'note_title': _noteTitle,
           'isFavorite': _isFavorite,
-          'note_text': _noteText
+          'note_text': _noteText,
+          'user_id': currentUserID
         }
     );
 
@@ -231,6 +234,7 @@ class NotesView extends State<NoteView> {
   late String _noteTitle = widget._noteTitle;
   late bool _isFavorite = widget._isFavorite;
   late String _noteText = widget._noteText;
+  final String currentUserID = FirebaseAuth.instance.currentUser!.uid;
 
   @override
   Widget build(BuildContext context) {
@@ -388,7 +392,8 @@ class NotesView extends State<NoteView> {
                       {
                         'id': favID,
                         'name': _noteTitle,
-                        'type': 'Заметка'
+                        'type': 'Заметка',
+                        'user_id': currentUserID
                       }
                   );
 

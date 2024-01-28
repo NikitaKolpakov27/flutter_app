@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:test_flutter/locations/location_fire.dart';
@@ -41,6 +42,7 @@ class _StoryEditor extends State<StoryEditor> {
 
   static const Color primaryColor =  Color(0xffe36b44);
   static const Color backColor = Color(0xffffe5b9);
+  final String currentUserID = FirebaseAuth.instance.currentUser!.uid;
 
   List<DropdownMenuItem<String>> get dropdownGenres {
     List<DropdownMenuItem<String>> menuItems = [
@@ -190,6 +192,15 @@ class _StoryEditor extends State<StoryEditor> {
                   stream: FirebaseFirestore.instance.collection('locations').snapshots(),
                   builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
                     List<DropdownMenuItem<String>> locationItems = [];
+
+                    // Set default value
+                    locationItems.add(const DropdownMenuItem<String>(
+                        value: 'The Grand Canyon. The most huge landscape in North America. Also known as a popular site',
+                        child: Text(
+                            'The Grand Canyon'
+                        )
+                    ));
+
                     if (!snapshot.hasData) {
                       return const CircularProgressIndicator();
                     }
@@ -254,10 +265,12 @@ class _StoryEditor extends State<StoryEditor> {
     hideKeyboard();
 
     _location = selectedLocation;
+    _genre = selectedGenre;
     Map<String, dynamic> updateInfo = {
       'title': _storyTitle,
       'genre': _genre,
-      'location': _location
+      'location': _location,
+      'user_id': currentUserID
     };
 
     print('STORY ID HERE: $_storyID');

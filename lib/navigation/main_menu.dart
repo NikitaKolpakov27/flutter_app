@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:test_flutter/character/perses_fire.dart';
 import 'package:test_flutter/colors.dart';
@@ -12,6 +13,7 @@ import '../locations/new_location.dart';
 import '../notes/new_note.dart';
 import '../settings/settings.dart';
 import '../story/new_story.dart';
+import '../styles.dart';
 
 class MainMenu extends StatefulWidget {
   const MainMenu({super.key});
@@ -23,7 +25,7 @@ class MainMenu extends StatefulWidget {
 
 
 class _MainMenu extends State<MainMenu> {
-  TextStyle _current_style = const TextStyle(fontSize: 20.0, color: Color(0xfffff7c3), fontFamily: 'Bajkal');
+  static TextStyle _current_style = Styles.currentStyle;
 
   int _selectedIndex = 0;
   PageController pageController = PageController();

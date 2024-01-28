@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:test_flutter/character/personality.dart';
 import 'new_character.dart';
@@ -13,6 +14,7 @@ class FireChar extends StatefulWidget {
 class _FireHomeState extends State<FireChar> {
   static const Color primaryColor = Color(0xffe36b44);
   static const Color backColor = Color(0xffffe5b9);
+  final String currentUserID = FirebaseAuth.instance.currentUser!.uid;
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +28,9 @@ class _FireHomeState extends State<FireChar> {
           ),
         ),
         body: StreamBuilder(
-          stream: FirebaseFirestore.instance.collection('perses').orderBy('id', descending: false).snapshots(),
+          stream: FirebaseFirestore.instance.collection('perses')
+              .where('user_id', isEqualTo: currentUserID)
+              .orderBy('id', descending: false).snapshots(),
           builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
             if (!snapshot.hasData) {
               return const CircularProgressIndicator();

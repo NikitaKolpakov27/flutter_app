@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class FireFavorite extends StatefulWidget {
@@ -10,16 +11,39 @@ class FireFavorite extends StatefulWidget {
 
 class _FireFavState extends State<FireFavorite> {
   static const Color backColor = Color(0xffffe5b9);
+  final String currentUserID = FirebaseAuth.instance.currentUser!.uid;
+
+  void getCurrentUserData() async {
+    dynamic _colRef = FirebaseFirestore.instance.collection('users').where('login', isEqualTo: 'Nikita101');
+    QuerySnapshot querySnapshot = await _colRef.get();
+    final allData = querySnapshot.docs.map((e) => e.data()).toList();
+    var a = FirebaseAuth.instance.currentUser!.email;
+    // print('ALL DATA: $allData');
+    print('CURRENT USER ID: $a');
+  }
+
+  // void getCurrentUserData() async {
+  //   FirebaseFirestore.instance
+  //       .collection('talks')
+  //       .where("login", isEqualTo: "Nikita101")
+  //       .snapshots()
+  //       .listen((data) =>
+  //       data.docs.forEach((doc) => print(doc['password'])));
+  // }
 
   @override
   Widget build(BuildContext context) {
+    getCurrentUserData();
     return Scaffold(
       backgroundColor: backColor,
       body: StreamBuilder(
-        stream: FirebaseFirestore.instance.collection('favorites').orderBy('id', descending: false).snapshots(),
+        stream: FirebaseFirestore.instance.collection('favorites')
+            .where('user_id', isEqualTo: currentUserID)
+            .orderBy('id', descending: false)
+            .snapshots(),
         builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (!snapshot.hasData) {
-            return const CircularProgressIndicator();
+            return const Center(child: CircularProgressIndicator());
           }
           return ListView.builder(
               itemCount: snapshot.data?.docs.length,

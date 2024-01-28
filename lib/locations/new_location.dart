@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:test_flutter/adding/add_entity.dart';
 import 'package:test_flutter/locations/edit_location.dart';
 import 'package:test_flutter/navigation/main_menu.dart';
 import '../favorite/new_favorite.dart';
@@ -26,6 +26,7 @@ class _CreateNewLocation extends State<NewLocation> {
   static const Color primaryColor =  Color(0xffe36b44);
   static const Color backColor = Color(0xffffe5b9);
   static const Color contrastColor = Color(0xff5191CA);
+  final String currentUserID = FirebaseAuth.instance.currentUser!.uid;
 
   @override
   Widget build(BuildContext context) {
@@ -171,7 +172,8 @@ class _CreateNewLocation extends State<NewLocation> {
         {
           'id': _locationID,
           'location_name': _locationName,
-          'description': _description
+          'description': _description,
+          'user_id': currentUserID
         }
     );
 
@@ -214,6 +216,7 @@ class LocationView extends State<LocView> {
   late bool _isFavorite = widget._isFavorite;
   late String _locationName = widget._locationName;
   late String _description = widget._description;
+  final String currentUserID = FirebaseAuth.instance.currentUser!.uid;
 
   @override
   Widget build(BuildContext context) {
@@ -260,8 +263,7 @@ class LocationView extends State<LocView> {
                   ),
                 ),
 
-                Padding(
-                  padding: const EdgeInsets.only(right: 32),
+                Flexible(
                   child: Text(
                     ' $_locationName',
                     style: const TextStyle(fontSize: 24.0),
@@ -378,7 +380,8 @@ class LocationView extends State<LocView> {
                       {
                         'id': favID,
                         'name': _locationName,
-                        'type': 'Локация'
+                        'type': 'Локация',
+                        'user_id': currentUserID
                       }
                   );
 

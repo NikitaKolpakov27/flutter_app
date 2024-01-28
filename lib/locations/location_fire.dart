@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'new_location.dart';
 
@@ -12,6 +13,7 @@ class FireLocation extends StatefulWidget {
 class _FireLocState extends State<FireLocation> {
   static const Color primaryColor = Color(0xffe36b44);
   static const Color backColor = Color(0xffffe5b9);
+  final String currentUserID = FirebaseAuth.instance.currentUser!.uid;
 
   @override
   Widget build(BuildContext context) {
@@ -25,10 +27,12 @@ class _FireLocState extends State<FireLocation> {
         ),
       ),
       body: StreamBuilder(
-        stream: FirebaseFirestore.instance.collection('locations').orderBy('id', descending: false).snapshots(),
+        stream: FirebaseFirestore.instance.collection('locations')
+            .where('user_id', isEqualTo: currentUserID)
+            .orderBy('id', descending: false).snapshots(),
         builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (!snapshot.hasData) {
-            return const CircularProgressIndicator();
+            return const Center(child: CircularProgressIndicator());
           }
           return ListView.builder(
               itemCount: snapshot.data?.docs.length,
