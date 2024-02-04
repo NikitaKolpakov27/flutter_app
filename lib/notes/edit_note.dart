@@ -1,12 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:test_flutter/colors.dart';
-import 'package:test_flutter/locations/location_fire.dart';
-import 'package:test_flutter/navigation/main_menu.dart';
-
 import '../navigation/edit_view.dart';
 
 class NoteEditor extends StatefulWidget {

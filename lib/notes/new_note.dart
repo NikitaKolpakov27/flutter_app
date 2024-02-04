@@ -3,15 +3,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:test_flutter/navigation/main_menu.dart';
-
-import '../adding/add_entity.dart';
 import '../favorite/new_favorite.dart';
 import 'edit_note.dart';
 
 class CreateNewNote extends StatelessWidget {
   final formKeyNote = GlobalKey<FormState>();
   late BuildContext _context;
-
+  
   // Location's properties
   late int _noteID = 0;
   late String _noteTitle = '';

@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:test_flutter/character/perses_fire.dart';
 import 'package:test_flutter/colors.dart';
@@ -8,11 +7,7 @@ import 'package:test_flutter/main.dart';
 import 'package:test_flutter/notes/notes_fire.dart';
 import 'package:test_flutter/story/stories_fire.dart';
 import '../adding/add_entity.dart';
-import '../character/new_character.dart';
-import '../locations/new_location.dart';
-import '../notes/new_note.dart';
 import '../settings/settings.dart';
-import '../story/new_story.dart';
 import '../styles.dart';
 
 class MainMenu extends StatefulWidget {
@@ -34,7 +29,7 @@ class _MainMenu extends State<MainMenu> {
     setState(() {
       _selectedIndex = index;
     });
-    pageController.animateToPage(index, duration: Duration(milliseconds: 500), curve: Curves.decelerate);
+    pageController.animateToPage(index, duration: const Duration(milliseconds: 500), curve: Curves.decelerate);
   }
 
   @override
